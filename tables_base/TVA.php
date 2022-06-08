@@ -24,7 +24,7 @@ if($id=="0")
             $id = 1;
         }
 
-       echo $sql="INSERT INTO `delta_TVAs`(`id`,`codsoc`,`code`,`designation`) VALUES
+        $sql="INSERT INTO `delta_TVAs`(`id`,`codsoc`,`code`,`designation`) VALUES
         ('".$id."','".$codsoc."','".$code."' , '".$designation."' )";
         
         //Log
@@ -61,6 +61,13 @@ while($enreg=mysql_fetch_array($query))
     $designation	=	$enreg["designation"] ;
 }
 ?>
+<script>
+function SupprimerTVA(id) {
+    if (confirm('Confirmez-vous cette action?')) {
+        document.location.href = "page_js/supprimerTVA.php?ID=" + id;
+    }
+}
+</script>
 <form action="" method="POST">
     <div class="form-group row">
         <h3 class="col-lg-12 m-5">TVA (*)</h3>
@@ -105,7 +112,10 @@ while($enreg=mysql_fetch_array($query))
                 <td><?php echo $enreg["code"] ?></td>
                 <td><?php echo $enreg["designation"]?></td>
                 <td><a type="button" href="tabs.php?IDT=<?php echo $enreg["id"] ?>&suc=9"
-                        class="btn btn-warning waves-effect waves-light">Modifier</a></td>
+                        class="btn btn-warning waves-effect waves-light">Modifier</a><a
+                        href="Javascript:SupprimerTVA('<?php echo $enreg["id"]; ?>')"
+                        class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
+                </td>
             </tr>
             <?php } ?>
         </tbody>

@@ -61,6 +61,13 @@ while($enreg=mysql_fetch_array($query))
     $designation	=	$enreg["designation"] ;
 }
 ?>
+<script>
+function SupprimerEmplacement(id) {
+    if (confirm('Confirmez-vous cette action?')) {
+        document.location.href = "page_js/supprimerEmplacement.php?ID=" + id;
+    }
+}
+</script>
 <form action="" method="POST">
     <div class="form-group row">
         <h3 class="col-lg-12 m-5">Emplacement (*)</h3>
@@ -105,7 +112,9 @@ while($enreg=mysql_fetch_array($query))
                 <td><?php echo $enreg["code"] ?></td>
                 <td><?php echo $enreg["designation"]?></td>
                 <td><a type="button" href="tabs.php?IDE=<?php echo $enreg["id"] ?>&suc=4"
-                        class="btn btn-warning waves-effect waves-light">Modifier</a></td>
+                        class="btn btn-warning waves-effect waves-light">Modifier</a> <a
+                        href="Javascript:SupprimerEmplacement('<?php echo $enreg["id"]; ?>')"
+                        class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a></td>
             </tr>
             <?php } ?>
         </tbody>
