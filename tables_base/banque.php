@@ -1,12 +1,12 @@
 <?php
 
-if(isset($_GET['IDMM'])){
-    $id = $_GET['IDMM'];
+if(isset($_GET['IDB'])){
+    $id = $_GET['IDB'];
 }else{
     $id = "0";
 }
 
-if(isset($_POST['enregistrer_mail6'])){	
+if(isset($_POST['enregistrer_mail8'])){	
 
 $codsoc	        	=	$_SESSION['delta_SOC'] ;
 $code	        	=	addslashes($_POST["code"]) ;
@@ -14,7 +14,7 @@ $designation		=	addslashes($_POST["designation"]) ;
 
 if($id=="0")
     {
-        $req="select max(id) as maxID from delta_magasins";
+        $req="select max(id) as maxID from delta_banques";
         $query=mysql_query($req);
         if(mysql_num_rows($query)>0){
             while($enreg=mysql_fetch_array($query)){
@@ -24,7 +24,7 @@ if($id=="0")
             $id = 1;
         }
 
-        $sql="INSERT INTO `delta_magasins`(`id`,`codsoc`,`code`,`designation`) VALUES
+        $sql="INSERT INTO `delta_banques`(`id`,`codsoc`,`code`,`designation`) VALUES
         ('".$id."','".$codsoc."','".$code."' , '".$designation."' )";
         
         //Log
@@ -35,7 +35,7 @@ if($id=="0")
         $req=mysql_query($sql1);			
     }
 else{
-        $sql="UPDATE `delta_magasins` SET `code`='".$code."' , `designation`='".$designation."' WHERE id=".$id;
+        $sql="UPDATE `delta_banques` SET `code`='".$code."' , `designation`='".$designation."' WHERE id=".$id;
         
         //Log
         $dateheure=date('Y-m-d H:i:s');
@@ -46,13 +46,13 @@ else{
     }
     $req=mysql_query($sql);
 
-    echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=6" </SCRIPT>';
+    echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=8" </SCRIPT>';
 }
 
 $code		        =	"" ;
 $designation		=	"" ;
 
-$req="select * from delta_magasins where id=".$id;
+$req="select * from delta_banques where id=".$id;
 $query=mysql_query($req);
 while($enreg=mysql_fetch_array($query))
 {
@@ -63,7 +63,7 @@ while($enreg=mysql_fetch_array($query))
 ?>
 <form action="" method="POST">
     <div class="form-group row">
-        <h3 class="col-lg-12 m-5">Magasin (*)</h3>
+        <h3 class="col-lg-12 m-5">Banque (*)</h3>
 
         <div class="col-sm-4">
             <b>Code (*)</b>
@@ -79,13 +79,13 @@ while($enreg=mysql_fetch_array($query))
             <button type="submit" class="btn btn-primary waves-effect waves-light">
                 Enregistrer
             </button>
-            <input class="form-control" type="hidden" name="enregistrer_mail6">
+            <input class="form-control" type="hidden" name="enregistrer_mail8">
         </div>
     </div>
 
 </form>
 <div class="col-xl-12">
-    <h3 class="col-lg-12 " style="color : red">Liste des magasins (*)</h3>
+    <h3 class="col-lg-12 " style="color : red">Liste des Banques (*)</h3>
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
@@ -96,7 +96,7 @@ while($enreg=mysql_fetch_array($query))
         </thead>
         <tbody>
             <?php 
-            $reqFP ="select * from delta_magasins"; 
+            $reqFP ="select * from delta_banques"; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 
@@ -104,7 +104,7 @@ while($enreg=mysql_fetch_array($query))
             <tr>
                 <td><?php echo $enreg["code"] ?></td>
                 <td><?php echo $enreg["designation"]?></td>
-                <td><a type="button" href="tabs.php?IDMM=<?php echo $enreg["id"] ?>&suc=6"
+                <td><a type="button" href="tabs.php?IDB=<?php echo $enreg["id"] ?>&suc=8"
                         class="btn btn-warning waves-effect waves-light">Modifier</a></td>
             </tr>
             <?php } ?>

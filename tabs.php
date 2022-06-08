@@ -53,24 +53,29 @@
                                         data-toggle="tab" href="#magasin" role="tab">Magasin</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==6){ ?> active <?php } } ?>"
+                                    <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==7){ ?> active <?php } } ?>"
                                         data-toggle="tab" href="#mode_paiement" role="tab">Mode de
                                         paiement</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#banque" role="tab">Banque</a>
+                                    <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==8){ ?> active <?php } } ?>"
+                                        data-toggle="tab" href="#banque" role="tab">Banque</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#tva" role="tab">TVA</a>
+                                    <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==9){ ?> active <?php } } ?>"
+                                        data-toggle="tab" href="#tva" role="tab">TVA</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#gouvernorat" role="tab">Gouvernorat</a>
+                                    <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==10){ ?> active <?php } } ?>"
+                                        data-toggle="tab" href="#gouvernorat" role="tab">Gouvernorat</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#region" role="tab">Région</a>
+                                    <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==11){ ?> active <?php } } ?>"
+                                        data-toggle="tab" href="#region" role="tab">Région</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#pays" role="tab">Pays</a>
+                                    <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==12){ ?> active <?php } } ?>"
+                                        data-toggle="tab" href="#pays" role="tab">Pays</a>
                                 </li>
                             </ul>
 
@@ -103,6 +108,26 @@
                                 <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==7){ ?> active <?php } } ?>"
                                     id="mode_paiement" role="tabpanel">
                                     <?php include("tables_base/mode_paiement.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==8){ ?> active <?php } } ?>"
+                                    id="banque" role="tabpanel">
+                                    <?php include("tables_base/banque.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==9){ ?> active <?php } } ?>"
+                                    id="tva" role="tabpanel">
+                                    <?php include("tables_base/TVA.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==10){ ?> active <?php } } ?>"
+                                    id="gouvernorat" role="tabpanel">
+                                    <?php include("tables_base/gouvernorat.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==11){ ?> active <?php } } ?>"
+                                    id="region" role="tabpanel">
+                                    <?php include("tables_base/region.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==12){ ?> active <?php } } ?>"
+                                    id="pays" role="tabpanel">
+                                    <?php include("tables_base/pays.php"); ?>
                                 </div>
                             </div>
                         </div>

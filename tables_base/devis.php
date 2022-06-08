@@ -24,7 +24,7 @@ if($id=="0")
             $id = 1;
         }
 
-       echo $sql="INSERT INTO `delta_devis`(`id`,`codsoc`,`code`,`designation`) VALUES
+        $sql="INSERT INTO `delta_devis`(`id`,`codsoc`,`code`,`designation`) VALUES
         ('".$id."','".$codsoc."','".$code."' , '".$designation."' )";
         
         //Log
