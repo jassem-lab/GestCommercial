@@ -31,7 +31,7 @@ if($id=="0")
         $dateheure=date('Y-m-d H:i:s');
         $iduser=$_SESSION['delta_IDUSER'];
        
-        $sql1="INSERT INTO `delta_log`(`dateheure`, `idutilisateur`, `document`, `action`, `iddocument`) VALUES ('".$dateheure."','".$iduser."','3','1','".$id."')";
+        $sql1="INSERT INTO `delta_log`(`dateheure`, `idutilisateur`, `document`, `action`, `iddocument`) VALUES ('".$dateheure."','".$iduser."','6','1','".$id."')";
         $req=mysql_query($sql1);			
     }
 else{
@@ -41,7 +41,7 @@ else{
         $dateheure=date('Y-m-d H:i:s');
         $iduser=$_SESSION['delta_IDUSER'];
         
-        $sql1="INSERT INTO `delta_log`(`dateheure`, `idutilisateur`, `document`, `action`, `iddocument`) VALUES ('".$dateheure."','".$iduser."','3','2','".$id."')";
+        $sql1="INSERT INTO `delta_log`(`dateheure`, `idutilisateur`, `document`, `action`, `iddocument`) VALUES ('".$dateheure."','".$iduser."','6','2','".$id."')";
         $req=mysql_query($sql1);				
     }
     $req=mysql_query($sql);
