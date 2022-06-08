@@ -1,20 +1,20 @@
 <?php
 
-if(isset($_GET['IDR'])){
-    $id = $_GET['IDR'];
+if(isset($_GET['IDV'])){
+    $id = $_GET['IDV'];
 }else{
     $id = "0";
 }
 
-if(isset($_POST['enregistrer_mail11'])){	
+if(isset($_POST['enregistrer_mail14'])){	
 
-$codsoc	        	=	$_SESSION['delta_SOC'] ;
-$code	        	=	addslashes($_POST["code"]) ;
-$designation		=	addslashes($_POST["designation"]) ;
+$codsoc	            	=	$_SESSION['delta_SOC'] ;
+$matricule	        	=	addslashes($_POST["matricule"]) ;
+$model		            =	addslashes($_POST["model"]) ;
 
 if($id=="0")
     {
-        $req="select max(id) as maxID from delta_regions";
+        $req="select max(id) as maxID from delta_vehicules";
         $query=mysql_query($req);
         if(mysql_num_rows($query)>0){
             while($enreg=mysql_fetch_array($query)){
@@ -24,7 +24,7 @@ if($id=="0")
             $id = 1;
         }
 
-        $sql="INSERT INTO `delta_regions`(`id`,`codsoc`,`code`,`designation`) VALUES
+        $sql="INSERT INTO `delta_vehicules`(`id`,`codsoc`,`code`,`designation`) VALUES
         ('".$id."','".$codsoc."','".$code."' , '".$designation."' )";
         
         //Log
@@ -35,7 +35,7 @@ if($id=="0")
         $req=mysql_query($sql1);			
     }
 else{
-        $sql="UPDATE `delta_regions` SET `code`='".$code."' , `designation`='".$designation."' WHERE id=".$id;
+        $sql="UPDATE `delta_vehicules` SET `code`='".$code."' , `designation`='".$designation."' WHERE id=".$id;
         
         //Log
         $dateheure=date('Y-m-d H:i:s');
@@ -49,50 +49,50 @@ else{
     echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=11" </SCRIPT>';
 }
 
-$code		        =	"" ;
-$designation		=	"" ;
+$matricule		        =	"" ;
+$model	            	=	"" ;
 
-$req="select * from delta_regions where id=".$id;
+$req="select * from delta_vehicules where id=".$id;
 $query=mysql_query($req);
 while($enreg=mysql_fetch_array($query))
 {
 
-    $code	        =	$enreg["code"] ;
-    $designation	=	$enreg["designation"] ;
+    $matricule	        =	$enreg["matricule"] ;
+    $model	            =	$enreg["model"] ;
 }
 ?>
 <script>
-function SupprimerRegion(id) {
+function SupprimerVehicule(id) {
     if (confirm('Confirmez-vous cette action?')) {
-        document.location.href = "page_js/supprimerRegion.php?ID=" + id;
+        document.location.href = "page_js/SupprimerVehicule.php?ID=" + id;
     }
 }
 </script>
 <form action="" method="POST">
     <div class="form-group row">
-    <h3 class="col-lg-12 mt-5 mb-5" style="color: green  !important;">Région (*)</h3>
+    <h3 class="col-lg-12 mt-5 mb-5" style="color: green  !important;">Véhicule (*)</h3>
 
         <div class="col-sm-4">
-            <b>Code (*)</b>
-            <input class="form-control" type="text" placeholder="Famille de produit" value="<?php echo $code; ?>"
-                id="example-text-input" name="code" required>
+            <b>Matricule (*)</b>
+            <input class="form-control" type="text" placeholder="Matricule" value="<?php echo $matricule; ?>"
+                id="example-text-input" name="matricule" required>
         </div>
         <div class="col-sm-4">
-            <b>Désignation (*)</b>
-            <input class="form-control" type="text" placeholder="designations" value="<?php echo $designation; ?>"
-                id="example-text-input" name="designation" required>
+            <b>Model (*)</b>
+            <input class="form-control" type="text" placeholder="Model" value="<?php echo $model; ?>"
+                id="example-text-input" name="model" required>
         </div>
         <div class="col-sm-3"><br>
             <button type="submit" class="btn btn-primary waves-effect waves-light">
                 Enregistrer
             </button>
-            <input class="form-control" type="hidden" name="enregistrer_mail11">
+            <input class="form-control" type="hidden" name="enregistrer_mail14">
         </div>
     </div>
 
 </form>
 <div class="col-xl-12">
-    <h3 class="col-lg-12 " style="color : red">Liste des Régions (*)</h3>
+    <h3 class="col-lg-12 " style="color : red">Liste des Véhicules (*)</h3>
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
@@ -111,9 +111,9 @@ function SupprimerRegion(id) {
             <tr>
                 <td><?php echo $enreg["code"] ?></td>
                 <td><?php echo $enreg["designation"]?></td>
-                <td><a type="button" href="tabs.php?IDR=<?php echo $enreg["id"] ?>&suc=11"
+                <td><a type="button" href="tabs.php?IDV=<?php echo $enreg["id"] ?>&suc=14"
                         class="btn btn-warning waves-effect waves-light">Modifier</a><a
-                        href="Javascript:SupprimerRegion('<?php echo $enreg["id"]; ?>')"
+                        href="Javascript:SupprimerVehicule('<?php echo $enreg["id"]; ?>')"
                         class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
                 </td>
             </tr>

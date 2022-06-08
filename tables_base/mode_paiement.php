@@ -70,7 +70,7 @@ function SupprimerModePaiement(id) {
 </script>
 <form action="" method="POST">
     <div class="form-group row">
-        <h3 class="col-lg-12 m-5">Mode Paiement (*)</h3>
+        <h3 class="col-lg-12 mt-5 mb-5" style="color: red  !important;">Mode Paiement (*)</h3>
 
         <div class="col-sm-4">
             <b>Code (*)</b>
@@ -114,7 +114,8 @@ function SupprimerModePaiement(id) {
                 <td><a type="button" href="tabs.php?IDMP=<?php echo $enreg["id"] ?>&suc=7"
                         class="btn btn-warning waves-effect waves-light">Modifier</a><a
                         href="Javascript:SupprimerModePaiement('<?php echo $enreg["id"]; ?>')"
-                        class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a></td>
+                        class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
+                </td>
             </tr>
             <?php } ?>
         </tbody>
