@@ -99,62 +99,61 @@
                             </ul>
 
                             <!-- Tab panes -->
-                            <div class="tab-content"></div>
-                            <div class="tab-pane <?php if(isset($_GET['suc'])){ if($_GET['suc']==1){ ?> active <?php } } ?>  <?php if (!(isset($_GET['suc']))){  ?> active <?php } ?> p-3"
-                                id="famille" role="tabpanel">
-                                <?php include ("tables_base/famille_produit.php"); ?>
-                            </div>
-                            <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==2){ ?> active <?php } } ?>"
-                                id="unite" role="tabpanel">
-                                <?php include("tables_base/unite_produit.php"); ?>
-                            </div>
-                            <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==3){ ?> active <?php } } ?>"
-                                id="messages" role="tabpanel">
-                                <?php include("tables_base/marque.php"); ?>
-                            </div>
-                            <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==4){ ?> active <?php } } ?>"
-                                id="emplacement" role="tabpanel">
-                                <?php include("tables_base/emplacement.php"); ?>
-                            </div>
-                            <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==5){ ?> active <?php } } ?>"
-                                id="devis" role="tabpanel">
-                                <?php include("tables_base/devis.php"); ?>
-                            </div>
-                            <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==6){ ?> active <?php } } ?>"
-                                id="magasin" role="tabpanel">
-                                <?php include("tables_base/magasin.php"); ?>
-                            </div>
-                            <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==7){ ?> active <?php } } ?>"
-                                id="mode_paiement" role="tabpanel">
-                                <?php include("tables_base/mode_paiement.php"); ?>
-                            </div>
-                            <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==8){ ?> active <?php } } ?>"
-                                id="banque" role="tabpanel">
-                                <?php include("tables_base/banque.php"); ?>
-                            </div>
-                            <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==9){ ?> active <?php } } ?>"
-                                id="tva" role="tabpanel">
-                                <?php include("tables_base/TVA.php"); ?>
-                            </div>
-                            <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==10){ ?> active <?php } } ?>"
-                                id="gouvernorat" role="tabpanel">
-                                <?php include("tables_base/gouvernorat.php"); ?>
-                            </div>
-                            <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==11){ ?> active <?php } } ?>"
-                                id="region" role="tabpanel">
-                                <?php include("tables_base/region.php"); ?>
-                            </div>
-                            <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==12){ ?> active <?php } } ?>"
-                                id="pays" role="tabpanel">
-                                <?php include("tables_base/pays.php"); ?>
-                            </div>
-                            <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==13){ ?> active <?php } } ?>"
-                                id="parametres" role="tabpanel">
-                                <?php include("tables_base/parametres.php"); ?>
-                            </div>
+                            <div class="tab-content">
+                                <div class="tab-pane <?php if(isset($_GET['suc'])){ if($_GET['suc']==1){ ?> active <?php } } ?>  <?php if (!(isset($_GET['suc']))){  ?> active <?php } ?> p-3"
+                                    id="famille" role="tabpanel">
+                                    <?php include ("tables_base/famille_produit.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==2){ ?> active <?php } } ?>"
+                                    id="unite" role="tabpanel">
+                                    <?php include("tables_base/unite_produit.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==3){ ?> active <?php } } ?>"
+                                    id="messages" role="tabpanel">
+                                    <?php include("tables_base/marque.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==4){ ?> active <?php } } ?>"
+                                    id="emplacement" role="tabpanel">
+                                    <?php include("tables_base/emplacement.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==5){ ?> active <?php } } ?>"
+                                    id="devis" role="tabpanel">
+                                    <?php include("tables_base/devis.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==6){ ?> active <?php } } ?>"
+                                    id="magasin" role="tabpanel">
+                                    <?php include("tables_base/magasin.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==7){ ?> active <?php } } ?>"
+                                    id="mode_paiement" role="tabpanel">
+                                    <?php include("tables_base/mode_paiement.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==8){ ?> active <?php } } ?>"
+                                    id="banque" role="tabpanel">
+                                    <?php include("tables_base/banque.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==9){ ?> active <?php } } ?>"
+                                    id="tva" role="tabpanel">
+                                    <?php include("tables_base/TVA.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==10){ ?> active <?php } } ?>"
+                                    id="gouvernorat" role="tabpanel">
+                                    <?php include("tables_base/gouvernorat.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==11){ ?> active <?php } } ?>"
+                                    id="region" role="tabpanel">
+                                    <?php include("tables_base/region.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==12){ ?> active <?php } } ?>"
+                                    id="pays" role="tabpanel">
+                                    <?php include("tables_base/pays.php"); ?>
+                                </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==13){ ?> active <?php } } ?>"
+                                    id="parametres" role="tabpanel">
+                                    <?php include("tables_base/parametres.php"); ?>
+                                </div>
 
-
-
+                            </div>
                         </div>
                     </div>
                 </div>
