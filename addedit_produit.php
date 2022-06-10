@@ -1,5 +1,30 @@
 <?php include('menu_footer/menu.php') ?>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+.accordion {
+
+  
+    cursor: pointer;
+
+    border: none;
+    text-align: left;
+    outline: none;
+    font-weight: bold;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+.active,
+.accordion:hover {}
+
+.panel {
+    width : 100% ; 
+    padding: 40px 18px;
+    display: none;
+    background-color: white;
+    overflow: hidden;
+}
+</style>
 <?php
 
 if(isset($_GET['ID'])){
@@ -89,11 +114,12 @@ $date_expiration             = "" ;
 $lot                         = "" ; 
 $numero_serie                = "" ; 
 $code_ngp                    = "" ; 
-$prix_achat_ht               = "" ; 
-$prix_achat_ttc              = "" ;
-$prix_vente_ttc              = "" ;
-$prix_vente_ht               = "" ;
-
+$prix_achat_ht               = 0 ; 
+$prix_achat_ttc              = 0 ;
+$prix_vente_ttc              = 0 ;
+$prix_vente_ht               = 0 ;
+$type                        = "" ; 
+$nature                        = "" ; 
 ?>
 
 <!-- page wrapper start -->
@@ -112,7 +138,7 @@ $prix_vente_ht               = "" ;
     </div>
     <!-- page-title-box -->
 
-    <div class="page-content-wrapper ">
+    <div class="page-content-wrapper">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
@@ -132,19 +158,21 @@ $prix_vente_ht               = "" ;
                             </font><br /><br />
                             <?php } }?>
                             <form method="POST">
+                               
                                 <div class="form-group row">
+
                                     <div class="col-sm-2">
-                                        <b>Référence (*)</b>
+                                        <b style="color : red ; ">Référence (*)</b>
                                         <input class="form-control" type="text" placeholder="Référence" value=""
                                             name="reference" id="code" required>
                                     </div>
                                     <div class="col-sm-2">
-                                        <b>Désignation (*)</b>
+                                        <b style="color : red ; ">Désignation (*)</b>
                                         <input class="form-control" type="text" placeholder="Désignation" value=""
                                             name="designation" id="designation" required>
                                     </div>
                                     <div class="col-xl-2">
-                                        <b>Famille de produit (*)</b>
+                                        <b style="color : red ; ">Famille de produit (*)</b>
                                         <select class="form-control select2" name="famille" id="famille">
                                             <option value=""> Sélectionner une famille </option>
                                             <option value="0"> Ajouter une famille </option>
@@ -159,127 +187,99 @@ $prix_vente_ht               = "" ;
                                             <?php } ?>
                                         </select>
                                     </div>
-                                    <div class="col-xl-1">
-                                        <b>TVA (*)</b>
-                                        <select class="form-control select2" name="tva" id="tva">
-                                            <option value="">TVA</option>
-                                            <option value="0">Ajouter un tva</option>
-                                            <?php
-												$req="select * from delta_TVAs order by code";
-												$query=mysql_query($req);
-												while($enreg=mysql_fetch_array($query)){
-												?>
-                                            <option value="<?php echo $enreg['code']; ?>"
-                                                <?php if($tva==$enreg['code']) {?> selected <?php } ?>>
-                                                <?php echo $enreg['designation']; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
+
                                     <div class="col-sm-1">
-                                        <b>Stock </b>
+                                        <b style="color : red ; ">Stock </b>
                                         <input class="form-control" type="text" placeholder="Stock"
                                             value="<?php echo $stock ?>" name="stock" id="stock" required>
                                     </div>
-                                    <div class="col-sm-1">
-                                        <b>Seuil </b>
-                                        <input class="form-control" type="text" placeholder="Seuil"
-                                            value="<?php echo $seuil ?>" name="seuil" id="seuil" required>
+                                    <div class="col-xl-4">
+                                        <br>
+                                        <button type="submit"
+                                            class="btn btn-primary waves-effect waves-light accordion">Détail
+                                            Stock</button>
+
+                                        <div class="panel">
+                                            <div class="row">
+
+                                                <div class="table-responsive">
+                                                    <table class="table table-responsive-md">
+                                                        <thead>
+                                                            <tr>
+                                                                
+
+                                                                <th>Produit</th>
+                                                                <th>Stock</th>
+                                                                <th>Date d'achat</th>
+                                                                <th>Date d'expiration</th>
+                                                                <th>Date de fabrication</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="form-group mt-5 pt-5 row"
+                                    style="box-shadow: 0px -3px 0px rgba(50, 50, 50, 0.05); ">
 
-                                <div class="form-group row">
-                                    <div class="col-sm-3 col-md-3 mt-5">
-                                        <div class="text-center">
-                                            <!-- Large modal -->
-                                            <button type="button" class="btn btn-primary waves-effect waves-light"
-                                                data-toggle="modal" data-target=".bs-example-modal-lg">Plus de Détails
-                                                produit</button>
-                                        </div>
-
-
-                                        <!--  Modal content for the above example -->
-                                        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
-                                            aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title mt-0" id="myLargeModalLabel">Détails
-                                                            produit</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-hidden="true">×</button>
-                                                    </div>
-                                                    <div class="modal-body">
-
-                                                        <div class="form-group row">
-                                                            <div class="col-xl-4">
-                                                                <b>Fournisseur par défault </b>
-                                                                <select class="form-control select2" name="fournisseur"
-                                                                    id="fournisseur">
-                                                                    <option value=""> Sélectionner un Fournisseur
-                                                                    </option>
-                                                                    <option value="0">Ajouter un fournisseur</option>
-                                                                    <?php
+                                    <div class="col-xl-3">
+                                        <h4 style=" font-weight : bold ; color : green ">Produit :</h4>
+                                        <b>Fournisseur par défault </b>
+                                        <select class="form-control select2" name="fournisseur" id="fournisseur">
+                                            <option value=""> Sélectionner un Fournisseur
+                                            </option>
+                                            <option value="0">Ajouter un fournisseur</option>
+                                            <?php
 												$req="select * from delta_fournisseurs order by code";
 												$query=mysql_query($req);
 												while($enreg=mysql_fetch_array($query)){
 												?>
-                                                                    <option value="<?php echo $enreg['code']; ?>"
-                                                                        <?php if($fournisseur==$enreg['code']) {?>
-                                                                        selected <?php } ?>>
-                                                                        <?php echo $enreg['designation']; ?></option>
-                                                                    <?php } ?>
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="col-xl-4">
-                                                                <b>Unité de produit </b>
-                                                                <select class="form-control select2" name="unite"
-                                                                    id="unite">
-                                                                    <option value=""> Sélectionner une Unité </option>
-                                                                    <option value="0"> Ajouter une Unité </option>
-                                                                    <?php
+                                            <option value="<?php echo $enreg['code']; ?>"
+                                                <?php if($fournisseur==$enreg['code']) {?> selected <?php } ?>>
+                                                <?php echo $enreg['designation']; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <br>
+                                        <b>Unité de produit </b>
+                                        <select class="form-control select2" name="unite" id="unite">
+                                            <option value=""> Sélectionner une Unité </option>
+                                            <option value="0"> Ajouter une Unité </option>
+                                            <?php
 												$req="select * from delta_unite_produit order by code";
 												$query=mysql_query($req);
 												while($enreg=mysql_fetch_array($query)){
 												?>
-                                                                    <option value="<?php echo $enreg['code']; ?>"
-                                                                        <?php if($unite==$enreg['code']) {?> selected
-                                                                        <?php } ?>>
-                                                                        <?php echo $enreg['designation']; ?></option>
-                                                                    <?php } ?>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-xl-4">
-                                                                <b>Marque </b>
-                                                                <select class="form-control select2" name="marque"
-                                                                    id="marque">
-                                                                    <option value=""> Sélectionner une Marque </option>
-                                                                    <option value="0"> Ajouter une Marque </option>
-                                                                    <?php
+                                            <option value="<?php echo $enreg['code']; ?>"
+                                                <?php if($unite==$enreg['code']) {?> selected <?php } ?>>
+                                                <?php echo $enreg['designation']; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <br>
+                                        <b>Marque </b>
+                                        <select class="form-control select2" name="marque" id="marque">
+                                            <option value=""> Sélectionner une Marque </option>
+                                            <option value="0"> Ajouter une Marque </option>
+                                            <?php
 												$req="select * from delta_marques order by code";
 												$query=mysql_query($req);
 												while($enreg=mysql_fetch_array($query)){
 												?>
-                                                                    <option value="<?php echo $enreg['code']; ?>"
-                                                                        <?php if($marque==$enreg['code']) {?> selected
-                                                                        <?php } ?>>
-                                                                        <?php echo $enreg['designation']; ?></option>
-                                                                    <?php } ?>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div><!-- /.modal-content -->
-                                            </div><!-- /.modal-dialog -->
-                                        </div><!-- /.modal -->
+                                            <option value="<?php echo $enreg['code']; ?>"
+                                                <?php if($marque==$enreg['code']) {?> selected <?php } ?>>
+                                                <?php echo $enreg['designation']; ?></option>
+                                            <?php } ?>
+                                        </select>
                                     </div>
-                                </div>
-
-                                <div class="form-group row">
-
-                                    <div class="col-xl-2">
-                                        <b>Magasin </b>
+                                    <div class="col-xl-3">
+                                        <br>
+                                        <!-- <b style="color : red ; ">Magasin </b>
                                         <select class="form-control select2" name="magasin" id="magasin">
                                             <option value=""> Sélectionner une Magasin </option>
                                             <option value="°0"> Ajouter une Magasin </option>
@@ -292,9 +292,8 @@ $prix_vente_ht               = "" ;
                                                 <?php if($magasin==$enreg['code']) {?> selected <?php } ?>>
                                                 <?php echo $enreg['designation']; ?></option>
                                             <?php } ?>
-                                        </select>
-                                    </div>
-                                    <div class="col-xl-2">
+                                        </select> -->
+                                        <BR>
                                         <b>Emplacement (*)</b>
                                         <select class="form-control select2" name="emplacement" id="emplacement">
                                             <option value=""> Sélectionner un Emplacement </option>
@@ -309,10 +308,22 @@ $prix_vente_ht               = "" ;
                                                 <?php echo $enreg['designation']; ?></option>
                                             <?php } ?>
                                         </select>
-                                    </div>
-
-                                    <div class="col-xl-2">
-                                        <b>Lot </b>
+                                        <b style="color : red ; ">TVA (*)</b>
+                                                <select class="form-control select2" name="tva" id="tva">
+                                                    <option value="">TVA</option>
+                                                    <option value="0">Ajouter un tva</option>
+                                                    <?php
+                                                            $req="select * from delta_TVAs order by code";
+                                                            $query=mysql_query($req);
+                                                            while($enreg=mysql_fetch_array($query)){
+                                                            ?>
+                                                    <option value="<?php echo $enreg['code']; ?>"
+                                                        <?php if($tva==$enreg['code']) {?> selected <?php } ?>>
+                                                        <?php echo $enreg['designation']; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                        <BR>
+                                        <!-- <b>Lot </b>
                                         <select class="form-control select2" name="lot" id="lot">
                                             <option value=""> Sélectionner un Lot </option>
                                             <option value=""> Ajouter un Lot </option>
@@ -325,101 +336,124 @@ $prix_vente_ht               = "" ;
                                                 <?php if($lot==$enreg['code']) {?> selected <?php } ?>>
                                                 <?php echo $enreg['designation']; ?></option>
                                             <?php } ?>
-                                        </select>
+                                        </select> -->
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-xl-2">
+                                    <!-- <div class="col-xl-2">
+                                        <br><br>
                                         <b>Date d'achat</b>
                                         <input type="date" class="form-control" id="date_achat" name="date_achat"
                                             value="<?php echo $date_achat; ?>">
                                     </div>
                                     <div class="col-xl-2">
+                                        <br><br>
                                         <b>Date de fabrication</b>
                                         <input type="date" class="form-control" id="date_fabrication"
                                             name="date_fabrication" value="<?php echo $date_fabrication; ?>">
                                     </div>
                                     <div class="col-xl-2">
-                                        <b>Date d'expiration </b>
+                                        <br><br>
+                                        <b>Date d'expiration</b>
                                         <input type="date" class="form-control" id="date_expiration"
                                             name="date_expiration" value="<?php echo $date_expiration; ?>">
-                                    </div>
+                                    </div> -->
                                 </div>
+                                <div class="form-group mt-5 pt-5 row"
+                                    style="box-shadow: 0px -3px 0px rgba(50, 50, 50, 0.05); ">
+                                    <h4 style="color:green;margin-left:15px ;font-weight : bold">Prix Produit</h4><br>
+                                    <div class="col-xl-12 row">
+                                        <div class="col-xl-6 row">
+                                            
+                                            <div class="col-xl-3">
+                                                <b>Prix d'achat HT</b>
+                                                <input class="form-control" type="number" placeholder="Prix d'achat HT"
+                                                    value="<?php echo $prix_achat_ht ?>" name="prix_achat_ht"
+                                                    id="prix_achat_ht">
+                                                <br>
+                                                <b>Prix d'achat TTC </b>
+                                                <input class="form-control" type="number" placeholder="Prix d'achat TTC"
+                                                    value="<?php echo $prix_achat_ttc ?>" name="prix_achat_ttc"
+                                                    id="prix_achat_ttc">
+                                            </div>
+                                            <div class="col-xl-3">
+                                                <b>Prix de vente HT </b>
+                                                <input class="form-control" type="number" placeholder="Prix de vente HT"
+                                                    value="<?php echo $prix_vente_ht ?>" name="prix_vente_ht"
+                                                    id="prix_vente_ht">
+                                                <br>
+                                                <b>Prix de vente TTC </b>
+                                                <input class="form-control" type="number"
+                                                    placeholder="Prix de vente TTC" value="<?php echo $prix_vente_ht ?>"
+                                                    name="prix_vente_ttc" id="prix_vente_ttc">
+                                            </div>
+                                            <div class="col-xl-3">
+                                                <b>Seuil </b>
+                                                <input class="form-control" type="text" placeholder="Seuil"
+                                                    value="<?php echo $seuil ?>" name="seuil" id="seuil" required>
+                                            </div>
+                                        </div>
 
-                                <div class="form-group row">
-                                    <div class="col-xl-2">
-                                        <b>Prix d'achat HT</b>
-                                        <input class="form-control" type="number" placeholder="Prix d'achat HT" value=""
-                                            name="prix_achat_ht" id="prix_achat_ht">
-                                    </div>
-                                    <div class="col-xl-2">
-                                        <b>Prix d'achat TTC </b>
-                                        <input class="form-control" type="number" placeholder="Prix d'achat TTC"
-                                            value="" name="prix_achat_ttc" id="prix_achat_ttc">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-xl-2">
-                                        <b>Prix de vente HT </b>
-                                        <input class="form-control" type="number" placeholder="Prix de vente HT"
-                                            value="" name="prix_vente_ht" id="prix_vente_ht">
-                                    </div>
-                                    <div class="col-xl-2">
-                                        <b>Prix de vente TTC </b>
-                                        <input class="form-control" type="number" placeholder="Prix de vente TTC"
-                                            value="" name="prix_vente_ttc" id="prix_vente_ttc">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-xl-2">
-                                        <b>Code NGP </b>
-                                        <input class="form-control" type="text" placeholder="Code NGP" value=""
-                                            name="code_ngp" id="code_ngp">
-                                    </div>
-                                    <div class="col-xl-2">
-                                        <b>Numéro Série </b>
-                                        <input class="form-control" type="text" placeholder="Numéro Série" value=""
-                                            name="numero_serie" id="numero_serie">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-xl-2">
-                                        <div class="form-check">
+                                        <div class="col-xl-2">
+
+                                            <b>Code NGP </b>
+                                            <input class="form-control" type="text" placeholder="Code NGP" value=""
+                                                name="code_ngp" id="code_ngp">
+                                            <br>
+                                            <b>Numéro Série </b>
+                                            <input class="form-control" type="text" placeholder="Numéro Série" value=""
+                                                name="numero_serie" id="numero_serie">
+                                        </div>
+                                        <div class="col-xl-2">
+
+                                            <b>Type </b>
+                                            <select class="form-control select2" name="type" id="type">
+                                                <option value=""> Sélectionner un type </option>
+                                                <?php
+												$req="select * from delta_types";
+												$query=mysql_query($req);
+												while($enreg=mysql_fetch_array($query)){
+												?>
+                                                <option value="<?php echo $enreg['id']; ?>"
+                                                    <?php if($type==$enreg['id']) {?> selected <?php } ?>>
+                                                    <?php echo $enreg['type']; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                            <br> <br>
+                                            <b>Nature </b>
+                                            <select class="form-control select2" name="nature" id="nature">
+                                                <option value=""> Sélectionner une Nature </option>
+                                                <?php
+												$req="select * from delta_natures";
+												$query=mysql_query($req);
+												while($enreg=mysql_fetch_array($query)){
+												?>
+                                                <option value="<?php echo $enreg['id']; ?>"
+                                                    <?php if($nature==$enreg['id']) {?> selected <?php } ?>>
+                                                    <?php echo $enreg['nature']; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-xl-2">
+
+                                            <br><br>
                                             <label class="form-check-label" for="produit_compose">
                                                 Produit Composé
                                             </label>
                                             <input style="width : 70px" name="produit_compose" class="form-check-input"
                                                 type="checkbox" value="" id="produit_compose">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-2">
-                                        <div class="form-check">
+                                            <br> <br>
                                             <label class="form-check-label" for="fodec">
                                                 FODEC
                                             </label>
                                             <input style="width : 70px" name="fodec" class="form-check-input"
                                                 type="checkbox" value="" id="fodec">
+                                            <br> <br>
                                         </div>
                                     </div>
-                                    <div class="col-xl-2">
-                                        <div class="form-check">
-                                            <label class="form-check-label" for="type">
-                                                Produit / Service
-                                            </label>
-                                            <input style="width : 70px" name="type" class="form-check-input"
-                                                type="checkbox" value="" id="type">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-2">
-                                        <div class="form-check">
-                                            <label class="form-check-label" for="nature">
-                                                Fifo - Filo
-                                            </label>
-                                            <input style="width : 70px" name="nature" class="form-check-input"
-                                                type="checkbox" value="" id="nature">
-                                        </div>
-                                    </div>
+
+
                                 </div>
+
+
                                 <div class="col-sm-3"><br>
                                     <button type="submit" class="btn btn-primary waves-effect waves-light">
                                         Enregistrer
@@ -438,6 +472,23 @@ $prix_vente_ht               = "" ;
 <!-- end page content-->
 </div>
 <!-- page wrapper end -->
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.display === "block") {
+            panel.style.display = "none";
+        } else {
+            panel.style.display = "block";
+        }
+    });
+}
+</script>
 
 <!-- jQuery  -->
 <script src="assets/js/jquery.min.js"></script>
