@@ -70,7 +70,7 @@ function SupprimerMarque(id) {
 </script>
 <form action="" method="POST">
     <div class="form-group row">
-        <h3 class="col-lg-12 mt-5 mb-5" style="color: #ffc107 !important;">Marque de produit (*)</h3>
+    <h3 class="col-lg-12 mt-5 mb-5" style="color: red !important;">Marque de produit (*)</h3>
 
         <div class="col-sm-4">
             <b>Code (*)</b>

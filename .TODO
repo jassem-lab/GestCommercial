@@ -1,0 +1,11 @@
+# Gestion des produits
+
+Gestion des produits ( Ajout , Modification )
+
+L'affichage se fait par priorité :
+
+- Modal (popup) pour les détails du produit : Unité Marque , Magasin ,Lot
+- Modal (popup) pour les dates : date d'achat, date de fabrication , date d'expiration
+Les conditions :
+Ajout Magasin par default
+Fournisseur par défault
