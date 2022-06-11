@@ -24,29 +24,29 @@ if($id=="0")
             $id = 1;
         }
 
-        $sql="INSERT INTO `delta_vehicules`(`id`,`codsoc`,`code`,`designation`) VALUES
-        ('".$id."','".$codsoc."','".$code."' , '".$designation."' )";
+        $sql="INSERT INTO `delta_vehicules`(`id`,`codsoc`,`matricule`,`model`) VALUES
+        ('".$id."','".$codsoc."','".$matricule."' , '".$model."' )";
         
         //Log
         $dateheure=date('Y-m-d H:i:s');
         $iduser=$_SESSION['delta_IDUSER'];
        
-        $sql1="INSERT INTO `delta_log`(`dateheure`, `idutilisateur`, `document`, `action`, `iddocument`) VALUES ('".$dateheure."','".$iduser."','11','1','".$id."')";
+        $sql1="INSERT INTO `delta_log`(`dateheure`, `idutilisateur`, `document`, `action`, `iddocument`) VALUES ('".$dateheure."','".$iduser."','17','1','".$id."')";
         $req=mysql_query($sql1);			
     }
 else{
-        $sql="UPDATE `delta_vehicules` SET `code`='".$code."' , `designation`='".$designation."' WHERE id=".$id;
+        $sql="UPDATE `delta_vehicules` SET `matricule`='".$matricule."' , `model`='".$model."' WHERE id=".$id;
         
         //Log
         $dateheure=date('Y-m-d H:i:s');
         $iduser=$_SESSION['delta_IDUSER'];
         
-        $sql1="INSERT INTO `delta_log`(`dateheure`, `idutilisateur`, `document`, `action`, `iddocument`) VALUES ('".$dateheure."','".$iduser."','11','2','".$id."')";
+        $sql1="INSERT INTO `delta_log`(`dateheure`, `idutilisateur`, `document`, `action`, `iddocument`) VALUES ('".$dateheure."','".$iduser."','17','2','".$id."')";
         $req=mysql_query($sql1);				
     }
     $req=mysql_query($sql);
 
-    echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=11" </SCRIPT>';
+    echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=14" </SCRIPT>';
 }
 
 $matricule		        =	"" ;
@@ -70,7 +70,7 @@ function SupprimerVehicule(id) {
 </script>
 <form action="" method="POST">
     <div class="form-group row">
-    <h3 class="col-lg-12 mt-5 mb-5" style="color: green  !important;">Véhicule (*)</h3>
+    <h3 class="col-lg-12 mt-5 mb-5" style="color: blue  !important;">Véhicule (*)</h3>
 
         <div class="col-sm-4">
             <b>Matricule (*)</b>
@@ -96,23 +96,23 @@ function SupprimerVehicule(id) {
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
-                <th>Code</th>
-                <th>Designation</th>
+                <th>Matricule</th>
+                <th>Model</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <?php 
-            $reqFP ="select * from delta_regions"; 
+            $reqFP ="select * from delta_vehicules"; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 
             ?>
             <tr>
-                <td><?php echo $enreg["code"] ?></td>
-                <td><?php echo $enreg["designation"]?></td>
+                <td><?php echo $enreg["matricule"] ?></td>
+                <td><?php echo $enreg["model"]?></td>
                 <td><a type="button" href="tabs.php?IDV=<?php echo $enreg["id"] ?>&suc=14"
-                        class="btn btn-warning waves-effect waves-light">Modifier</a><a
+                        class="btn btn-warning waves-effect waves-light">Modifier</a> <a
                         href="Javascript:SupprimerVehicule('<?php echo $enreg["id"]; ?>')"
                         class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
                 </td>

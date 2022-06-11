@@ -132,7 +132,7 @@ function SupprimerDevis(id) {
                 <td><?php echo $enreg["nombre_chiffre"]?></td>
                 <td><?php echo $enreg["symbole"]?></td>
                 <td><a type="button" href="tabs.php?IDD=<?php echo $enreg["id"] ?>&suc=5"
-                        class="btn btn-warning waves-effect waves-light">Modifier</a><a
+                        class="btn btn-warning waves-effect waves-light">Modifier</a> <a
                         href="Javascript:SupprimerDevis('<?php echo $enreg["id"]; ?>')"
                         class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
                 </td>
