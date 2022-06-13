@@ -50,7 +50,6 @@ if(isset($_POST['enregistrer_mail'])){
 $raisonsocial                   = addslashes($_POST["raisonsocial"]) ; 
 $mail                           = addslashes($_POST["mail"]) ; 
 $tel                            = addslashes($_POST["tel"]) ; 
-$gsm                            = addslashes($_POST["gsm"]) ; 
 $pays                           = addslashes($_POST["pays"]) ; 
 $adresse                        = addslashes($_POST["adresse"]) ; 
 $region                         = addslashes($_POST["region"]) ; 
@@ -60,7 +59,6 @@ $mail2                          = addslashes($_POST["mail2"]) ;
 $gsm2                           = addslashes($_POST["gsm2"]) ; 
 $RIB                            = addslashes($_POST["RIB"]) ; 
 $banque                         = addslashes($_POST["banque"]) ; 
-$nature                         = addslashes($_POST["nature"]) ; 
 $activite                       = addslashes($_POST["activite"]) ; 
 $SWIFT                          = addslashes($_POST["SWIFT"]) ; 
 $IBAN                           = addslashes($_POST["IBAN"]) ; 
@@ -68,7 +66,7 @@ $IBAN                           = addslashes($_POST["IBAN"]) ;
     
 if($id=="0")
 {
-    $req="select max(id) as maxID from delta_produits";
+    $req="select max(id) as maxID from delta_fournisseurs";
     $query=mysql_query($req);
     if(mysql_num_rows($query)>0){
         while($enreg=mysql_fetch_array($query)){
@@ -77,33 +75,33 @@ if($id=="0")
     } else{
         $id = 1;
     }
-    echo $sql="INSERT INTO `delta_clients`(`id`,`raison_social`,`mail`,`tel`,`gsm2`,`pays`,`adresse`,`region`,`matricule_fiscale`,`registre_commerce`,`mail2`,`rib`,`banque`,`nature`,`activite`,`swift`,`iban`) VALUES
-    ('".$id."','".$raisonsocial."','".$mail."','".$tel."','".$gsm2."','".$pays."','".$adresse."','".$region."','".$matricule_fiscale."','".$registre_commerce."','".$mail2."','".$RIB."','".$banque."','".$nature."','".$activite."','".$SWIFT."','".$IBAN."')";
+     $sql="INSERT INTO `delta_fournisseurs`(`id`,`raison_social`,`mail`,`tel`,`gsm2`,`pays`,`adresse`,`region`,`matricule_fiscale`,`registre_commerce`,`mail2`,`rib`,`banque`,`activite`,`swift`,`iban`) VALUES
+    ('".$id."','".$raisonsocial."','".$mail."','".$tel."','".$gsm2."','".$pays."','".$adresse."','".$region."','".$matricule_fiscale."','".$registre_commerce."','".$mail2."','".$RIB."','".$banque."','".$activite."','".$SWIFT."','".$IBAN."')";
         //Log
 
     $dateheure=date('Y-m-d H:i:s');
     $iduser=$_SESSION['delta_IDUSER'];
    
-    $sql1="INSERT INTO `delta_log`(`dateheure`, `idutilisateur`, `document`, `action`, `iddocument`) VALUES ('".$dateheure."','".$iduser."','19','1','".$id."')";
+    $sql1="INSERT INTO `delta_log`(`dateheure`, `idutilisateur`, `document`, `action`, `iddocument`) VALUES ('".$dateheure."','".$iduser."','20','1','".$id."')";
     $req=mysql_query($sql1);
     
     
     
 }
 else{
-    $sql="UPDATE `delta_clients` SET `raison_social`='".$raisonsocial."' , `mail`='".$mail."' , `tel`='".$tel."' , `gsm2`='".$gsm2."' , `pays`='".$pays."' , `adresse`='".$adresse."' , `region`='".$region."' , `matricule_fiscale`='".$matricule_fiscale."' , `registre_commerce`='".$registre_commerce."', `mail2`='".$mail2."', `rib`='".$rib."', `banque`='".$banque."', `nature`='".$nature."', `activite`='".$activite."', `swift`='".$SWIFT."', `iban`='".$IBAN."' WHERE id=".$id;
+    $sql="UPDATE `delta_fournisseurs` SET `raison_social`='".$raisonsocial."' , `mail`='".$mail."' , `tel`='".$tel."' , `gsm2`='".$gsm2."' , `pays`='".$pays."' , `adresse`='".$adresse."' , `region`='".$region."' , `matricule_fiscale`='".$matricule_fiscale."' , `registre_commerce`='".$registre_commerce."', `mail2`='".$mail2."', `rib`='".$rib."', `banque`='".$banque."',  `activite`='".$activite."', `swift`='".$SWIFT."', `iban`='".$IBAN."' WHERE id=".$id;
     
       //Log
 
     $dateheure=date('Y-m-d H:i:s');
     $iduser=$_SESSION['delta_IDUSER'];
     
-    $sql1="INSERT INTO `delta_log`(`dateheure`, `idutilisateur`, `document`, `action`, `iddocument`) VALUES ('".$dateheure."','".$iduser."','19','2','".$id."')";
+    $sql1="INSERT INTO `delta_log`(`dateheure`, `idutilisateur`, `document`, `action`, `iddocument`) VALUES ('".$dateheure."','".$iduser."','20','2','".$id."')";
     $req=mysql_query($sql1);				
 }
 $req=mysql_query($sql);
 
-echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=1" </SCRIPT>';
+// echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=1" </SCRIPT>';
 }
 $raisonsocial            = "" ; 
 $mail                    = "" ; 
@@ -118,13 +116,12 @@ $mail2                   = "" ;
 $gsm2                    = "" ;
 $RIB                     = "" ;
 $banque                  = "" ;
-$nature                  = "" ;
 $activite                = "" ;
 $SWIFT                   = "" ; 
 $IBAN                    = "" ; 
 
 
-$req = "select * from delta_clients where id=".$id ;
+$req = "select * from delta_fournisseurs where id=".$id ;
 $query = mysql_query($req) ; 
 while($enreg = mysql_fetch_array($query)){
     $raisonsocial            = $enreg["raison_social"] ; 
@@ -140,7 +137,7 @@ while($enreg = mysql_fetch_array($query)){
     $gsm2                    = $enreg["gsm2"] ;
     $RIB                     = $enreg["rib"] ;
     $banque                  = $enreg["banque"] ;
-    $nature                  = $enreg["nature"] ;
+    $activite                = $enreg["activite"] ;
     $SWIFT                   = $enreg["swift"] ;
     $IBAN                    = $enreg["iban"] ;
 } 
@@ -153,7 +150,7 @@ while($enreg = mysql_fetch_array($query)){
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
-                    <h4 class="page-title">Gestion des Clients</h4>
+                    <h4 class="page-title">Gestion des Fournisseurs</h4>
                 </div>
             </div>
         </div>
@@ -179,7 +176,7 @@ while($enreg = mysql_fetch_array($query)){
                                     matiere premiere : <?php echo $_GET["Emp"] ; ?></center>
                             </font><br /><br />
                             <?php } }?>
-                            <a href="clients.php" class="btn btn-primary waves-effect waves-light">Retour</a>
+                            <a href="fournisseurs.php" class="btn btn-primary waves-effect waves-light">Retour</a>
                             <form method="POST">
 
                                 <div class="form-group row mt-4">
@@ -259,21 +256,7 @@ while($enreg = mysql_fetch_array($query)){
                                             required>
 
                                     </div>
-                                    <div class="col-sm-2">
-                                        <b>Nature </b>
-                                        <select class="form-control select2" name="nature" id="nature">
-                                            <option value=""> Sélectionner une Nature </option>
-                                            <?php
-                                                        $req="select * from delta_natures_client";
-                                                        $query=mysql_query($req);
-                                                        while($enreg=mysql_fetch_array($query)){
-                                                        ?>
-                                            <option value="<?php echo $enreg['id']; ?>"
-                                                <?php if($nature==$enreg['id']) {?> selected <?php } ?>>
-                                                <?php echo $enreg['nature']; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
+
                                     <div class="col-sm-2">
                                         <b>Gouvernorat</b>
                                         <select class="form-control select2" name="gouvernorat" id="gouvernorat">

@@ -213,6 +213,7 @@ $nature                      = "" ;
                                     matiere premiere : <?php echo $_GET["Emp"] ; ?></center>
                             </font><br /><br />
                             <?php } }?>
+                            <a href="produits.php" class="btn btn-primary waves-effect waves-light mb-2">Retour</a>
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
@@ -500,12 +501,14 @@ $nature                      = "" ;
 
                                             </div>
                                         </div>
+                                        <?php if(isset($_GET['ID'])){ ?>
                                         <div class="col-sm-3"><br>
                                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                                 Enregistrer
                                             </button>
                                             <input class="form-control" type="hidden" name="enregistrer_mail1">
                                         </div>
+                                        <?php } ?>
                                     </div>
                                     <div class="tab-pane p-3 mt-5 <?php if(isset($_GET['suc'])){ if($_GET['suc']==4){ ?> active <?php } } ?>"
                                         id="stock" role="tabpanel">

@@ -2,9 +2,9 @@
 
 
 <script>
-function SupprimerClient(id) {
+function SupprimerFournisseur(id) {
     if (confirm('Confirmez-vous cette action?')) {
-        document.location.href = "page_js/SupprimerClient.php?ID=" + id;
+        document.location.href = "page_js/SupprimerFournisseur.php?ID=" + id;
     }
 }
 </script>
@@ -25,7 +25,7 @@ if(isset($_POST['Client'])){
 
             <div class="row">
                 <div class="col-sm-12">
-                    <h4 class="page-title">Gestion des Clients</h4>
+                    <h4 class="page-title">Gestion des Fournisseurs</h4>
                 </div>
             </div>
         </div>
@@ -38,18 +38,19 @@ if(isset($_POST['Client'])){
                 <div class="col-lg-12">
                     <div class="card m-b-20">
                         <div class="card-body">
-                            <a href="addedit_client.php" class="btn btn-primary waves-effect waves-light">Ajouter un
-                                Client</a>
-                            <h3>Liste des Clients</h3>
+                            <a href="addedit_fournisseur.php" class="btn btn-primary waves-effect waves-light">Ajouter
+                                un
+                                Fournisseur</a>
+                            <h3>Liste des Fournisseurs</h3>
                             <form name="SubmitContact" class="" method="post" action="" onSubmit="" style=''>
                                 <div class="col-xl-12">
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <b>Client (*)</b>
-                                            <select class="form-control select2" name="client">
-                                                <option value=""> Sélectionner un client </option>
+                                            <select class="form-control select2" name="fournisseur">
+                                                <option value=""> Sélectionner un Fournisseur </option>
                                                 <?php
-												echo $reqc="select * from delta_clients";
+												echo $reqc="select * from delta_fournisseurs";
 												$queryc=mysql_query($reqc);
 												while($enregc=mysql_fetch_array($queryc)){
 												?>
@@ -78,7 +79,7 @@ if(isset($_POST['Client'])){
                                     <th><b>M.Fiscale</b></th>
                                     <th><br><b>R. de commerce</b></th>
                                     <th><b>Email</b></th>
-                                    <th><b>Nature</b></th>
+                                    <th><b>Activité</b></th>
                                     <th><b>Téléphone</b></th>
                                     <th><b>Adresse</b></th>
                                     <th><b>Région</b></th>
@@ -92,68 +93,41 @@ if(isset($_POST['Client'])){
                                         $famille			=	"";
                                         $unite			    =	"";
                                         $emplacement		=	"";
-                                        $req = "select * from delta_clients where 1=1 ".$reqClient ; 
+                                        $req = "select * from delta_fournisseurs where 1=1 ".$reqClient ; 
                                         $query =mysql_query($req); 
                                         while($enreg = mysql_fetch_array($query)){
                                             $id = $enreg["id"] ; 
+                                            $reqR="select * from delta_regions where id=".$enreg["region"] ; 
+                                            $queryR = mysql_query($reqR); 
+                                            while($enregR = mysql_fetch_array($queryR)){
+                                                $Region =  $enregR["code"] ; 
+                                            }
                                     ?>
                                 <tr>
                                     <td><?php echo $enreg["raison_social"]  ; ?></td>
                                     <td><?php echo $enreg["matricule_fiscale"]  ; ?></td>
                                     <td><?php echo $enreg["registre_commerce"]  ; ?></td>
                                     <td><?php echo $enreg["mail"]  ; ?></td>
-                                    <td><?php 
-                                    $reqN = "select * from delta_natures_client where id=".$enreg["nature"] ; 
-                                    $queryN = mysql_query($reqN) ; 
-                                    while ($enregN = mysql_fetch_array($queryN)){
-                                        echo $enregN["nature"] ; 
-                                    }
-                                    ?></td>
+                                    <td><?php echo $enreg["activite"] ; ?></td>
                                     <td><?php echo $enreg["tel"]  ; ?></td>
                                     <td><?php echo $enreg["adresse"]  ; ?></td>
+                                    <td><?php  echo $Region ; ?></td>
 
-                                    <td><?php 
-                                        $reqR="select * from delta_regions where id=".$enreg["region"] ; 
-                                        $queryR = mysql_query($reqR); 
-                                        while($enregR = mysql_fetch_array($queryR)){
-                                            echo $enregR["code"] ; 
-                                        }
-                                        ; ?></td>
+
                                     <td>
 
-                                        <a href="clients.php?ID=<?php echo $id; ?>"
+                                        <a href="fournisseurs.php?ID=<?php echo $id; ?>"
                                             class="btn btn-success waves-effect waves-light">
                                             Autres Contacts
                                         </a>
-                                        <a href="clients.php?ID=<?php echo $id; ?>"
+                                        <a href="fournisseurs.php?ID=<?php echo $id; ?>"
                                             class="btn btn-success waves-effect waves-light">
                                             Information Bancaire
                                         </a>
-                                        <!-- <div class="text-center">
-                                            <button type="button" class="btn btn-primary waves-effect waves-light"
-                                                data-toggle="modal" data-target=".bs-example-modal-lg<?php echo $id; ?>">Détails</button>
-                                        </div> -->
 
-                                        <!--  Modal content for the above example -->
-                                        <!-- <div class="modal fade bs-example-modal-lg<?php echo $id; ?>" tabindex="-1" role="dialog"
-                                            aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg<?php echo $id; ?>">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title mt-0" id="myLargeModalLabel">Détails Client
-                                                        </h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-hidden="true">×</button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> -->
                                     </td>
                                     <td>
-                                        <a href="addedit_client.php?ID=<?php echo $id; ?>"
+                                        <a href="addedit_fournisseur.php?ID=<?php echo $id; ?>"
                                             class="btn btn-warning waves-effect waves-light">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </a>
@@ -162,7 +136,7 @@ if(isset($_POST['Client'])){
                                             style="background-color: blue;color: white;">
                                             <span class="glyphicon glyphicon-print"></span>
                                         </a>
-                                        <a href="Javascript:SupprimerClient('<?php echo $id; ?>')"
+                                        <a href="Javascript:SupprimerFournisseur('<?php echo $id; ?>')"
                                             class="btn btn-danger waves-effect waves-light"
                                             style="background-color:brown">
                                             <span class="glyphicon glyphicon-trash"></span>
