@@ -26,8 +26,8 @@ if($id=="0")
             $id = 1;
         }
 
-        $sql="INSERT INTO `delta_colisage`(`id`,`codsoc`,`code`,`designation`) VALUES
-        ('".$id."','".$codsoc."','".$code."' , '".$designation."' )";
+        $sql="INSERT INTO `delta_colisage`(`id`,`codsoc`,`code`,`designation`,`nbr_pieces`,`poids_vide`) VALUES
+        ('".$id."','".$codsoc."','".$code."' , '".$designation."', '".$nbr_pieces."', '".$poids_vide."' )";
         
         //Log
         $dateheure=date('Y-m-d H:i:s');
@@ -37,7 +37,7 @@ if($id=="0")
         $req=mysql_query($sql1);			
     }
 else{
-        $sql="UPDATE `delta_colisage` SET `code`='".$code."' , `designation`='".$designation."' WHERE id=".$id;
+        $sql="UPDATE `delta_colisage` SET `code`='".$code."' , `designation`='".$designation."' , `nbr_pieces`='".$nbr_pieces."' , `poids_vide`='".$poids_vide."' WHERE id=".$id;
         
         //Log
         $dateheure=date('Y-m-d H:i:s');
@@ -48,7 +48,7 @@ else{
     }
     $req=mysql_query($sql);
 
-    echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=16" </SCRIPT>';
+    // echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=16" </SCRIPT>';
 }
 
 $code		        =	"" ;

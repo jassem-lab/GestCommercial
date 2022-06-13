@@ -2,25 +2,17 @@
 <script>
 function SupprimerProduit(id) {
     if (confirm('Confirmez-vous cette action?')) {
-        document.location.href = "page_js/SupprimerProduit.php?ID=" + id;
+        document.location.href = "page_js/SupprimerClient.php?ID=" + id;
     }
 }
 </script>
 <?php
-$reqDate="";
-$dat="";
-if(isset($_POST['dat'])){
-	if(($_POST['dat'])<>""){
-		$dat				=	$_POST['dat'];
-		$reqDate			=	" and  date<='".$dat."'";
-	}
-}
-$reqDate1="";
-$dat1="";
-if(isset($_POST['dat1'])){
-	if(($_POST['dat1'])<>""){
-		$dat1				=	$_POST['dat1'];
-		$reqDate1			=	" and  date1>='".$dat1."'";
+$reqClient="";
+$Client="";
+if(isset($_POST['Client'])){
+	if(is_numeric($_POST['Client'])){
+		$Client		=	$_POST['Client'];
+		$reqClient		=	" and  id=".$Client;
 	}
 }
 ?>
@@ -76,50 +68,27 @@ if(isset($_POST['mp'])){
                 <div class="col-lg-12">
                     <div class="card m-b-20">
                         <div class="card-body">
-                            <a href="addedit_produit.php" class="btn btn-primary waves-effect waves-light">Ajouter un
-                                Produit</a>
-                            <h3>Liste des Produits</h3>
+                            <a href="addedit_client.php" class="btn btn-primary waves-effect waves-light">Ajouter un
+                                Client</a>
+                            <h3>Liste des Clients</h3>
                             <form name="SubmitContact" class="" method="post" action="" onSubmit="" style=''>
                                 <div class="col-xl-12">
                                     <div class="row">
                                         <div class="col-sm-3">
-                                            <b>Famille (*)</b>
-                                            <select class="form-control select2" name="famille">
-                                                <option value=""> Sélectionner une famille </option>
+                                            <b>Client (*)</b>
+                                            <select class="form-control select2" name="client">
+                                                <option value=""> Sélectionner un client </option>
                                                 <?php
-												$req="select * from delta_famille_produit order by code";
+												$req="select * from delta_client";
 												$query=mysql_query($req);
 												while($enreg=mysql_fetch_array($query)){
 												?>
                                                 <option value="<?php echo $enreg['id']; ?>"
                                                     <?php if($famille==$enreg['id']) {?> selected <?php } ?>>
-                                                    <?php echo $enreg['designation']; ?></option>
+                                                    <?php echo $enreg['raison_social']; ?></option>
                                                 <?php } ?>
                                             </select>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <b>Marque (*)</b>
-                                            <select class="form-control select2" name="marque">
-                                                <option value=""> Sélectionner une marque </option>
-                                                <?php
-												$req="select * from delta_marques order by code";
-												$query=mysql_query($req);
-												while($enreg=mysql_fetch_array($query)){
-												?>
-                                                <option value="<?php echo $enreg['id']; ?>"
-                                                    <?php if($marque==$enreg['id']) {?> selected <?php } ?>>
-                                                    <?php echo $enreg['designation']; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <b>Magasin (*)</b>
-                                            <select class="form-control select2" id="type" name="magasin" required>
-                                                <option value=""> Sélectionner la magasin </option>
-
-                                            </select>
-                                        </div>
-
                                         <div class="col-xl-3">
                                             <b></b><br>
                                             <input name="SubmitContact" type="submit" id="submit"
@@ -133,13 +102,13 @@ if(isset($_POST['mp'])){
                             <table class="table mb-0">
                                 <thead>
                                     <tr>
-                                        <th><b>Référence</b></th>
-                                        <th><b>Famille</b></th>
-                                        <th><b>Unité</b></th>
-                                        <th><b>Marque</b></th>
-                                        <th><b>Emplacement</b></th>
-                                        <th><b>Prix d'achat TTC</b></th>
-                                        <th><b>Prix de vente TTC</b></th>
+                                        <th><b>R.Social</b></th>
+                                        <th><b>Email</b></th>
+                                        <th><b>Téléphone</b></th>
+                                        <th><b>Adresse</b></th>
+                                        <th><b>M.Fiscale</b></th>
+                                        <th><b>R. de commerce</b></th>
+                                        <th><b>Région</b></th>
                                         <th><b>Action</b></th>
                                     </tr>
                                 </thead>
@@ -149,7 +118,7 @@ if(isset($_POST['mp'])){
                                         $famille			=	"";
                                         $unite			    =	"";
                                         $emplacement		=	"";
-                                        $req = "select * from delta_produits"; 
+                                        $req = "select * from delta_clients where 1=1 ".$reqClient ; 
                                         $query =mysql_query($req); 
                                         while($enreg = mysql_fetch_array($query)){
                                             $id = $enreg["id"] ; 

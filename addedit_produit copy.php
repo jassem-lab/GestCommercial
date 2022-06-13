@@ -110,54 +110,6 @@ $req=mysql_query($sql);
 echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=1" </SCRIPT>';
 }
 
-
-
-if(isset($_POST['enregistrer_mail1'])){	
-
-    $codsoc	                  	=	$_SESSION['delta_SOC'] ;
-    $reference	            	=	addslashes($_POST["reference"]) ;
-    $designation	        	=	addslashes($_POST["designation"]) ;
-    $tva      	            	=	addslashes($_POST["tva"]) ;
-    $stock           	    	=	addslashes($_POST["stock"]) ;
-    $seuil      		        =	addslashes($_POST["seuil"]) ;
-    $famille            	    =	addslashes($_POST["famille"]) ;
-    $unite      	        	=	addslashes($_POST["unite"]) ;
-    $marque      	        	=	addslashes($_POST["marque"]) ;
-    $emplacement      	      	=	addslashes($_POST["emplacement"]) ;
-    $colisage      	        	=	addslashes($_POST["colisage"]) ;
-    $code_ngp      	            =	addslashes($_POST["code_ngp"]) ;
-    $numero_serie      	        =	addslashes($_POST["numero_serie"]) ;
-    $prix_achat_ht              =   addslashes($_POST["prix_achat_ht"]);
-    $prix_achat_ttc             =   addslashes($_POST["prix_achat_ttc"]);
-    $prix_vente_ttc             =   addslashes($_POST["prix_vente_ttc"]);
-    $prix_vente_ht              =   addslashes($_POST["prix_vente_ht"]);
-    $fodec                      =   addslashes($_POST["fodec"]);
-    $produit_compose            =   addslashes($POST["produit_compose"]); 
-
-
-    $sql="UPDATE `delta_produits` SET `reference`='".$reference."' , `designation`='".$designation."', `tva`='".$tva."', `stock`='".$stock."', `seuil`='".$seuil."', `famille`='".$famille."', `unite`='".$unite."', `marque`='".$marque."', `magasin`='".$magasin."', `emplacement`='".$emplacement."',  `numero_serie`='".$numero_serie."', `code_ngp`='".$code_ngp."',`produit_compose`='".$produit_compose."' , `fodec`='".$fodec."',`type`='".$type."',`nature`='".$nature."',`colisage`='".$colisage."' WHERE id=".$id;
-    
-    //Log
-    
-    $dateheure=date('Y-m-d H:i:s');
-    $iduser=$_SESSION['delta_IDUSER'];
-    
-    $sql1="INSERT INTO `delta_log`(`dateheure`, `idutilisateur`, `document`, `action`, `iddocument`) VALUES ('".$dateheure."','".$iduser."','5','2','".$id."')";
-    $req=mysql_query($sql1);				
-    
-    $req=mysql_query($sql);
-    
-    echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=1" </SCRIPT>';
-
-}
-
-
-
-
-
-
-
-
 $reference                   = "" ; 
 $designation                 = "" ; 
 $tva                         = "" ; 
@@ -504,7 +456,7 @@ $nature                      = "" ;
                                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                                 Enregistrer
                                             </button>
-                                            <input class="form-control" type="hidden" name="enregistrer_mail1">
+                                            <input class="form-control" type="hidden" name="enregistrer_mail">
                                         </div>
                                     </div>
                                     <div class="tab-pane p-3 mt-5 <?php if(isset($_GET['suc'])){ if($_GET['suc']==4){ ?> active <?php } } ?>"
