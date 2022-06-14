@@ -112,7 +112,7 @@ function SupprimerTVA(id) {
                 <td><?php echo $enreg["code"] ?></td>
                 <td><?php echo $enreg["designation"]?></td>
                 <td><a type="button" href="tabs.php?IDT=<?php echo $enreg["id"] ?>&suc=9"
-                        class="btn btn-warning waves-effect waves-light">Modifier</a><a
+                        class="btn btn-warning waves-effect waves-light">Modifier</a> <a
                         href="Javascript:SupprimerTVA('<?php echo $enreg["id"]; ?>')"
                         class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
                 </td>

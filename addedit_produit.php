@@ -229,7 +229,7 @@ $nature                      = "" ;
                                 </li>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==6){ ?> active <?php } } ?>"
+                                    <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==3){ ?> active <?php } } ?>"
                                         style="background: #ffc107  " data-toggle="tab" href="#magasin"
                                         role="tab">Autres</a>
                                 </li>
@@ -550,7 +550,7 @@ $nature                      = "" ;
                                         </div>
                                     </div>
 
-                                    <div class="tab-pane p-3 mt-5 <?php if(isset($_GET['suc'])){ if($_GET['suc']==4){ ?> active <?php } } ?>"
+                                    <div class="tab-pane p-3 mt-5 <?php if(isset($_GET['suc'])){ if($_GET['suc']==5){ ?> active <?php } } ?>"
                                         id="magasin" role="tabpanel">
                                         <h4 style="color:green;margin-left:15px ;font-weight : bold">Autres informations
                                             :
@@ -644,7 +644,6 @@ $nature                      = "" ;
         <!-- end page content-->
     </div>
 </div>
-</div>
 <!-- page wrapper end -->
 
 <script>
@@ -664,14 +663,5 @@ for (i = 0; i < acc.length; i++) {
 }
 </script>
 
-<!-- jQuery  -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/jquery.slimscroll.js"></script>
-<script src="assets/js/waves.min.js"></script>
 
-<script src="../plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
-
-<!-- App js -->
-<script src="assets/js/app.js"></script>
 <?php include("menu_footer/footer.php") ?>

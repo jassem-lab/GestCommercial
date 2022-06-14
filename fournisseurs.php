@@ -150,7 +150,7 @@ if(isset($_POST['Client'])){
                                         <a href="javascript:Imprimer('<?php echo $id; ?>')"
                                             class="btn btn-warning waves-effect waves-light"
                                             style="background-color: blue;color: white;">
-                                            <span class="glyphicon glyphicon-print"></span>
+                                            Imprimer
                                         </a>
                                         <a href="addedit_fournisseur.php?ID=<?php echo $id; ?>"
                                             class="btn btn-warning waves-effect waves-light">Modifier</a>

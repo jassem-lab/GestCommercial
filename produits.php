@@ -31,7 +31,7 @@ if(isset($_POST['dat1'])){
 
             <div class="row">
                 <div class="col-sm-12">
-                    <h4 class="page-title">Produits</h4>
+                    <h4 class="page-title">Gestion des Produits</h4>
                 </div>
             </div>
         </div>
@@ -196,17 +196,17 @@ if(isset($_POST['mp'])){
 
                                             <a href="addedit_produit.php?ID=<?php echo $id; ?>"
                                                 class="btn btn-warning waves-effect waves-light">
-                                                <span class="glyphicon glyphicon-pencil"></span>
+                                                <span class="glyphicon glyphicon-pencil"></span>Modifer
                                             </a>
                                             <a href="javascript:Imprimer('<?php echo $id; ?>')"
                                                 class="btn btn-warning waves-effect waves-light"
                                                 style="background-color: blue;color: white;">
-                                                <span class="glyphicon glyphicon-print"></span>
+                                                <span class="glyphicon glyphicon-print"></span>Imprimer
                                             </a>
                                             <a href="Javascript:SupprimerProduit('<?php echo $id; ?>')"
                                                 class="btn btn-danger waves-effect waves-light"
                                                 style="background-color:brown">
-                                                <span class="glyphicon glyphicon-trash"></span>
+                                                <span class="glyphicon glyphicon-trash"></span>Supprimer
                                             </a>
                                         </td>
                                     </tr>
