@@ -7,6 +7,26 @@ function SupprimerClient(id) {
         document.location.href = "page_js/SupprimerClient.php?ID=" + id;
     }
 }
+
+function Archiver(id) {
+    if (confirm('Confirmez-vous cette action?')) {
+        document.location.href = "page_js/archiverClient.php?ID=" + id;
+    }
+}
+
+function Unarchiver(id) {
+    if (confirm('Confirmez-vous cette action?')) {
+        document.location.href = "page_js/unarchiverClient.php?ID=" + id;
+    }
+}
+
+function Imprimer(id) {
+    if (confirm('Confirmez-vous cette action?')) {
+        var myMODELE_A4 = window.open("print/imprimerClient.php?ID=" + id, "_blank",
+            "toolbar=no, scrollbars=yes, resizable=no, top=500, left=500, width=700, height=600");
+
+    }
+}
 </script>
 <?php
 $reqClient="";
@@ -129,44 +149,23 @@ if(isset($_POST['Client'])){
                                             class="btn btn-success waves-effect waves-light">
                                             Information Bancaire
                                         </a>
-                                        <!-- <div class="text-center">
-                                            <button type="button" class="btn btn-primary waves-effect waves-light"
-                                                data-toggle="modal" data-target=".bs-example-modal-lg<?php echo $id; ?>">Détails</button>
-                                        </div> -->
-
-                                        <!--  Modal content for the above example -->
-                                        <!-- <div class="modal fade bs-example-modal-lg<?php echo $id; ?>" tabindex="-1" role="dialog"
-                                            aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg<?php echo $id; ?>">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title mt-0" id="myLargeModalLabel">Détails Client
-                                                        </h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-hidden="true">×</button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> -->
                                     </td>
                                     <td>
-                                        <a href="addedit_client.php?ID=<?php echo $id; ?>"
-                                            class="btn btn-warning waves-effect waves-light">
-                                            <span class="glyphicon glyphicon-pencil"></span>
-                                        </a>
                                         <a href="javascript:Imprimer('<?php echo $id; ?>')"
                                             class="btn btn-warning waves-effect waves-light"
                                             style="background-color: blue;color: white;">
                                             <span class="glyphicon glyphicon-print"></span>
                                         </a>
-                                        <a href="Javascript:SupprimerClient('<?php echo $id; ?>')"
-                                            class="btn btn-danger waves-effect waves-light"
-                                            style="background-color:brown">
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                        </a>
+                                        <a href="addedit_client.php?ID=<?php echo $id; ?>"
+                                            class="btn btn-warning waves-effect waves-light">Modifier</a>
+                                        <?php if ($enreg["archive"]=="0"){ ?>
+                                        <a href="Javascript:Archiver('<?php echo $id; ?>')"
+                                            class="btn btn-danger waves-effect waves-light">Archiver</a>
+                                        <?php } else {?>
+                                        <a href="Javascript:Unarchiver('<?php echo $id; ?>')"
+                                            class="btn btn-dark waves-effect waves-light">Unarchiver</a>
+                                        <?php }?>
+
                                     </td>
                                 </tr>
                                 <?php } ?>

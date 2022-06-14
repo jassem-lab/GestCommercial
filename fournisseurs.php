@@ -7,6 +7,26 @@ function SupprimerFournisseur(id) {
         document.location.href = "page_js/SupprimerFournisseur.php?ID=" + id;
     }
 }
+
+function Archiver(id) {
+    if (confirm('Confirmez-vous cette action?')) {
+        document.location.href = "page_js/archiverFournisseur.php?ID=" + id;
+    }
+}
+
+function Unarchiver(id) {
+    if (confirm('Confirmez-vous cette action?')) {
+        document.location.href = "page_js/unarchiverFournisseur.php?ID=" + id;
+    }
+}
+
+function Imprimer(id) {
+    if (confirm('Confirmez-vous cette action?')) {
+        var myMODELE_A4 = window.open("print/imprimerFournisseur.php?ID=" + id, "_blank",
+            "toolbar=no, scrollbars=yes, resizable=no, top=500, left=500, width=700, height=600");
+    }
+}
+
 </script>
 <?php
 $reqClient="";
@@ -127,20 +147,20 @@ if(isset($_POST['Client'])){
 
                                     </td>
                                     <td>
-                                        <a href="addedit_fournisseur.php?ID=<?php echo $id; ?>"
-                                            class="btn btn-warning waves-effect waves-light">
-                                            <span class="glyphicon glyphicon-pencil"></span>
-                                        </a>
                                         <a href="javascript:Imprimer('<?php echo $id; ?>')"
                                             class="btn btn-warning waves-effect waves-light"
                                             style="background-color: blue;color: white;">
                                             <span class="glyphicon glyphicon-print"></span>
                                         </a>
-                                        <a href="Javascript:SupprimerFournisseur('<?php echo $id; ?>')"
-                                            class="btn btn-danger waves-effect waves-light"
-                                            style="background-color:brown">
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                        </a>
+                                        <a href="addedit_fournisseur.php?ID=<?php echo $id; ?>"
+                                            class="btn btn-warning waves-effect waves-light">Modifier</a>
+                                        <?php if ($enreg["archive"]=="0"){ ?>
+                                        <a href="Javascript:Archiver('<?php echo $id; ?>')"
+                                            class="btn btn-danger waves-effect waves-light">Archiver</a>
+                                        <?php } else {?>
+                                        <a href="Javascript:Unarchiver('<?php echo $id; ?>')"
+                                            class="btn btn-dark waves-effect waves-light">Unarchiver</a>
+                                        <?php }?>
                                     </td>
                                 </tr>
                                 <?php } ?>

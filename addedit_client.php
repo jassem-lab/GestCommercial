@@ -183,43 +183,68 @@ while($enreg = mysql_fetch_array($query)){
                             <form method="POST">
 
                                 <div class="form-group row mt-4">
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-3 col-lg-2">
                                         <b>Raison sociale (*)</b>
                                         <input class="form-control" type="text" placeholder="Raison sociale"
                                             value="<?php echo $raisonsocial; ?>" id="example-text-input"
                                             name="raisonsocial" required>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2 col-lg-2">
+                                        <b>Matricule Fiscale (*)</b>
+                                        <input class="form-control" data-parsley-type="number" type="number"
+                                            placeholder="Matricule Fiscale" value="<?php echo $matriculeFiscale; ?>"
+                                            id="example-text-input" name="matriculeFiscale" required>
+                                    </div>
+                                    <div class="col-sm-2 col-lg-2">
+                                        <b>Registre de Commerce (*)</b>
+                                        <input class="form-control" data-parsley-type="number" type="number"
+                                            placeholder="Matricule Fiscale" value="<?php echo $registre_commerce; ?>"
+                                            id="example-text-input" name="registre_commerce" required>
+                                    </div>
+                                    <div class="col-sm-2 col-lg-2">
+                                        <b>Activité </b>
+
+                                        <input class="form-control" type="text" placeholder="Activité"
+                                            value="<?php echo $activite; ?>" id="example-text-input" name="activite"
+                                            required>
+
+                                    </div>
+                                    <div class="col-sm-2 col-lg-2">
+                                        <b>Nature </b>
+                                        <select class="form-control select2" name="nature" id="nature">
+                                            <option value=""> Sélectionner une Nature </option>
+                                            <?php
+                                                        $req="select * from delta_natures_client";
+                                                        $query=mysql_query($req);
+                                                        while($enreg=mysql_fetch_array($query)){
+                                                        ?>
+                                            <option value="<?php echo $enreg['id']; ?>"
+                                                <?php if($nature==$enreg['id']) {?> selected <?php } ?>>
+                                                <?php echo $enreg['nature']; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3 col-lg-2">
+
                                         <b>Email (*)</b>
                                         <input class="form-control" type="email" parsley-type="email"
                                             placeholder="Email de client" value="<?php echo $mail; ?>"
                                             id="example-text-input" name="mail" required>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-2 col-lg-2 mt-2">
                                         <b>Téléphone (*)</b>
                                         <input class="form-control" data-parsley-type="number" type="number"
                                             placeholder="Téléphone de client" value="<?php echo $tel; ?>"
                                             id="example-text-input" name="tel">
                                     </div>
 
-                                    <div class="col-sm-2">
-                                        <b>Matricule Fiscale (*)</b>
-                                        <input class="form-control" data-parsley-type="number" type="number"
-                                            placeholder="Matricule Fiscale" value="<?php echo $matriculeFiscale; ?>"
-                                            id="example-text-input" name="matriculeFiscale" required>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <b>Registre de Commerce (*)</b>
-                                        <input class="form-control" data-parsley-type="number" type="number"
-                                            placeholder="Matricule Fiscale" value="<?php echo $registre_commerce; ?>"
-                                            id="example-text-input" name="registre_commerce" required>
-                                    </div>
-                                    <div class="col-sm-2">
+
+                                    <div class="col-sm-2 col-lg-2 mt-2">
                                         <b>Adresse</b>
                                         <input class="form-control" type="text" placeholder="Adresse"
                                             value="<?php echo $adresse; ?>" id="example-text-input" name="adresse">
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-2 col-lg-2 mt-2">
                                         <b>Pays</b>
                                         <select class="form-control select2" name="pays" id="pays">
                                             <option value=""> Sélectionner un Pays </option>
@@ -235,7 +260,7 @@ while($enreg = mysql_fetch_array($query)){
                                             <?php } ?>
                                         </select>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-2 col-lg-2 mt-2">
                                         <b>Région </b>
                                         <select class="form-control select2" name="region" id="region">
                                             <option value=""> Sélectionner une Région </option>
@@ -251,30 +276,8 @@ while($enreg = mysql_fetch_array($query)){
                                             <?php } ?>
                                         </select>
                                     </div>
-                                    <div class="col-sm-2">
-                                        <b>Activité </b>
 
-                                        <input class="form-control" type="text" placeholder="Activité"
-                                            value="<?php echo $activite; ?>" id="example-text-input" name="activite"
-                                            required>
-
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <b>Nature </b>
-                                        <select class="form-control select2" name="nature" id="nature">
-                                            <option value=""> Sélectionner une Nature </option>
-                                            <?php
-                                                        $req="select * from delta_natures_client";
-                                                        $query=mysql_query($req);
-                                                        while($enreg=mysql_fetch_array($query)){
-                                                        ?>
-                                            <option value="<?php echo $enreg['id']; ?>"
-                                                <?php if($nature==$enreg['id']) {?> selected <?php } ?>>
-                                                <?php echo $enreg['nature']; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-2 col-lg-2 mt-2">
                                         <b>Gouvernorat</b>
                                         <select class="form-control select2" name="gouvernorat" id="gouvernorat">
                                             <option value=""> Sélectionner une Gouvernorat </option>
@@ -293,6 +296,38 @@ while($enreg = mysql_fetch_array($query)){
 
                                 </div>
                                 <br>
+                                <h5 style="color : red "><strong>Autres Contacts: </strong></h5>
+                                <div class="form-group row">
+
+                                    <div class="col-sm-3 col-xl-2">
+                                        <b>Email </b>
+                                        <input class="form-control" type="email" parsley-type="email"
+                                            placeholder="Email de client" value="<?php echo $mail2; ?>"
+                                            id="example-text-input" name="mail2">
+                                    </div>
+
+                                    <div class="col-xl-2">
+                                        <b>Téléphone</b>
+                                        <input class="form-control" type="number" parsley-type="tel" placeholder="GSM"
+                                            value="<?php echo $gsm2; ?>" id="example-text-input" name="gsm2">
+                                    </div>
+
+
+                                    <div class="col-sm-3 col-xl-2">
+                                        <b>Email 2</b>
+                                        <input class="form-control" type="email" parsley-type="email"
+                                            placeholder="Email de client" value="<?php echo $mail2; ?>"
+                                            id="example-text-input" name="mail2">
+                                    </div>
+                                    <div class="col-xl-2">
+                                        <b>Téléphone 2</b>
+                                        <input class="form-control" type="number" parsley-type="tel" placeholder="GSM"
+                                            value="<?php echo $gsm2; ?>" id="example-text-input" name="gsm2">
+                                    </div>
+                                </div>
+
+
+
                                 <h5 style="color : red "><strong>Informations Bancaire : </strong></h5>
                                 <div class="form-group row">
 
@@ -327,9 +362,80 @@ while($enreg = mysql_fetch_array($query)){
                                             value="<?php echo $IBAN; ?>" id="example-text-input" name="IBAN">
                                     </div>
                                 </div>
+                                <div class="form-group row" style="display:none">
+
+                                    <div class="col-sm-3 col-xl-2" style="display:none">
+                                        <b>Banque</b>
+                                        <select class="form-control select2" name="banque" id="banque">
+                                            <option value=""> Sélectionner une banque </option>
+                                            <?php
+                                                        $req="select * from delta_banques";
+                                                        $query=mysql_query($req);
+                                                        while($enreg=mysql_fetch_array($query)){
+                                                        ?>
+                                            <option value="<?php echo $enreg['id']; ?>"
+                                                <?php if($banque==$enreg['id']) {?> selected <?php } ?>>
+                                                <?php echo $enreg['designation']; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3 col-xl-2">
+                                        <b>RIB </b>
+                                        <input class="form-control" type="text" parsley-type="RIB" placeholder="RIB"
+                                            value="<?php echo $RIB; ?>" id="example-text-input" name="RIB">
+                                    </div>
+                                    <div class="col-sm-3 col-xl-2">
+                                        <b>SWIFT </b>
+                                        <input class="form-control" type="text" parsley-type="SWIFT" placeholder="SWIFT"
+                                            value="<?php echo $SWIFT; ?>" id="example-text-input" name="SWIFT">
+                                    </div>
+                                    <div class="col-sm-3 col-xl-2">
+                                        <b>IBAN </b>
+                                        <input class="form-control" type="text" parsley-type="IBAN" placeholder="IBAN"
+                                            value="<?php echo $IBAN; ?>" id="example-text-input" name="IBAN">
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="display:none">
+
+                                    <div class="col-sm-3 col-xl-2" style="display:none">
+                                        <b>Banque</b>
+                                        <select class="form-control select2" name="banque" id="banque">
+                                            <option value=""> Sélectionner une banque </option>
+                                            <?php
+                                                        $req="select * from delta_banques";
+                                                        $query=mysql_query($req);
+                                                        while($enreg=mysql_fetch_array($query)){
+                                                        ?>
+                                            <option value="<?php echo $enreg['id']; ?>"
+                                                <?php if($banque==$enreg['id']) {?> selected <?php } ?>>
+                                                <?php echo $enreg['designation']; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3 col-xl-2" style="display:none">
+                                        <b>RIB </b>
+                                        <input class="form-control" type="text" parsley-type="RIB" placeholder="RIB"
+                                            value="<?php echo $RIB; ?>" id="example-text-input" name="RIB">
+                                    </div>
+                                    <div class="col-sm-3 col-xl-2" style="display:none">
+                                        <b>SWIFT </b>
+                                        <input class="form-control" type="text" parsley-type="SWIFT" placeholder="SWIFT"
+                                            value="<?php echo $SWIFT; ?>" id="example-text-input" name="SWIFT">
+                                    </div>
+                                    <div class="col-sm-3 col-xl-2" style="display:none">
+                                        <b>IBAN </b>
+                                        <input class="form-control" type="text" parsley-type="IBAN" placeholder="IBAN"
+                                            value="<?php echo $IBAN; ?>" id="example-text-input" name="IBAN">
+                                    </div>
+                                </div>
                                 <br>
-                                <h5 style="color : red "><strong>Autre Contact ( facultatif ) : </strong></h5>
-                                <div class="form-group row">
+
+
+                                <div class="form-group row" style="display:none">
+
+
+                                </div>
+                                <div class="form-group row" style="display:none">
 
                                     <div class="col-sm-3 col-xl-2">
                                         <b>Email </b>
