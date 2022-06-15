@@ -6,7 +6,7 @@ include('../connexion/cn.php');
     $req="select * from delta_retenues  WHERE id=".$id;
     $query=mysql_query($req);
     while($enreg=mysql_fetch_array($query)){
-        $code = $enreg['code'];
+        $code = $enreg['label'];
     }
 	$sql = "delete from `delta_retenues` WHERE id=".$id;
 	$requete = mysql_query($sql) ;

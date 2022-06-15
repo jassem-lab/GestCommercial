@@ -8,7 +8,7 @@ include('../connexion/cn.php');
     $req="select * from delta_commerciaux  WHERE id=".$id;
     $query=mysql_query($req);
     while($enreg=mysql_fetch_array($query)){
-        $code = $enreg['code'];
+        $code = $enreg['nom'];
     }
 
 

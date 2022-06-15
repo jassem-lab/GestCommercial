@@ -41,14 +41,24 @@ if(isset($_POST['dat1'])){
     <?php
 $reqfamille="";
 $famille="";
-if(isset($_POST['mp'])){
-	if(is_numeric($_POST['mp'])){
+if(isset($_POST['famille'])){
+	if(is_numeric($_POST['famille'])){
 		$famille				=	$_POST['famille'];
-		$reqfamille			=	" and  id=".$famille;
+		$reqfamille				=	" and  famille=".$famille;
 	}
 }
 
 
+    ?>
+    <?php
+$reqCode="";
+$code="";
+if(isset($_POST['code'])){
+	if(($_POST['code'])<>""){
+		$code				=	$_POST['code'];
+		$reqCode			=	" and  reference like '%".$code."%'";
+	}
+}
     ?>
     <?php
 $reqMarque="";
@@ -56,17 +66,7 @@ $marque="";
 if(isset($_POST['marque'])){
 	if(is_numeric($_POST['marque'])){
 		$marque				=	$_POST['marque'];
-		$reqMarque			=	" and  id=".$marque;
-	}
-}
-    ?>
-    <?php
-$reqfamille="";
-$famille="";
-if(isset($_POST['mp'])){
-	if(is_numeric($_POST['mp'])){
-		$famille				=	$_POST['famille'];
-		$reqfamille			=	" and  id=".$famille;
+		$reqMarque			=	" and  marque=".$marque;
 	}
 }
     ?>
@@ -82,8 +82,12 @@ if(isset($_POST['mp'])){
                             <form name="SubmitContact" class="" method="post" action="" onSubmit="" style=''>
                                 <div class="col-xl-12">
                                     <div class="row">
+										<div class="col-sm-3">
+											<b>Référence </b>
+											<input class="form-control" name="code" value="<?php $code; ?>">
+										</div>
                                         <div class="col-sm-3">
-                                            <b>Famille (*)</b>
+                                            <b>Famille </b>
                                             <select class="form-control select2" name="famille">
                                                 <option value=""> Sélectionner une famille </option>
                                                 <?php
@@ -98,7 +102,7 @@ if(isset($_POST['mp'])){
                                             </select>
                                         </div>
                                         <div class="col-sm-3">
-                                            <b>Marque (*)</b>
+                                            <b>Marque </b>
                                             <select class="form-control select2" name="marque">
                                                 <option value=""> Sélectionner une marque </option>
                                                 <?php
@@ -112,14 +116,7 @@ if(isset($_POST['mp'])){
                                                 <?php } ?>
                                             </select>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <b>Magasin (*)</b>
-                                            <select class="form-control select2" id="type" name="magasin" required>
-                                                <option value=""> Sélectionner la magasin </option>
-
-                                            </select>
-                                        </div>
-
+                                       
                                         <div class="col-xl-3">
                                             <b></b><br>
                                             <input name="SubmitContact" type="submit" id="submit"
@@ -149,7 +146,7 @@ if(isset($_POST['mp'])){
                                         $famille			=	"";
                                         $unite			    =	"";
                                         $emplacement		=	"";
-                                        $req = "select * from delta_produits"; 
+                                        $req = "select * from delta_produits where 1=1 ".$reqCode.$reqfamille.$reqMarque; 
                                         $query =mysql_query($req); 
                                         while($enreg = mysql_fetch_array($query)){
                                             $id = $enreg["id"] ; 

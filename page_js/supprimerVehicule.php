@@ -6,7 +6,7 @@ include('../connexion/cn.php');
     $req="select * from delta_vehicules  WHERE id=".$id;
     $query=mysql_query($req);
     while($enreg=mysql_fetch_array($query)){
-        $code = $enreg['code'];
+        $code = $enreg['matricule'];
     }
 	$sql = "delete from `delta_vehicules` WHERE id=".$id;
 	$requete = mysql_query($sql) ;
@@ -14,7 +14,7 @@ include('../connexion/cn.php');
     $iduser=$_SESSION['delta_IDUSER'];
     $sql1="INSERT INTO `delta_log`(`dateheure`, `idutilisateur`, `document`, `action`, `iddocument`,`code`) VALUES ('".$dateheure."','".$iduser."','17','3','".$id."','".$code."')";
     $req=mysql_query($sql1);	
-    echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="../tabs.php?suc=17" </SCRIPT>';
+    echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="../tabs.php?suc=14" </SCRIPT>';
 	
   
 ?>

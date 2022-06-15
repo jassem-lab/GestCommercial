@@ -25,14 +25,12 @@ if (!isset($_SESSION['delta_MAILUSER']))
     <link rel="stylesheet" href="plugins/morris/morris.css">
 
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>		
 
 </head>
 
@@ -119,7 +117,7 @@ if (!isset($_SESSION['delta_MAILUSER']))
                     <!-- Navigation Menu-->
 
                     <?php
-						if (isset($_SESSION['delta_MAILUSER'])) {
+						if (isset($_SESSION['delta_MAILUSER']) and isset($_SESSION['delta_SOC'])) {
 						?>
 
                     <?php if ($_SESSION['delta_PROFIL'] == 1) { ?>
@@ -137,6 +135,7 @@ if (!isset($_SESSION['delta_MAILUSER']))
                                         <li><a href="utilisateurs.php"><b style="font-size:12px">Utilisateurs</a></b>
                                         </li>
                                         <li><a href="socs.php"><b style="font-size:12px">Société</a></b></li>
+										<li><a href="autorisation_profils.php"><b style="font-size:12px">Autorisations par profils</a></b></li>
                                         <li><a href="tabs.php"><b style="font-size:12px">Autres table des base</a></b>
                                         </li>
                                         <li><a href="produits.php"><b style="font-size:12px">Produits </a></b></li>
@@ -188,14 +187,10 @@ if (!isset($_SESSION['delta_MAILUSER']))
                             <ul class="submenu megamenu">
                                 <li>
                                     <ul>
-                                        <li><a href="gest_paie_cli.php"><b style="font-size:12px">Paiement
-                                                    Client</a></b></li>
-                                        <li><a href="gest_paie_frn.php"><b style="font-size:12px">Paiement
-                                                    Fournisseur</a></b></li>
-                                        <li><a href="etat_paie_cli.php"><b style="font-size:11px">Etat des paiements
-                                                    client</a></b></li>
-                                        <li><a href="etat_paie_frn.php"><b style="font-size:11px">Etat des paiements
-                                                    fournisseur</a></b></li>
+                                        <li><a href="gest_paie_cli.php"><b style="font-size:12px">PaiementClient</a></b></li>
+                                        <li><a href="gest_paie_frn.php"><b style="font-size:12px">Paiement Fournisseur</a></b></li>
+                                        <li><a href="etat_paie_cli.php"><b style="font-size:11px">Etat des paiements client</a></b></li>
+                                        <li><a href="etat_paie_frn.php"><b style="font-size:11px">Etat des paiements fournisseur</a></b></li>
                                     </ul>
                                 </li>
 
@@ -207,19 +202,15 @@ if (!isset($_SESSION['delta_MAILUSER']))
                             <ul class="submenu megamenu">
                                 <li>
                                     <ul>
-                                        <li><a href="journal.php"><b style="font-size:12px">Journal des
-                                                    mouvements</a></b></li>
+                                        <li><a href="journal.php"><b style="font-size:12px">Journal des mouvements</a></b></li>
                                         <li><a href="ca.php"><b style="font-size:12px">Chiffres d'affaires</a></b></li>
-                                        <li><a href="cli_frn.php"><b style="font-size:11px">Liste
-                                                    clients/fournisseurs</a></b></li>
+                                        <li><a href="cli_frn.php"><b style="font-size:11px">Liste clients/fournisseurs</a></b></li>
                                         <li><a href="stock_prd.php"><b style="font-size:11px">Stock produits</a></b>
                                         </li>
                                         <li><a href="mvt_stock.php"><b style="font-size:11px">Mouvement de stock</a></b>
                                         </li>
-                                        <li><a href="val_stock.php"><b style="font-size:11px">Valorisation de
-                                                    stock</a></b></li>
-                                        <li><a href="inventaire_stock.php"><b style="font-size:11px">Inventaires de
-                                                    stock</a></b></li>
+                                        <li><a href="val_stock.php"><b style="font-size:11px">Valorisation de stock</a></b></li>
+                                        <li><a href="inventaire_stock.php"><b style="font-size:11px">Inventaires de stock</a></b></li>
                                     </ul>
                                 </li>
 
@@ -239,4 +230,46 @@ if (!isset($_SESSION['delta_MAILUSER']))
             </div> <!-- end container -->
         </div> <!-- end navbar-custom -->
     </header>
-    <!-- End Navigation Bar-->
+	<!-- End Navigation Bar-->
+	
+	<!-- Autorisations -->	
+	<?php
+	function phpAlert($msg) {
+		echo '<script type="text/javascript">alert("' . $msg . '")</script>';
+	}		
+		if (isset($_SESSION['delta_MAILUSER']) and isset($_SESSION['delta_SOC'])) {
+			$page = basename($_SERVER['PHP_SELF']);
+			if($page<>"dashbord.php" && $page<>"login.php" && $page<>"dashbord_soc.php"){
+
+				$req="select * from delta_autorisation_profils where codsoc=".$_SESSION['delta_SOC']." and idprofil=".$_SESSION['delta_PROFIL'];
+				$query=mysql_query($req);
+				while($enreg=mysql_fetch_array($query)){
+						if($enreg[$page]==0){
+							$req="select * from delta_autorisation_utilisateur where codsoc=".$_SESSION['delta_SOC']." and idutilisateur=".$_SESSION['delta_IDUSER'];
+							$query=mysql_query($req);
+							while($enreg=mysql_fetch_array($query)){
+								if($enreg[$page]==0){
+								 phpAlert("Vous n'êtes pas autorisée pour ouvrier cet écran."); 
+								 echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="dashbord.php" </SCRIPT>';
+								 exit;
+								}
+							}						
+						} else{
+							$req="select * from delta_autorisation_utilisateur where codsoc=".$_SESSION['delta_SOC']." and idutilisateur=".$_SESSION['delta_IDUSER'];
+							$query=mysql_query($req);
+							while($enreg=mysql_fetch_array($query)){
+								if($enreg[$page]==0){
+								 phpAlert("Vous n'êtes pas autorisée pour ouvrier cet écran."); 
+								 echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="dashbord.php" </SCRIPT>';
+								 exit;
+								}
+							}
+						}
+					}
+				}							
+		}
+	
+	?>
+	
+	<!-- FIN Autorisations -->	
+    

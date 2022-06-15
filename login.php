@@ -35,7 +35,8 @@ if (isset($_POST['username'])) {
 	$LOGIN 		= addslashes($_POST["username"]);
 	$MOTDEPASSE = addslashes($_POST["userpassword"]);
 
-	$idprofil = 0; $codsoc=0;
+	$idprofil	= 0; 
+	$codsoc		= 0;
 	$reqTestExistEmail = " select * from delta_utilisateurs where  mail='" . $LOGIN . "' and motdepasse='" . $MOTDEPASSE . "'";
 	$queryTestExistEmail = mysql_query($reqTestExistEmail);
 	if (mysql_num_rows($queryTestExistEmail) != 0) {
@@ -45,21 +46,30 @@ if (isset($_POST['username'])) {
 			$idprofil 		= $enregTestExistEmail['idprofil'];
             $codsoc  		= $enregTestExistEmail['codsoc'];
 
-			$_SESSION['delta_IDUSER'] = $IDUTILISATEUR;
-			$_SESSION['delta_USER'] = $enregTestExistEmail['nom'] . ' ' . $enregTestExistEmail['prenom'];
-			$_SESSION['delta_MAILUSER'] = $MAIL;
-			$_SESSION['delta_PROFIL'] = $idprofil;
-            $_SESSION['delta_SOC']      = $codsoc;
+			$_SESSION['delta_IDUSER']	 = $IDUTILISATEUR;
+			$_SESSION['delta_USER'] 	 = $enregTestExistEmail['nom'] . ' ' . $enregTestExistEmail['prenom'];
+			$_SESSION['delta_MAILUSER']  = $MAIL;
+			$_SESSION['delta_PROFIL'] 	 = $idprofil;
+           // $_SESSION['delta_SOC']       = $codsoc;
+			
+			if (mysql_num_rows($queryTestExistEmail) >1) {
+				echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="dashbord_soc.php" </SCRIPT>';
+				exit;					
+			} else{
+				if($idprofil==1 or $idprofil==2){
+					echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="dashbord.php" </SCRIPT>';
+					exit;				
+				}				
+			}
+			
+			
 
 			if($enregTestExistEmail['archive']==1){
 				echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?err=nocpt1" </SCRIPT>';
 				exit;
 			}
 		
-			if($idprofil==1 or $idprofil==2){
-				echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="dashbord.php" </SCRIPT>';
-				exit;				
-			}
+
 		}
 
 		echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="dashbord.php" </SCRIPT>';
