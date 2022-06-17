@@ -5,12 +5,20 @@
 - Information bancaire pour chaque client
 - Information bancaire pour chaque Fournisseur
 - Impression fiche client
-- Impression fiche produit
-- Impression liste des clients
-- Impression liste des fournisseurs
 - Exportation Excel de liste client
+
+
+
+
 - Exportation Excel de liste produit
 - Exportation Excel de liste fournisseurs
+
+
 - Stock par produit ( avec impression )
 - Liste des articles à commander
 - Valorisation de stock
+  
+
+- Impression fiche produit
+- Impression liste des clients
+- Impression liste des fournisseurs

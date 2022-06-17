@@ -26,6 +26,14 @@ function Imprimer(id) {
             "toolbar=no, scrollbars=yes, resizable=no, top=500, left=500, width=700, height=600");
     }
 }
+
+function ImprimerListeFournisseurs() {
+    if (confirm('Confirmez-vous cette action?')) {
+        var myMODELE_A4 = window.open("print/imprimerFournisseurs.php"
+            _blank ",
+            "toolbar=no, scrollbars=yes, resizable=no, top=500, left=500, width=700, height=600");
+    }
+}
 </script>
 <?php
 $reqClient="";
@@ -83,7 +91,13 @@ if(isset($_POST['Client'])){
                                             <b></b><br>
                                             <input name="SubmitContact" type="submit" id="submit"
                                                 class="btn btn-primary btn-sm " value="Filtrer">
+                                            <a href="print/imprimerFournisseurs.php" target="_blank"
+                                                class="btn btn-sm btn-warning waves-effect waves-light"
+                                                style="background-color: blue;color: white;">
+                                                <i class="ion-printer"></i>
+                                            </a>
                                         </div>
+
 
                                     </div>
                                 </div>
@@ -325,11 +339,12 @@ if(isset($_POST['Client'])){
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-12 row" style="margin-top:20px"
-                                                            id="listeBANQUE<?php echo $enreg['id']; ?>">
-                                                        </div>
 
 
+
+                                                    </div>
+                                                    <div class="col-md-12 row" style="margin-top:20px"
+                                                        id="listeBANQUE<?php echo $enreg['id']; ?>">
                                                     </div>
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
@@ -422,10 +437,11 @@ $(".btn").on("click", function() {
 });
 $(".btnmp").on("click", function() {
     var id = $(this).attr('id');
+    var nomcontact = $("#nomcontact" + id).val();
     var email = $("#email" + id).val();
     var tel = $("#tel" + id).val();
 
-    var variable = "client=" + id + "&email=" + email + "&tel=" + tel;
+    var variable = "client=" + id + "&nomcontact=" + nomcontact + "&email=" + email + "&tel=" + tel;
     $.post("page_ajax/ajax_contact_frn.php", variable, function(data, status) {
         if (status == "success") {
             if (window.XMLHttpRequest) {
@@ -444,6 +460,7 @@ $(".btnmp").on("click", function() {
             xmlhttp_liste_contact.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xmlhttp_liste_contact.send("client=" + id);
 
+            $('#nomcontact' + id).val('');
             $('#email' + id).val('');
             $('#tel' + id).val('');
         }

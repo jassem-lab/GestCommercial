@@ -49,7 +49,8 @@
                     <span class="far fa-edit"></span>
                 </a>
                 <a style="display:none" id="btnModif2<?php echo $enregnom['id']; ?>"
-                    data-id="<?php echo $enregnom['id']; ?>" class="btn btn-sm btn-warning waves-effect waves-light btnModif1">
+                    data-id="<?php echo $enregnom['id']; ?>"
+                    class="btn btn-sm btn-warning waves-effect waves-light btnModif1">
                     Enregistrer
                 </a>
                 <a id="<?php echo $enregnom['id']; ?>" class="btn btn-sm btn-danger waves-effect waves-light btnDelete">
@@ -63,9 +64,9 @@
 
 <script>
 $(".btnModif").on("click", function() {
-  
+
     var id = $(this).data('id');
-    alert(id)
+
     $("#span_banque" + id).hide();
     $("#banque" + id).show();
 

@@ -82,6 +82,16 @@ if(isset($_POST['Client'])){
                                             <b></b><br>
                                             <input name="SubmitContact" type="submit" id="submit"
                                                 class="btn btn-primary btn-sm " value="Filtrer">
+                                            <a href="print/imprimerClients.php" target="_blank"
+                                                class="btn btn-sm btn-warning waves-effect waves-light"
+                                                style="background-color: blue;color: white;">
+                                                <i class="ion-printer"></i>
+                                            </a>
+                                            <a href="export/export_clients.php" target="_blank"
+                                                class="btn btn-sm btn-danger waves-effect waves-light"
+                                                style="background-color: blue;color: white;">
+                                                Exporter
+                                            </a>
                                         </div>
 
                                     </div>
@@ -245,11 +255,9 @@ if(isset($_POST['Client'])){
                                                                     class="btn btn-primary btn-sm btnmp">
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                     <div class="col-md-12 row" style="margin-top:20px"
                                                         id="listeCONTACT<?php echo $enreg['id']; ?>">
-
                                                     </div>
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
@@ -321,12 +329,9 @@ if(isset($_POST['Client'])){
                                                                     class="btn btn-primary btn-sm btnmp1">
                                                             </div>
                                                         </div>
-
-                                                        <div class="col-md-12 row" style="margin-top:20px"
-                                                            id="listeBANQUE<?php echo $enreg['id']; ?>">
-                                                        </div>
-
-
+                                                    </div>
+                                                    <div class="col-md-12 row" style="margin-top:20px"
+                                                        id="listeBANQUE<?php echo $enreg['id']; ?>">
                                                     </div>
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
@@ -355,7 +360,6 @@ if(isset($_POST['Client'])){
                                 <?php } ?>
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
