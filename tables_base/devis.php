@@ -16,7 +16,7 @@ $symbole		=	addslashes($_POST["symbole"]) ;
 
 if($id=="0")
     {
-        $req="select max(id) as maxID from delta_devis";
+        $req="select max(id) as maxID from delta_devise";
         $query=mysql_query($req);
         if(mysql_num_rows($query)>0){
             while($enreg=mysql_fetch_array($query)){
@@ -26,7 +26,7 @@ if($id=="0")
             $id = 1;
         }
 
-        $sql="INSERT INTO `delta_devis`(`id`,`codsoc`,`code`,`designation`,`symbole`,`nombre_chiffre`) VALUES
+        $sql="INSERT INTO `delta_devise`(`id`,`codsoc`,`code`,`designation`,`symbole`,`nombre_chiffre`) VALUES
         ('".$id."','".$codsoc."','".$code."' , '".$designation."', '".$symbole."' , '".$nombre_chiffre."'  )";
         
         //Log
@@ -37,7 +37,7 @@ if($id=="0")
         $req=mysql_query($sql1);			
     }
 else{
-        $sql="UPDATE `delta_devis` SET `code`='".$code."' , `designation`='".$designation."', `symbole`='".$symbole."', `nombre_chiffre`='".$nombre_chiffre."' WHERE id=".$id;
+        $sql="UPDATE `delta_devise` SET `code`='".$code."' , `designation`='".$designation."', `symbole`='".$symbole."', `nombre_chiffre`='".$nombre_chiffre."' WHERE id=".$id;
         
         //Log
         $dateheure=date('Y-m-d H:i:s');
@@ -56,7 +56,7 @@ $designation		=	"" ;
 $nombre_chiffre		=	"" ;
 $symbole    		=	"" ;
 
-$req="select * from delta_devis where id=".$id;
+$req="select * from delta_devise where id=".$id;
 $query=mysql_query($req);
 while($enreg=mysql_fetch_array($query))
 {
@@ -121,7 +121,7 @@ function SupprimerDevis(id) {
         </thead>
         <tbody>
             <?php 
-            $reqFP ="select * from delta_devis"; 
+            $reqFP ="select * from delta_devise"; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 

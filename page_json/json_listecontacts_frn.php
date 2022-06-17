@@ -2,7 +2,7 @@
 	session_start(); 
 	include('../connexion/cn.php');  
  
-    $client   				= $_POST['client']; 
+    $client   			= $_POST['client']; 
 ?>
 
 <table class="table mb-0">

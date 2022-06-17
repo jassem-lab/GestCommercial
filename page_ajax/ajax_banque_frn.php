@@ -5,10 +5,9 @@
     $client   				= $_POST['client']; 
 	$email					= $_POST['email']; 
 	$tel				   	= $_POST['tel']; 
-	$nomcontact			   	= $_POST['nomcontact']; 
 	
-	$sql="INSERT INTO `delta_contacts_client`(`client`, `email`, `telephone`, `nomcontact`) VALUES";
-	$sql=$sql." ('".$client."','".$email."','".$tel."','".$nomcontact."')";
+	$sql="INSERT INTO `delta_banque_fournisseur`(`fournisseur`, `email`, `telephone`) VALUES";
+	$sql=$sql." ('".$client."','".$email."','".$tel."')";
 	
 	$requete = mysql_query($sql) or die( mysql_error()) ;	
 	

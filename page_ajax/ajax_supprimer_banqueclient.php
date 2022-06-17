@@ -3,11 +3,8 @@
 	include('../connexion/cn.php');  
  
     $id   				= $_POST['id']; 
-	$email				= $_POST['email']; 
-	$tel				= $_POST['tel']; 
-	$nomcontact			= $_POST['nomcontact'];
 	
-	$sql="update delta_contacts_client set email='".$email."', telephone='".$tel."', nomcontact='".$nomcontact."' where id=".$id;	
+	$sql="delete from delta_banque_client where id=".$id;	
 	$requete = mysql_query($sql) or die( mysql_error()) ;	
 	
 	$json = '{"client":"'.$id.'"}';

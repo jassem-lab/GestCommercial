@@ -8,6 +8,7 @@
 <table class="table mb-0">
 	<thead>
 	<tr>
+		<th><b>Nom de contact</b></th>	
 		<th><b>Email</b></th>
 		<th><b>Téléphone</b></th>
 		<th><b>Action</b></th>
@@ -20,7 +21,11 @@
 	while($enregnom=mysql_fetch_array($querynom))
 	{
 ?>
-			<tr>			
+			<tr>
+				<td>
+					<span id="span_nom<?php echo $enregnom['id']; ?>"> <?php echo $enregnom['nomcontact']; ?></span>
+					<input style="display:none;width: 100%;" id="nomcontact<?php echo $enregnom['id']; ?>" class="form-control" value="<?php echo $enregnom['nomcontact']; ?>" >
+				</td>							
 				<td>
 					<span id="span_email<?php echo $enregnom['id']; ?>"> <?php echo $enregnom['email']; ?></span>
 					<input style="display:none;width: 100%;" id="email<?php echo $enregnom['id']; ?>" class="form-control" value="<?php echo $enregnom['email']; ?>" >
@@ -30,14 +35,14 @@
 					<input style="display:none;width: 70%;" id="tel<?php echo $enregnom['id']; ?>" class="form-control" value="<?php echo $enregnom['telephone']; ?>" >
 				</td>				
 				<td>
-					<a id="btnMod<?php echo $enregnom['id']; ?>" data-id="<?php echo $enregnom['id']; ?>" class="btn btn-warning waves-effect waves-light btnModif">
-						<span class="glyphicon glyphicon-pencil"></span>
+					<a id="btnMod<?php echo $enregnom['id']; ?>" data-id="<?php echo $enregnom['id']; ?>" class="btn btn-sm btn-warning waves-effect waves-light btnModif">
+						<span class="far fa-edit"></span>
 					</a>
-					<a style="display:none" id="btnModif2<?php echo $enregnom['id']; ?>" data-id="<?php echo $enregnom['id']; ?>" class="btn btn-warning waves-effect waves-light btnModif1">
+					<a style="display:none" id="btnModif2<?php echo $enregnom['id']; ?>" data-id="<?php echo $enregnom['id']; ?>" class="btn btn-sm btn-warning waves-effect waves-light btnModif1">
 						Enregistrer
 					</a>
 					<a id="<?php echo $enregnom['id']; ?>" class="btn btn-sm btn-danger waves-effect waves-light btnDelete">
-							<span class="glyphicon glyphicon-trash"></span>
+							<span class="far fa-trash-alt"></span>
 					</a>				
 				</td>
 			</tr>
@@ -50,7 +55,10 @@
 		var id = $(this).data('id'); 
 		$("#span_email"+id).hide();
 		$("#email"+id).show();
-		
+
+		$("#span_nom"+id).hide();
+		$("#nomcontact"+id).show();
+
 		$("#span_tel"+id).hide();
 		$("#tel"+id).show();		
 		
@@ -64,9 +72,10 @@
 		var client=<?php echo $_POST['client']; ?>;
 		var email = $("#email"+id).val(); 
 		var tel   = $("#tel"+id).val();
+		var nomcontact   = $("#nomcontact"+id).val();
 		
 		if(confirm('Confirmez-vous la modification?')){
-			var variable="id="+id+"&email="+email+"&tel="+tel;
+			var variable="id="+id+"&email="+email+"&tel="+tel+"&nomcontact="+nomcontact;
 			$.post("page_ajax/ajax_modifier_contactclient.php", variable, function (data, status) {
 				if (status == "success") {
 						if (window.XMLHttpRequest)

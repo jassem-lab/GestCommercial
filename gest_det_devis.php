@@ -2,9 +2,16 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <?php
+if(isset($_GET['IDP'])){
+    $idp = $_GET['IDP'];
+   
+}else{
+    $idp = "0";
+}
 
 if(isset($_GET['ID'])){
     $id = $_GET['ID'];
+   
 }else{
     $id = "0";
 }
@@ -90,7 +97,8 @@ if(isset($_POST['enregistrer_mail'])){
         }
     else{
             $sql="UPDATE `delta_devis` SET `date`='".$date."' , `validite`='".$validite."' WHERE idd=".$id;
-            $sql1="UPDATE `delta_det_devis` SET `taux_remise`='".$taux_remise."' , `quantite`='".$quantite."' WHERE idd=".$id;
+            $sql2="INSERT INTO `delta_det_devis`(`idd`,`produit` , `tva`, `prix_vente_ht`, `prix_vente_ttc` , `taux_remise` , `prix_remise` , `quantite` , `prix_total`)VALUES('".$id."','".$produit."','".$tva."','".$prix_vente_ht."','".$prix_vente_ttc."','".$taux_remise."','".$prix_remise."','".$quantite."','".$prix_total."')" ; 
+            	
             //Log
             $dateheure=date('Y-m-d H:i:s');
             $iduser=$_SESSION['delta_IDUSER'];
@@ -101,10 +109,19 @@ if(isset($_POST['enregistrer_mail'])){
         $req=mysql_query($sql);
         $req=mysql_query($sql2);
     
-        echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=1" </SCRIPT>';
+        // echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=1" </SCRIPT>';
     }
 
-    $req = "select * from delta_det_devis where idd=".$id ; 
+
+    $reqe = "select * from delta_devis where id=".$id ; 
+    $querye = mysql_query($reqe);
+    while($enrege = mysql_fetch_array($querye)){
+        $numero      = $enrege["numero"] ;
+        $client      = $enrege["client"] ; 
+        $date        = $enrege["date"].strtotime('m-d-Y') ; 
+        $validite    = $enrege["validite"] ;  
+    }
+    echo $req = "select * from delta_det_devis where id=".$idp ; 
     $query = mysql_query($req) ; 
     while($enreg = mysql_fetch_array($query)){
         $produit            = $enreg["produit"] ; 
@@ -113,6 +130,8 @@ if(isset($_POST['enregistrer_mail'])){
         $prix_vente_ttc     = $enreg["prix_vente_ttc"] ; 
         $quantite           = $enreg["quantite"] ; 
         $prix_total         = $enreg["prix_total"] ; 
+        $taux_remise        = $enreg["taux_remise"] ; 
+        $prix_remise        = $enreg["prix_remise"] ; 
     }
 
 
@@ -296,6 +315,7 @@ if(isset($_POST['enregistrer_mail'])){
                                 $reqDevis ="select * from delta_det_devis where idd =".$id ; 
                                 $queryDevis = mysql_query($reqDevis) ; 
                                 while($enregDevis = mysql_fetch_array($queryDevis)){
+                                    $idp                 = $enregDevis["id"]; 
                                     $produit             = $enregDevis["produit"] ; 
                                     $tva                 = $enregDevis["tva"] ; 
                                     $prix_vente_ht       = $enregDevis["prix_vente_ht"] ; 
@@ -323,14 +343,8 @@ if(isset($_POST['enregistrer_mail'])){
                                         <td> <?php echo $prix_remise ?> </td>
 
                                         <td>
-                                            <a href="javascript:Imprimer('')"
-                                                class="btn btn-sm btn-warning waves-effect waves-light"
-                                                style="background-color: blue;color: white;">
-                                                Imprimer
-                                            </a>
-
-
-
+                                            <a href="gest_det_devis.php?ID=<?php echo $id ?>&IDP=<?php echo $idp ; ?>"
+                                                class="btn btn-sm btn-warning waves-effect waves-light">Modifier</a>
                                         </td>
                                     </tr>
                                     <?php } ?>
@@ -379,9 +393,11 @@ $("#produit").on("change", function() {
     });
 });
 $("#client").on("change", function() {
-    var client = $("#client").val();
-    $("#nature").val(0);
-
+    
+    let client = $("#client").val();
+    console.log(client)
+    
+    
     $.getJSON("page_json/json_detailclient.php?ID=" + client, function(data, status) {
         if (status == "success") {
 
@@ -410,38 +426,48 @@ $('#quantite').keyup(delay(function(e) {
     let quantite = this.value
     let Nature = $("#nature").val();
     if (Nature == 1) {
-        let prix_vente_ht = $("#prix_vente_ht").val()
         let prix_total = $("#prix_total").val();
+        let quantite = $("#quantite").val();
+        let prix_vente_ht = $("#prix_vente_ht").val();
         let tauxFodec = $("#tauxFodec").val();
         let tva = $("#tva").val();
-        prix_total = prix_vente_ht * quantite + (prix_vente_ht * tva) / 100 + (tauxFodec * prix_vente_ht) /
-            100;
-
         if (quantite == "" || quantite == 0) {
             prix_total = 0;
+        } else {
+            prix_total = prix_vente_ht * quantite + (prix_vente_ht * tva) / 100 + (tauxFodec *
+                prix_vente_ht) / 100;
         }
         $("#prix_total").val(prix_total);
     }
+   
     if (Nature == 2) {
-        let prix_total = $("#prix_total").val;
+        let prix_total = $("#prix_total").val();
+        let quantite = $("#quantite").val();
+        let prix_vente_ht = $("#prix_vente_ht").val();
+
+        console.log($("#quantite").val())
         let tauxFodec = $("#tauxFodec").val();
         prix_total = prix_vente_ht * quantite + (tauxFodec * prix_vente_ht / 100);
-
+        console.log(prix_total);
         $("#prix_total").val(prix_total);
     }
     if (Nature == 4) {
         let prix_vente_ht = $("#prix_vente_ht").val()
+        console.log($("#quantite").val())
         let prix_total = $("#prix_total").val();
         let tva = $("#tva").val();
 
         prix_total = prix_vente_ht * quantite + ((prix_vente_ht * tva) / 100);
+
+        $("#prix_total").val(prix_total);
     }
     if (Nature == 5) {
         let prix_vente_ht = $("#prix_vente_ht").val()
+        console.log($("#quantite").val())
         let prix_total = $("#prix_total").val();
 
-
         prix_total = prix_vente_ht * quantite;
+        $("#prix_total").val(prix_total);
     }
 
 }, 500));
