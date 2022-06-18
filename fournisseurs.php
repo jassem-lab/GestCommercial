@@ -92,9 +92,12 @@ if(isset($_POST['Client'])){
                                             <input name="SubmitContact" type="submit" id="submit"
                                                 class="btn btn-primary btn-sm " value="Filtrer">
                                             <a href="print/imprimerFournisseurs.php" target="_blank"
-                                                class="btn btn-sm btn-warning waves-effect waves-light"
-                                                style="background-color: blue;color: white;">
+                                                class="btn btn-sm btn-info waves-effect waves-light">
                                                 <i class="ion-printer"></i>
+                                            </a>
+                                            <a href="export/export_fournisseurs.php" target="_blank"
+                                                class="btn btn-sm btn-success waves-effect waves-light">
+                                                Exporter Excel
                                             </a>
                                         </div>
 
@@ -145,7 +148,7 @@ if(isset($_POST['Client'])){
                                     <td style="padding: 2px 2px;"><?php echo $enreg["mail"]  ; ?></td>
                                     <td style="padding: 2px 2px;"><?php echo $enreg["tel"]  ; ?></td>
                                     <td style="padding: 2px 2px;">
-                                        <button type="button" class="btn btn-primary waves-effect waves-light"
+                                        <button type="button" class="btn btn-sm btn-primary waves-effect waves-light"
                                             data-toggle="modal"
                                             data-target=".bs-example-modal-lg<?php echo $enreg['id']; ?>"
                                             id="<?php echo $enreg['id']; ?>">

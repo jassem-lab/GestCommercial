@@ -121,8 +121,8 @@ if(isset($_POST['enregistrer_mail'])){
         $date        = $enrege["date"].strtotime('m-d-Y') ; 
         $validite    = $enrege["validite"] ;  
     }
-    echo $req = "select * from delta_det_devis where id=".$idp ; 
-    $query = mysql_query($req) ; 
+     $req = "select * from delta_det_devis where id=".$idp ; 
+    $que0ry = mysql_query($req) ; 
     while($enreg = mysql_fetch_array($query)){
         $produit            = $enreg["produit"] ; 
         $tva                = $enreg["tva"] ; 

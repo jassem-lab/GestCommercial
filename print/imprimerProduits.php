@@ -56,7 +56,7 @@ function int_to_words($x) {
 class PDF extends FPDF
 {
 
-// variables privées
+// variables priv�es
 
 var $colonnes;
 var $format;
@@ -67,7 +67,7 @@ var $angle=0;
 	$withEntete = $_GET['ent'];
 }*/
 
-// fonctions privées
+// fonctions priv�es
 function RoundedRect($x, $y, $w, $h, $r, $style = '')
 {
 	$k = $this->k;
@@ -247,7 +247,7 @@ function addClient( $ref )
 	$this->Line( $r1, $mid+30, $r2, $mid+30);
 	$this->SetXY( $r1 + ($r2-$r1)/2 - 5, $y1+32 );
 	$this->SetFont( "Arial", "B", 10);
-	$this->Cell(10,5, "FOURNISSEUR", 0, 0, "C");
+	$this->Cell(10,5, "Numero", 0, 0, "C");
 	$this->SetXY( $r1 + ($r2-$r1)/2 - 5, $y1 + 41 );
 	$this->SetFont( "Arial", "", 10);
 	$this->Cell(10,5,$ref, 0,0, "C");
@@ -274,7 +274,7 @@ function addPageNumber( $page )
 
 // Affiche l'adresse du client
 // (en haut, a droite)
-function addClientAdresse( $clt,$adr,$tel ,$trim )
+function addClientAdresse( $clt,$adr,$tel )
 {
 	$r1     = $this->w - 200;
 	$r2     = $r1 + 90;
@@ -285,24 +285,19 @@ function addClientAdresse( $clt,$adr,$tel ,$trim )
 	$this->RoundedRect($r1, $y1+5, ($r2 - $r1)+20, $y2-3, 3.5, '');
 	
 	$this->SetFont( "Arial", "B", 10);
-	$this->Cell(25,5, "Client:", 0, 0, "C");
+	$this->Cell(25,8, "Client :", 0, 0, "C");
 	$this->SetFont( "Arial", "", 8);
-	$this->MultiCell( 100, 5, $clt);
+	$this->MultiCell( 80, 8, $clt);
 	
 	$this->SetFont( "Arial", "B", 10);
-	$this->Cell(33,8, "Téléphone:", 0, 0, "C");
+	$this->Cell(25,8, "Telephone :", 0, 0, "C");
 	$this->SetFont( "Arial", "", 8);
 	$this->MultiCell( 80, 8, $adr);
 	
 	$this->SetFont( "Arial", "B", 10);
-	$this->Cell(30,8, "Adresse:", 0, 0, "C");
+	$this->Cell(24,8, "Adresse :", 0, 0, "C");
 	$this->SetFont( "Arial", "", 8);
 	$this->MultiCell( 80, 8, utf8_decode($tel));
-	
-	$this->SetFont( "Arial", "B", 10);
-	$this->Cell(32,8, "Trimestre:", 0, 0, "C");
-	$this->SetFont( "Arial", "", 8);
-	$this->MultiCell( 80, 8, utf8_decode($trim));	
 	
 	$this->SetXY( $r1 + ($r2-$r1)/2 - 5, $y1 + 41 );
 	$this->SetFont( "Arial", "B", 20);
@@ -354,13 +349,13 @@ function addNumTVA($tva)
 function addReference($ref)
 {
 	$this->SetFont( "Arial", "", 10);
-	$length = $this->GetStringWidth( "Références : " . $ref );
+	$length = $this->GetStringWidth( "Devis : " . $ref );
 	$r1  = 10;
 	$r2  = $r1 + $length;
 	$y1  = 92;
 	$y2  = $y1+5;
 	$this->SetXY( $r1 , $y1 );
-	$this->Cell($length,4, "Références : " . $ref);
+	$this->Cell($length,4, "Devis : " . $ref);
 }
 
 // trace le cadre des colonnes du devis/facture
@@ -386,7 +381,7 @@ function addCols( $tab )
 	}
 }
 
-// mémorise le format (gauche, centre, droite) d'une colonne
+// m�morise le format (gauche, centre, droite) d'une colonne
 function addLineFormat( $tab )
 {
 	global $format, $colonnes;
@@ -650,7 +645,7 @@ function addTVAs( $params, $tab_tva, $invoice )
 		{
 			$accompteTTC=sprintf ("%.2F", $params["accompte"]);
 			if ( strlen ($params["Remarque"]) == 0 )
-				$this->addRemarque( "Accompte de $accompteTTC Euros exigé à la commande.");
+				$this->addRemarque( "Accompte de $accompteTTC Euros exig� � la commande.");
 			else
 				$this->addRemarque( $params["Remarque"] );
 		}
@@ -662,12 +657,12 @@ function addTVAs( $params, $tab_tva, $invoice )
 			$accompteTTC=sprintf("%.2F", $totalTTC * $percent);
 			$percent100 = $percent * 100;
 			if ( strlen ($params["Remarque"]) == 0 )
-				$this->addRemarque( "Accompte de $percent100 % (soit $accompteTTC Euros) exigé à la commande." );
+				$this->addRemarque( "Accompte de $percent100 % (soit $accompteTTC Euros) exig� � la commande." );
 			else
 				$this->addRemarque( $params["Remarque"] );
 		}
 		else
-			$this->addRemarque( "Drôle d'acompte !!! " . $params["Remarque"]);
+			$this->addRemarque( "Dr�le d'acompte !!! " . $params["Remarque"]);
 	}
 	else
 	{
@@ -730,7 +725,7 @@ function RowHead($data)
 	for($i=0;$i<count($data);$i++)
 		$nb=max($nb,$this->NbLines($this->widths[$i],$data[$i]));
 	$h=12;
-	//Effectue un saut de page si nécessaire
+	//Effectue un saut de page si n�cessaire
 	$this->CheckPageBreak($h);
 	//Dessine les cellules
 	for($i=0;$i<count($data);$i++)
@@ -751,10 +746,10 @@ function RowHead($data)
 		//Imprime le texte
 		$this->SetFont('Arial','B',7);
 		$this->MultiCell($w,6,$data[$i],0,$a);
-		//Repositionne à droite
+		//Repositionne � droite
 		$this->SetXY($x+$w,$y);
 	}
-	//Va à la ligne
+	//Va � la ligne
 	$this->Ln($h);
 }
 
@@ -765,7 +760,7 @@ function RowHeadBase($data)
 	for($i=0;$i<count($data);$i++)
 		$nb=max($nb,$this->NbLines($this->widths[$i],$data[$i]));
 	$h=5*$nb;
-	//Effectue un saut de page si nécessaire
+	//Effectue un saut de page si n�cessaire
 	$this->CheckPageBreak($h);
 	//Dessine les cellules
 	for($i=0;$i<count($data);$i++)
@@ -780,10 +775,10 @@ function RowHeadBase($data)
 		//Imprime le texte
 		$this->SetFont('Arial','B',11);
 		$this->MultiCell($w,6,$data[$i],0,$a);
-		//Repositionne à droite
+		//Repositionne � droite
 		$this->SetXY($x+$w,$y);
 	}
-	//Va à la ligne
+	//Va � la ligne
 	$this->Ln($h);
 }
 
@@ -801,7 +796,7 @@ function Row($data)
 			$h=10;
 		}
 
-	//Effectue un saut de page si nécessaire
+	//Effectue un saut de page si n�cessaire
 	$this->CheckPageBreak($h);
 	//Dessine les cellules
 	for($i=0;$i<count($data);$i++)
@@ -823,10 +818,10 @@ function Row($data)
 		//Imprime le texte
 		$this->SetFont('Arial','',6);
 		$this->MultiCell($w,4,$data[$i],0,$a);
-		//Repositionne à droite
+		//Repositionne � droite
 		$this->SetXY($x+$w,$y);
 	}
-	//Va à la ligne
+	//Va � la ligne
 	$this->Ln($h);
 }
 
@@ -843,7 +838,7 @@ function Row1($data)
 			$h=10;
 		}
 
-	//Effectue un saut de page si nécessaire
+	//Effectue un saut de page si n�cessaire
 	$this->CheckPageBreak($h);
 	//Dessine les cellules
 	for($i=0;$i<count($data);$i++)
@@ -865,16 +860,16 @@ function Row1($data)
 		//Imprime le texte
 		$this->SetFont('Arial','B',6);
 		$this->MultiCell($w,4,$data[$i],0,$a);
-		//Repositionne à droite
+		//Repositionne � droite
 		$this->SetXY($x+$w,$y);
 	}
-	//Va à la ligne
+	//Va � la ligne
 	$this->Ln($h);
 }
 
 function CheckPageBreak($h)
 {
-	//Si la hauteur h provoque un débordement, saut de page manuel
+	//Si la hauteur h provoque un d�bordement, saut de page manuel
 	if($this->GetY()+$h>$this->PageBreakTrigger)
 		$this->AddPage($this->CurOrientation);
 }
@@ -938,13 +933,13 @@ function Header()
 
 function Footer()
 {
-	// Positionnement à 1,5 cm du bas
+	// Positionnement � 1,5 cm du bas
 	$this->SetY(-15);
 	// Arial italique 8
 	$this->SetFont('Arial','I',8);
 	// Couleur du texte en gris
 	$this->SetTextColor(128);
-	// Numéro de page
+	// Num�ro de page
 	//$this->Cell(0,10,'Page '.$this->PageNo(),0,0,'C');
 }
 
@@ -966,7 +961,7 @@ function CorpsChapitre($fichier)
 	//$txt = file_get_contents($fichier);
 	// Times 12
 	$this->SetFont('Arial','',12);
-	// Sortie du texte justifié
+	// Sortie du texte justifi�
 	$this->MultiCell(170,5,$fichier);
 	// Saut de ligne
 	// Mention en italique
@@ -980,7 +975,7 @@ function CorpsChapitreBold($fichier)
 	//$txt = file_get_contents($fichier);
 	// Times 12
 	$this->SetFont('Arial','B',12);
-	// Sortie du texte justifié
+	// Sortie du texte justifi�
 	$this->SetTextColor(0, 0, 0);
 	$this->MultiCell(250,5,$fichier);
 	// Saut de ligne
@@ -1013,7 +1008,7 @@ function CorpsChapitreBoldTailleCouleur($fichier, $taille, $redColor, $greenColo
 	// Times 12
 	$this->SetFont('Arial','B',$taille);
 	$this->SetTextColor($redColor, $greenColor, $blueColor);
-	// Sortie du texte justifié
+	// Sortie du texte justifi�
 	$this->MultiCell(110,10,$fichier);
 	// Saut de ligne
 	$this->Ln();
@@ -1029,7 +1024,7 @@ function CorpsChapitreTitreDOCUMENT($fichier, $taille)
 	// Times 12
 	$this->SetFont('Arial','B',$taille);
 	$this->SetTextColor(0,80,180);
-	// Sortie du texte justifié
+	// Sortie du texte justifi�
 	$this->Ln();
 	$this->MultiCell(200,10,$fichier);
 	// Saut de ligne
@@ -1046,7 +1041,7 @@ function CorpsChapitreParametrer($fichier, $taille, $police, $style, $redColor, 
 	// Times 12
 	$this->SetFont($police,$style,$taille);
 	$this->SetTextColor($redColor, $greenColor, $blueColor);
-	// Sortie du texte justifié
+	// Sortie du texte justifi�
 	$this->MultiCell(190,5,$fichier);
 	// Mention en italique
 	$this->SetFont('','I');
@@ -1078,7 +1073,7 @@ if(!isset($_SESSION['delta_MAILUSER'])){
 
 
 
-// $id = $_GET['ID'];
+
 $withEntete = 0;
 
 if(isset($_GET['ent'])){
@@ -1098,74 +1093,80 @@ $pdf->AddPage();
 //$pdf->Image('../assets/pied.png', 0, 276, 210 , 0, 'PNG');
 
 
-// $id					=	$_GET['ID'];
-
-
-$req="select * from delta_fournisseurs";	
-$query=mysql_query($req);
-while($enreg=mysql_fetch_array($query))
-{
-		$id							=	$enreg["id"] ;	
-		$date						=	date("d/m/Y");	
-		$raison_social				=	$enreg["raison_social"];	
-		$mail						=	$enreg["mail"];	
-		$adresse					=	$enreg["adresse"];	
-		$tel						=	$enreg["tel"];	
-		$mf							=	$enreg["matricule_fiscale"];	
-		$rc							=	$enreg["registre_commerce"];	
-		$activite					=	$enreg["activite"];	
-		
-	
-}
-	$raison_social = stripslashes($raison_social);
-	$raison_social = iconv('UTF-8', 'windows-1252', $raison_social);
-
-	$pdf->fact_dev( "Gestion Commercial","Liste des Fournisseurs" );
+	// $numero = stripslashes($numero);
+	// $numero = iconv('UTF-8', 'windows-1252', $numero);
+$date = date('d-m-y');
+$pdf->fact_dev(  "Gestion Commercial", "Liste des Produits");
 	$pdf->Ln();$pdf->Ln();$pdf->Ln();
 		
 	$pdf->addDate( $date );
 	$pdf->addPageNumber("1");
-// 	if($client<>""){
-// 		$pdf->addClientAdresse($client,$tel,$adresse,$trimestre);
-// 	}
+	
+		// $pdf->addClientAdresse($raison_social,$tel,$adresse);
+	
 
-// $total_tt=0;
-// $total=0;$tot_qte=0;
-$pdf->SetWidths(array(60,20,20,30,30,30));
+$total_ttc=0;
+$total=0;$tot_qte=0;
+$pdf->SetWidths(array(15,15,15,15,15,30,30,30,30));
 srand(microtime()*1000000);
 $pdf->Ln();$pdf->Ln();
-$des="";
-$pdf->RowHead(array(("R.Social"),("M.F"),("R.C"),("tel"),("adresse"),("mail")));
-	$article="";
-	$req="select * from delta_fournisseurs ";
+$pdf->RowHead(array(utf8_decode("produit"),utf8_decode("Famille"),utf8_decode("Unite"),utf8_decode("Marque"),utf8_decode("Empl."),utf8_decode("Prix d'achat HT"),utf8_decode("Prix d'achat TTC"),utf8_decode("Prix de vente HT"),utf8_decode("Prix de vente TTC")));
+	$ref="";
+	 $req="select * from delta_produits";
 	$query=mysql_query($req);
 	while($enreg=mysql_fetch_array($query))
-	{
+	{   
 		$id				                =	$enreg["id"] ;	
-		$raison_social				    =	$enreg["raison_social"] ;
-		$matricule_fiscale				=	$enreg["matricule_fiscale"] ;
-		$registre_commerce			    =	$enreg["registre_commerce"] ;
-		$tel				            =	$enreg["tel"] ;
-		$adresse			            =	$enreg["adresse"] ;
-		$mail			            	=	$enreg["mail"] ;
+		$reference				    	=	$enreg["reference"] ;
+		$famille					    =	$enreg["famille"] ;
+		$unite			            	=	$enreg["unite"] ;
+		$marque				            =	$enreg["marque"] ;
+		$emplacement			        =	$enreg["emplacement"] ;
+		$prix_achat_ttc			      	=	$enreg["prix_achat_ttc"] ;
+		$prix_achat_ht			      	=	$enreg["prix_achat_ht"] ;
+		$prix_vente_ht			      	=	$enreg["prix_vente_ht"] ;
+		$prix_vente_ttc				    =	$enreg["prix_vente_ttc"] ;
+		$tva				            =	$enreg["tva"] ;
+		$reqP="select * from delta_marques where id=".$marque ; 
+        $queryP = mysql_query($reqP) ; 
+        while($enregP = mysql_fetch_array($queryP)){
+            $marque = $enregP["designation"];
+        }
+		$reqU="select * from delta_unite_produit where id=".$unite ; 
+        $queryU = mysql_query($reqU) ; 
+        while($enregU = mysql_fetch_array($queryU)){
+            $unite = $enregU["code"];
+        }
+		$reqF="select * from delta_famille_produit where id=".$famille ; 
+        $quertF = mysql_query($reqF) ; 
+        while($enregF = mysql_fetch_array($quertF)){
+            $famille = $enregF["designation"];
+        }
+        $reqE="select * from delta_emplacements where id=".$emplacement ; 
+        $queryE = mysql_query($reqE) ; 
+        while($enregE = mysql_fetch_array($queryE)){
+            $emplacement = $enregE["designation"];
+        }
+       
+		
+        $pdf->SetFont('Arial','', 12); // Font Name, Font Style (eg. 'B' for Bold), Font Size
+		$pdf->Row(array(utf8_decode($reference),utf8_decode($famille),utf8_decode($unite),utf8_decode($marque),utf8_decode($emplacement),utf8_decode($prix_achat_ht),utf8_decode($prix_achat_ttc),utf8_decode($prix_vente_ht),utf8_decode($prix_vente_ttc)
+		   ));		
 
-
 		
 		
-		$pdf->SetFont('Arial','', 10); // Font Name, Font Style (eg. 'B' for Bold), Font Size
-		$pdf->Row(array(utf8_decode($raison_social),($matricule_fiscale),($registre_commerce),($tel),($adresse),($mail)));		
-		
-		
+			
+	
 	}
-$pdf->SetWidths(array(60,20,20,30,30,30));
-srand(microtime()*1000000);
-$pdf->Ln();$pdf->Ln();
+	
+    $pdf->SetWidths(array(15,15,30,30,30,30,15,15));
 
-	$pdf->SetFont('Arial','B', 10); // Font Name, Font Style (eg. 'B' for Bold), Font Size
-	// $pdf->RowHead(array(utf8_decode(''),(''),('TOTAL'),number_format($total,'3','.',''),'',number_format($total_tt,'3','.','')));		
+$pdf->SetFont('Arial','B', 10); 
+// $pdf->Row1(array("TOTAL","",number_format($total,"3",".",""),$tot_qte ,number_format($total_ttc,"3",".",""),"" ,""   ));		
 
 
-$filename="Liste_Fournisseurs.pdf";
+
+$filename="Liste des produits.pdf";
 $pdf->Output($filename, 'I');
 	
 

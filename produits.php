@@ -5,6 +5,15 @@ function SupprimerProduit(id) {
         document.location.href = "page_js/SupprimerProduit.php?ID=" + id;
     }
 }
+
+// function Imprimer() {
+//     if (confirm('Confirmez-vous cette action?')) {
+//         var myMODELE_A4 = window.open("print/imprimerProduits.php"
+//             "_blank",
+//             "toolbar=no, scrollbars=yes, resizable=no, top=500, left=500, width=700, height=600");
+
+//     }
+// }
 </script>
 <?php
 $reqDate="";
@@ -82,10 +91,10 @@ if(isset($_POST['marque'])){
                             <form name="SubmitContact" class="" method="post" action="" onSubmit="" style=''>
                                 <div class="col-xl-12">
                                     <div class="row">
-										<div class="col-sm-3">
-											<b>Référence </b>
-											<input class="form-control" name="code" value="<?php $code; ?>">
-										</div>
+                                        <div class="col-sm-3">
+                                            <b>Référence </b>
+                                            <input class="form-control" name="code" value="<?php $code; ?>">
+                                        </div>
                                         <div class="col-sm-3">
                                             <b>Famille </b>
                                             <select class="form-control select2" name="famille">
@@ -116,11 +125,19 @@ if(isset($_POST['marque'])){
                                                 <?php } ?>
                                             </select>
                                         </div>
-                                       
+
                                         <div class="col-xl-3">
                                             <b></b><br>
                                             <input name="SubmitContact" type="submit" id="submit"
                                                 class="btn btn-primary btn-sm " value="Filtrer">
+                                            <a href="print/imprimerProduits.php" target="_blank"
+                                                class="btn btn-sm btn-info waves-effect waves-light">
+                                                <i class="ion-printer"></i>
+                                            </a>
+                                            <a href="export/export_produits.php" target="_blank"
+                                                class="btn btn-sm btn-success waves-effect waves-light">
+                                                Exporter Excel
+                                            </a>
                                         </div>
 
                                     </div>
@@ -195,11 +212,7 @@ if(isset($_POST['marque'])){
                                                 class="btn btn-warning waves-effect waves-light">
                                                 <span class="glyphicon glyphicon-pencil"></span>Modifer
                                             </a>
-                                            <a href="javascript:Imprimer('<?php echo $id; ?>')"
-                                                class="btn btn-warning waves-effect waves-light"
-                                                style="background-color: blue;color: white;">
-                                                <span class="glyphicon glyphicon-print"></span>Imprimer
-                                            </a>
+
                                             <a href="Javascript:SupprimerProduit('<?php echo $id; ?>')"
                                                 class="btn btn-danger waves-effect waves-light"
                                                 style="background-color:brown">

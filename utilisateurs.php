@@ -2,40 +2,36 @@
 
 <div class="wrapper">
 
-  <div class="page-title-box">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-12">
-				<h4 class="page-title">Gestion des utilisateurs</h4>
-				<br> Utilisateur : <?php echo $_SESSION['delta_USER']; ?>
-			</div>
-		</div>
-	</div>
-  </div>
-  <script>
-		function Supprimer(id)
-	  {
-			if(confirm('Confirmez-vous cette action?'))
-			{
-				document.location.href="page_js/supprimerutilisateur.php?ID="+id ;
-			}			    
-	  }	
-	function Archiver(id)
-	  {
-			if(confirm('Confirmez-vous cette action?'))
-			{
-				document.location.href="page_js/archiverutilisateur.php?ID="+id ;
-			}			    
-	  }		  
-	function Unarchiver(id)
-	  {
-			if(confirm('Confirmez-vous cette action?'))
-			{
-				document.location.href="page_js/unarchiverutilisateur.php?ID="+id ;
-			}			    
-	  }	
-  </script>
- <?php
+    <div class="page-title-box">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4 class="page-title">Gestion des utilisateurs</h4>
+                    <br> Utilisateur : <?php echo $_SESSION['delta_USER']; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    function Supprimer(id) {
+        if (confirm('Confirmez-vous cette action?')) {
+            document.location.href = "page_js/supprimerutilisateur.php?ID=" + id;
+        }
+    }
+
+    function Archiver(id) {
+        if (confirm('Confirmez-vous cette action?')) {
+            document.location.href = "page_js/archiverutilisateur.php?ID=" + id;
+        }
+    }
+
+    function Unarchiver(id) {
+        if (confirm('Confirmez-vous cette action?')) {
+            document.location.href = "page_js/unarchiverutilisateur.php?ID=" + id;
+        }
+    }
+    </script>
+    <?php
 
 	if(isset($_GET['ID'])){
 		$id = $_GET['ID'];
@@ -86,70 +82,81 @@ if(isset($_POST['enregistrer_mail'])){
 
 	}
 	
-	?> 
-  <div class="page-content-wrapper">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="card m-b-20">
-						<div class="card-body">
-							<?php if(isset($_GET['suc'])){ ?>
-								<?php if($_GET['suc']=='1'){ ?>
-								<font color="green" style="background-color:#FFFFFF;"><center>Enregistrement effectué avec succès</center></font><br /><br />
-							<?php } }?>							
-							<form action="" method="POST">    
-								<div class="form-group row">								
-									<div class="col-sm-2">
-									<b>Nom (*)</b>
-										<input class="form-control" type="text"  placeholder="Nom d'utilisateur" value="<?php echo $nom; ?>" id="example-text-input" name="nom" required>
-									</div>
-									<div class="col-sm-2">
-									<b>Prénom (*)</b>
-										<input class="form-control"  type="text"  placeholder="prénom d'utilisateur" value="<?php echo $prenom; ?>" id="example-text-input" name="prenom" required>
-									</div>
-									<div class="col-sm-2">
-									<b>Mail (*)</b>
-										<input class="form-control"  data-parsley-type="email" type="email"  placeholder="Mail d'utilisateur" value="<?php echo $mail; ?>" id="example-text-input" name="mail" required>
-									</div>										
-									<div class="col-sm-2">
-									<b>Mot de passe (*)</b>
-										<input class="form-control"  data-parsley-type="text" type="text"  placeholder="MDP d'utilisateur" value="<?php echo $motdepasse; ?>" id="example-text-input" name="motdepasse" required>
-									</div>		
-									
-									<div class="col-sm-2">
-									<b>Profil (*)</b>
-										<select class="form-control select2" name="idprofil" required>
-											<option value=""> Sélectionner un profil </option>
-											<?php
+	?>
+    <div class="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card m-b-20">
+                        <div class="card-body">
+                            <?php if(isset($_GET['suc'])){ ?>
+                            <?php if($_GET['suc']=='1'){ ?>
+                            <font color="green" style="background-color:#FFFFFF;">
+                                <center>Enregistrement effectué avec succès</center>
+                            </font><br /><br />
+                            <?php } }?>
+                            <form action="" method="POST">
+                                <div class="form-group row">
+                                    <div class="col-sm-2">
+                                        <b>Nom (*)</b>
+                                        <input class="form-control" type="text" placeholder="Nom d'utilisateur"
+                                            value="<?php echo $nom; ?>" id="example-text-input" name="nom" required>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <b>Prénom (*)</b>
+                                        <input class="form-control" type="text" placeholder="prénom d'utilisateur"
+                                            value="<?php echo $prenom; ?>" id="example-text-input" name="prenom"
+                                            required>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <b>Mail (*)</b>
+                                        <input class="form-control" data-parsley-type="email" type="email"
+                                            placeholder="Mail d'utilisateur" value="<?php echo $mail; ?>"
+                                            id="example-text-input" name="mail" required>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <b>Mot de passe (*)</b>
+                                        <input class="form-control" data-parsley-type="text" type="text"
+                                            placeholder="MDP d'utilisateur" value="<?php echo $motdepasse; ?>"
+                                            id="example-text-input" name="motdepasse" required>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <b>Profil (*)</b>
+                                        <select class="form-control select2" name="idprofil" required>
+                                            <option value=""> Sélectionner un profil </option>
+                                            <?php
 											$req="select * from delta_profil order by profil";
 											$query=mysql_query($req);
 											while($enreg=mysql_fetch_array($query)){
 											?>
-											<option value="<?php echo $enreg['id']; ?>" <?php if($idprofil==$enreg['id']) {?> selected <?php } ?>><?php echo $enreg['profil']; ?></option>
-											<?php } ?>
-										</select>										
-									</div>									
-								</div>
-								
-								<div class="form-group row">
-									<div class="col-sm-2">	
-										<br>
-										<button type="submit" class="btn btn-primary waves-effect waves-light">
-											Enregistrer
-										</button>
-										<input class="form-control" type="hidden" name="enregistrer_mail">										
-									</div>
-								</div>
-																			
-							</form>   
-						</div>
+                                            <option value="<?php echo $enreg['id']; ?>"
+                                                <?php if($idprofil==$enreg['id']) {?> selected <?php } ?>>
+                                                <?php echo $enreg['profil']; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
 
-					</div>
-				 </div> 
-			</div> 
-			
-			
-<?php
+                                <div class="form-group row">
+                                    <div class="col-sm-2">
+                                        <br>
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                            Enregistrer
+                                        </button>
+                                        <input class="form-control" type="hidden" name="enregistrer_mail">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <?php
 $reqEmp="";
 $utilisateur="";
 if(isset($_POST['utilisateur'])){
@@ -167,64 +174,69 @@ if(isset($_POST['profil'])){
 		$reqProfil			=	" and  idprofil =".$profil;
 	}
 }
-?>	        		
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="card m-b-20">
-						<div class="card-body">
-							<h3>Liste des utilisateurs</h3>			
-								<form name="SubmitContact" class="" method="post" action="" onSubmit="" style=''>
-									<div class="col-xl-12">
-										<div class="row">
-											<div class="col-xl-3">
-											<b>Liste des utilisateurs</b>
-											<select class="form-control select2" name="utilisateur">
-												<option value=""> Sélectionner un utilisateur </option>
-												<?php
+?>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card m-b-20">
+                        <div class="card-body">
+                            <h3>Liste des utilisateurs</h3>
+                            <form name="SubmitContact" class="" method="post" action="" onSubmit="" style=''>
+                                <div class="col-xl-12">
+                                    <div class="row">
+                                        <div class="col-xl-3">
+                                            <b>Liste des utilisateurs</b>
+                                            <select class="form-control select2" name="utilisateur">
+                                                <option value=""> Sélectionner un utilisateur </option>
+                                                <?php
 												$req="select * from delta_utilisateurs order by nom";
 												$query=mysql_query($req);
 												while($enreg=mysql_fetch_array($query)){
 												?>
-												<option value="<?php echo $enreg['id']; ?>" <?php if($utilisateur==$enreg['id']) {?> selected <?php } ?>><?php echo $enreg['nom'].' '.$enreg['prenom']; ?></option>
-												<?php } ?>
-											</select>
-											</div>
-											<div class="col-xl-3">
-											<b>Liste des équipes</b>
-											<select class="form-control select2" name="profil">
-												<option value=""> Sélectionner un profil </option>
-												<?php
+                                                <option value="<?php echo $enreg['id']; ?>"
+                                                    <?php if($utilisateur==$enreg['id']) {?> selected <?php } ?>>
+                                                    <?php echo $enreg['nom'].' '.$enreg['prenom']; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <b>Liste des équipes</b>
+                                            <select class="form-control select2" name="profil">
+                                                <option value=""> Sélectionner un profil </option>
+                                                <?php
 												$req="select * from delta_profil order by profil";
 												$query=mysql_query($req);
 												while($enreg=mysql_fetch_array($query)){
 												?>
-												<option value="<?php echo $enreg['id']; ?>" <?php if($profil==$enreg['id']) {?> selected <?php } ?>><?php echo $enreg['profil']; ?></option>
-												<?php } ?>
-											</select>
-											</div>
+                                                <option value="<?php echo $enreg['id']; ?>"
+                                                    <?php if($profil==$enreg['id']) {?> selected <?php } ?>>
+                                                    <?php echo $enreg['profil']; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
 
-											<div class="col-xl-3">
-											  <b></b><br>
-												<input name="SubmitContact" type="submit" id="submit" class="btn btn-primary btn-sm " value="Filtrer">											
-											</div>
-											
-										</div>	
-									</div>
-								</form>
-								<br>
-                                    <table class="table mb-0">
-                                        <thead>
-                                        <tr>
-                                            <th><b>Nom et prénom</b></th>
-                                            <th><b>Mail</b></th>
-											<th><b>Mot de passe</b></th>
-											<th><b>Profil</b></th>
-											<th><b>Etat</b></th>
-											<th><b>Action</b></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-<?php
+                                        <div class="col-xl-3">
+                                            <b></b><br>
+                                            <input name="SubmitContact" type="submit" id="submit"
+                                                class="btn btn-primary btn-sm " value="Filtrer">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                            <br>
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th><b>Nom et prénom</b></th>
+                                        <th><b>Mail</b></th>
+                                        <th><b>Mot de passe</b></th>
+                                        <th><b>Profil</b></th>
+                                        <th><b>Etat</b></th>
+                                        <th><b>Action</b></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
 	$id					=	0;
 	$nom				=	"";
 	$prenom				=	"";
@@ -252,53 +264,51 @@ if(isset($_POST['profil'])){
 			$nomprofil			=	$enregprofil["profil"] ;
 		}
 	?>
-										<tr>
-											 <td><?php echo $nom.' '.$prenom; ?></td>
-											 <td><?php echo $mail; ?></td>
-											 <td><?php echo $motdepasse; ?></td>
-											 <td><?php echo $nomprofil; ?></td>
-											 <td>
-												<?php if($enreg['archive']==0){ ?>
-													<b style="color:green"> Actif </b>
-												<?php } else{ ?>
-													<b style="color:red"> Inactif </b>
-												<?php } ?>
-											 
-											 </td>
-											 <td>
-												<a href="utilisateurs.php?ID=<?php echo $id; ?>" class="btn btn-warning waves-effect waves-light">
-													<span class="glyphicon glyphicon-pencil"></span>
-												</a>
-												<a href="autorisation_users.php?ID=<?php echo $id; ?>" class="btn btn-warning waves-effect waves-light">
-													Autorisation
-												</a>												
-												<?php if ($enreg["archive"]=="0"){ ?>
-													<a href="Javascript:Archiver('<?php echo $id; ?>')" class="btn btn-danger waves-effect waves-light">Archiver</a>						
-												<?php } else {?>
-													<a href="Javascript:Unarchiver('<?php echo $id; ?>')" class="btn btn-dark waves-effect waves-light">Unarchiver</a>
-												<?php }?>	
-												<?php 
-												/*$reqc='select * from telec_requete where idutilisateur='.$id;
-												$queryc=mysql_query($reqc);
-												$numc=mysql_num_rows($queryc);
-												if($numc=='0'){ ?>
-												<a href="Javascript:Supprimer('<?php echo $id; ?>')" class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
-												<?php }*/ ?>
-											 </td>
-										</tr>
-	<?php } ?>
-                                        </tbody>
-                                    </table>								
-								
-						</div> 
-					</div> 
-					
-				</div> 
-			</div> 	
-			
-			
-		 </div> 
-  </div>
- </div>
+                                    <tr>
+                                        <td><?php echo $nom.' '.$prenom; ?></td>
+                                        <td><?php echo $mail; ?></td>
+                                        <td><?php echo $motdepasse; ?></td>
+                                        <td><?php echo $nomprofil; ?></td>
+                                        <td>
+                                            <?php if($enreg['archive']==0){ ?>
+                                            <b style="color:green"> Actif </b>
+                                            <?php } else{ ?>
+                                            <b style="color:red"> Inactif </b>
+                                            <?php } ?>
+
+                                        </td>
+                                        <td>
+                                            <a href="utilisateurs.php?ID=<?php echo $id; ?>"
+                                                class="btn btn-warning waves-effect waves-light">
+                                                <span class="far fa-edit"></span>
+                                            </a>
+                                            <a href="autorisation_users.php?ID=<?php echo $id; ?>"
+                                                class="btn btn-warning waves-effect waves-light">
+                                                Autorisation
+                                            </a>
+                                            <?php if ($enreg["archive"]=="0"){ ?>
+                                            <a href="Javascript:Archiver('<?php echo $id; ?>')"
+                                                class="btn btn-danger waves-effect waves-light">Archiver</a>
+                                            <?php } else {?>
+                                            <a href="Javascript:Unarchiver('<?php echo $id; ?>')"
+                                                class="btn btn-dark waves-effect waves-light">Unarchiver</a>
+                                            <?php }?>
+
+                                        </td>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
 
 <?php include ("menu_footer/footer.php"); ?>

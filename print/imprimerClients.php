@@ -180,7 +180,7 @@ function fact_dev( $libelle, $num )
     $y2  = $y1 + 2;
     $mid = ($r1 + $r2 ) / 2;
     
-    $texte  = $libelle . " N° : " . $num;    
+    $texte  = $libelle . "  : " . $num;    
     $szfont = 12;
     $loop   = 0;
     
@@ -1101,24 +1101,24 @@ $pdf->AddPage();
 // $id					=	$_GET['ID'];
 
 
-// $req="select * from delta_fournisseurs where id=".$id;	
-// $query=mysql_query($req);
-// while($enreg=mysql_fetch_array($query))
-// {
-// 		$id					=	$enreg["id"] ;	
-// 		$date				=	date("d/m/Y");	
-// 		$raison_social				=	$enreg["raison_social"];	
+$req="select * from delta_clients ";	
+$query=mysql_query($req);
+while($enreg=mysql_fetch_array($query))
+{
+		$id					=	$enreg["id"] ;	
+		$date				=	date("d/m/Y");	
+		$raison_social				=	$enreg["raison_social"];	
 		
 	
-// }
-// 	$raison_social = stripslashes($raison_social);
-// 	$raison_social = iconv('UTF-8', 'windows-1252', $raison_social);
+}
+	$raison_social = stripslashes($raison_social);
+	$raison_social = iconv('UTF-8', 'windows-1252', $raison_social);
 
-	// $pdf->fact_dev( "Liste des clients" );
-	// $pdf->Ln();$pdf->Ln();$pdf->Ln();
+	$pdf->fact_dev( "Gestion Commercial", "Liste des clients" );
+	$pdf->Ln();$pdf->Ln();$pdf->Ln();
 		
-	// $pdf->addDate( $date );
-	// $pdf->addPageNumber("1");
+	$pdf->addDate( $date );
+	$pdf->addPageNumber("1");
 	// if($client<>""){
 	// 	$pdf->addClientAdresse($client,$tel,$adresse,$trimestre);
 	// }
