@@ -1,24 +1,17 @@
 # Todo
 
-- Client :  Nom de contact, contact par défaut
-- Fournisseur : nom de contact, contact par défaut
-- Information bancaire pour chaque client
-- Information bancaire pour chaque Fournisseur
-- Impression fiche client
-- Exportation Excel de liste client
+- valorisation de stock
 
+- filtrage ecran entrée marchandises
 
+- filtrage ecra livraison client
 
+-filtrage ecran devis client
 
-- Exportation Excel de liste produit
-- Exportation Excel de liste fournisseurs
+- impression fiche client
 
+- impression fiche produit
 
-- Stock par produit ( avec impression )
-- Liste des articles à commander
-- Valorisation de stock
-  
+- impression fich fournisseur
 
-- Impression fiche produit
-- Impression liste des clients
-- Impression liste des fournisseurs
+- filtrage dans les tables des base : estimation 3 heures
