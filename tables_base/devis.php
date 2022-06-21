@@ -12,10 +12,19 @@ $codsoc	        	=	$_SESSION['delta_SOC'] ;
 $code	        	=	addslashes($_POST["code"]) ;
 $designation		=	addslashes($_POST["designation"]) ;
 $nombre_chiffre		=	addslashes($_POST["nombre_chiffre"]) ;
-$symbole		=	addslashes($_POST["symbole"]) ;
+$symbole			=	addslashes($_POST["symbole"]) ;
+$taux			=	addslashes($_POST["taux"]) ;
 
 if($id=="0")
     {
+		//Vérfication d'existance de code
+		$req="select * from delta_devise where code='".$code."'";
+		$query=mysql_query($req);
+		if(mysql_num_rows($query)>0){
+			 echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=5&err=1" </SCRIPT>';
+			 exit;
+		}	
+		
         $req="select max(id) as maxID from delta_devise";
         $query=mysql_query($req);
         if(mysql_num_rows($query)>0){
@@ -26,8 +35,8 @@ if($id=="0")
             $id = 1;
         }
 
-        $sql="INSERT INTO `delta_devise`(`id`,`codsoc`,`code`,`designation`,`symbole`,`nombre_chiffre`) VALUES
-        ('".$id."','".$codsoc."','".$code."' , '".$designation."', '".$symbole."' , '".$nombre_chiffre."'  )";
+        $sql="INSERT INTO `delta_devise`(`id`,`codsoc`,`code`,`designation`,`symbole`,`nombre_chiffre`,`taux`) VALUES
+        ('".$id."','".$codsoc."','".$code."' , '".$designation."', '".$symbole."' , '".$nombre_chiffre."', '".$taux."'  )";
         
         //Log
         $dateheure=date('Y-m-d H:i:s');
@@ -37,7 +46,7 @@ if($id=="0")
         $req=mysql_query($sql1);			
     }
 else{
-        $sql="UPDATE `delta_devise` SET `code`='".$code."' , `designation`='".$designation."', `symbole`='".$symbole."', `nombre_chiffre`='".$nombre_chiffre."' WHERE id=".$id;
+        $sql="UPDATE `delta_devise` SET `code`='".$code."' , `designation`='".$designation."', `symbole`='".$symbole."', `taux`='".$taux."', `nombre_chiffre`='".$nombre_chiffre."' WHERE id=".$id;
         
         //Log
         $dateheure=date('Y-m-d H:i:s');
@@ -55,7 +64,7 @@ $code		        =	"" ;
 $designation		=	"" ;
 $nombre_chiffre		=	"" ;
 $symbole    		=	"" ;
-
+$taux				=	"";
 $req="select * from delta_devise where id=".$id;
 $query=mysql_query($req);
 while($enreg=mysql_fetch_array($query))
@@ -65,6 +74,7 @@ while($enreg=mysql_fetch_array($query))
     $designation	=	$enreg["designation"] ;
     $nombre_chiffre	=	$enreg["nombre_chiffre"] ;
     $symbole       	=	$enreg["symbole"] ;
+	$taux			=	$enreg["taux"] ;
 }
 ?>
 <script>
@@ -75,9 +85,7 @@ function SupprimerDevis(id) {
 }
 </script>
 <form action="" method="POST">
-    <div class="form-group row">
-        <h3 class="col-lg-12 mt-5 mb-5" style="color: red  !important;">Devise (*)</h3>
-
+    <div class="form-group row" id="DivDEV" <?php if(!isset($_GET['add5']) and !isset($_GET['IDD']) ){?> style="display:none" <?php }?>>
         <div class="col-sm-2">
             <b>Code (*)</b>
             <input class="form-control" type="text" placeholder="Famille de produit" value="<?php echo $code; ?>"
@@ -98,6 +106,11 @@ function SupprimerDevis(id) {
             <input class="form-control" type="text" placeholder="symbole" value="<?php echo $symbole; ?>"
                 id="example-text-input" name="symbole" required>
         </div>
+        <div class="col-sm-2">
+            <b>Taux de change (*)</b>
+            <input class="form-control" type="text" placeholder="Taux" value="<?php echo $taux; ?>"
+                id="example-text-input" name="taux" required>
+        </div>		
         <div class="col-sm-3"><br>
             <button type="submit" class="btn btn-primary waves-effect waves-light">
                 Enregistrer
@@ -108,7 +121,20 @@ function SupprimerDevis(id) {
 
 </form>
 <div class="col-xl-12">
-    <h3 class="col-lg-12 " style="color : red">Liste des Devise (*)</h3>
+   	<div class="col-xl-12 row">
+		<div class="col-xl-6">
+			 <b class="col-lg-12" style="color : red">Liste des devises</b>
+		</div>
+		<div class="col-xl-3"></div>
+		<div class="col-xl-3">
+			<button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutDEV"  <?php if(isset($_GET['add5']) and (isset($_GET['IDD'])) ){?> style="display:none" <?php }?>>+ Ajouter</button>
+			<button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerDEV"  <?php if(!isset($_GET['add5']) and !isset($_GET['IDD'])){?> style="display:none" <?php }?>>- Annuler</button>
+		</div>			
+	</div>
+	<?php if(isset($_GET['err'])){ ?>
+		<?php if($_GET['err']=='1'){ ?>
+		<font color="red" style="background-color:#FFFFFF;"><center>Attention ! Ce code est déjà existant</center></font><br /><br />
+	<?php } }?>	
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>

@@ -51,8 +51,43 @@ $i = 5;
 	session_start();
 	include('../connexion/cn.php');
 
+	$reqfamille="";
+	$famille="";
+	if(isset($_GET['famille'])){
+		if(is_numeric($_GET['famille'])){
+			$famille				=	$_GET['famille'];
+			$reqfamille				=	" and  famille=".$famille;
+		}
+	}
+	$reqCode="";
+	$code="";
+	if(isset($_GET['code'])){
+		if(($_GET['code'])<>""){
+			$code				=	$_GET['code'];
+			$reqCode			=	" and  designation like '%".$code."%'";
+		}
+	}
+
+	$reqUnite="";
+	$unite="";
+	if(isset($_GET['unite'])){
+		if(is_numeric($_GET['unite'])){
+			$unite				=	$_GET['unite'];
+			$reqUnite			=	" and  unite=".$unite;
+		}
+	}
+
+	$reqNature="";
+	$nature="";
+	if(isset($_GET['nature'])){
+		if(is_numeric($_GET['nature'])){
+			$nature				=	$_GET['nature'];
+			$reqNature			=	" and  nature=".$nature;
+		}
+	}
 	$article="";
-	$req="select * from delta_produits";
+	$req = "select * from delta_produits where 1=1 ".$reqCode.$reqfamille.$reqUnite.$reqNature." order by nature"; 
+
 	$query=mysql_query($req);
 	while($enreg=mysql_fetch_array($query))
 	{
@@ -71,6 +106,7 @@ $i = 5;
         $stock                          =   $enreg["stock"];
         $seuil                          =   $enreg["seuil"];
         $dateheure              = date('d-m-y'); 
+
 			$reqR = "select * from delta_famille_produit where id=".$famille ; 
             $queryR = mysql_query($reqR) ; 
             while($enregR = mysql_fetch_array($queryR)){

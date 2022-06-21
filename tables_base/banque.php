@@ -14,6 +14,13 @@ $designation		=	addslashes($_POST["designation"]) ;
 
 if($id=="0")
     {
+		//Vérfication d'existance de code
+		$req="select * from delta_banques where code='".$code."'";
+		$query=mysql_query($req);
+		if(mysql_num_rows($query)>0){
+			 echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=8&err=1" </SCRIPT>';
+			 exit;
+		}			
         $req="select max(id) as maxID from delta_banques";
         $query=mysql_query($req);
         if(mysql_num_rows($query)>0){
@@ -69,8 +76,7 @@ function SupprimerBanque(id) {
 }
 </script>
 <form action="" method="POST">
-    <div class="form-group row">
-        <h3 class="col-lg-12 mt-5 mb-5" style="color: red  !important;">Banque (*)</h3>
+   <div class="form-group row" id="DivBNK" <?php if(!isset($_GET['add8']) and !isset($_GET['IDB']) ){?> style="display:none" <?php }?>>
 
         <div class="col-sm-4">
             <b>Code (*)</b>
@@ -92,7 +98,20 @@ function SupprimerBanque(id) {
 
 </form>
 <div class="col-xl-12">
-    <h3 class="col-lg-12 " style="color : red">Liste des Banques (*)</h3>
+   	<div class="col-xl-12 row">
+		<div class="col-xl-6">
+			 <b class="col-lg-12" style="color : red">Liste des banques</b>
+		</div>
+		<div class="col-xl-3"></div>
+		<div class="col-xl-3">
+			<button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutBNK"  <?php if(isset($_GET['add8']) and (isset($_GET['IDB'])) ){?> style="display:none" <?php }?>>+ Ajouter</button>
+			<button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerBNK"  <?php if(!isset($_GET['add8']) and !isset($_GET['IDB'])){?> style="display:none" <?php }?>>- Annuler</button>
+		</div>			
+	</div>
+	<?php if(isset($_GET['err'])){ ?>
+		<?php if($_GET['err']=='1'){ ?>
+		<font color="red" style="background-color:#FFFFFF;"><center>Attention ! Ce code est déjà existant</center></font><br /><br />
+	<?php } }?>	
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>

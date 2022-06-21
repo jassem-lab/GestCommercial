@@ -269,7 +269,28 @@
 		} else{
 			$sql="UPDATE delta_autorisation_utilisateur SET `gest_det_devis.php`=0 where idutilisateur=".$id." and codsoc=".$_SESSION['delta_SOC'];
 			$requete=mysql_query($sql);
-		}				
+		}	
+		if(isset($_POST["profils"])){
+			$sql="UPDATE delta_autorisation_utilisateur SET `profils.php`=1 where idutilisateur=".$id." and codsoc=".$_SESSION['delta_SOC'];
+			$requete=mysql_query($sql);
+		} else{
+			$sql="UPDATE delta_autorisation_utilisateur SET `profils.php`=0 where idutilisateur=".$id." and codsoc=".$_SESSION['delta_SOC'];
+			$requete=mysql_query($sql);
+		}	
+		if(isset($_POST["paremtrage"])){
+			$sql="UPDATE delta_autorisation_utilisateur SET `paremtrage.php`=1 where idutilisateur=".$id." and codsoc=".$_SESSION['delta_SOC'];
+			$requete=mysql_query($sql);
+		} else{
+			$sql="UPDATE delta_autorisation_utilisateur SET `paremtrage.php`=0 where idutilisateur=".$id." and codsoc=".$_SESSION['delta_SOC'];
+			$requete=mysql_query($sql);
+		}
+		if(isset($_POST["taxs"])){
+			$sql="UPDATE delta_autorisation_utilisateur SET `taxs.php`=1 where idutilisateur=".$id." and codsoc=".$_SESSION['delta_SOC'];
+			$requete=mysql_query($sql);
+		} else{
+			$sql="UPDATE delta_autorisation_utilisateur SET `taxs.php`=0 where idutilisateur=".$id." and codsoc=".$_SESSION['delta_SOC'];
+			$requete=mysql_query($sql);
+		}			
 	}
 ?>
 	
@@ -305,7 +326,9 @@
 	$autorisation_users					=		0;
 	$autorisation_addprofils			=		0;
 	$gest_det_devis						=		0;
-	
+	$profils							=		0;
+	$paremtrage							=		0;
+	$taxs								=		0;
 
 	$req="select * from delta_autorisation_utilisateur where idutilisateur=".$id." and codsoc=".$_SESSION['delta_SOC'];
 	$query=mysql_query($req);
@@ -341,6 +364,9 @@
 		$autorisation_users					=		$enreg['autorisation_users.php'];
 		$autorisation_addprofils			=		$enreg['autorisation_addprofils.php'];
 		$gest_det_devis						=		$enreg['gest_det_devis.php'];
+		$profils							=		$enreg['profils.php'];
+		$paremtrage							=		$enreg['paremtrage.php'];
+		$taxs								=		$enreg['taxs.php'];
 	}
 ?>
     <!-- page-title-box -->
@@ -350,11 +376,22 @@
                 <div class="col-lg-12">
                     <div class="card m-b-20">
                         <div class="card-body">
-                            <a href="utilisateurss.php" class="btn btn-primary waves-effect waves-light">Retour</a>
+                            <a href="utilisateurs.php" class="btn btn-primary waves-effect waves-light">Retour</a>
                             <form method="POST">
 
                                 <div class="form-group" style="margin-top:30px">
-									
+									 <div class="col-md-12 row">
+									  <input type="checkbox" id="paremtrage" name="paremtrage" value="1" <?php if($paremtrage==1){ ?> checked <?php } ?>>
+									  <label for="paremtrage" style="margin-left: 5px;"> Paramétrage d'exercice</label><br>									  
+									 </div> 	
+									 <div class="col-md-12 row">
+									  <input type="checkbox" id="taxs" name="taxs" value="1" <?php if($taxs==1){ ?> checked <?php } ?>>
+									  <label for="taxs" style="margin-left: 5px;"> Paramétrage des taxs</label><br>									  
+									 </div>									 
+									 <div class="col-md-12 row">
+									  <input type="checkbox" id="profils" name="profils" value="1" <?php if($profils==1){ ?> checked <?php } ?>>
+									  <label for="profils" style="margin-left: 5px;"> Gestion des profils</label><br>									  
+									 </div>  									
 									<div class="col-md-12 row">
 									  <input type="checkbox" id="utilisateurs" name="utilisateurs" value="1" <?php if($utilisateurs==1){ ?> checked <?php } ?>>
 									  <label for="utilisateurs" style="margin-left: 5px;"> Gestion des utilisateurs</label><br>

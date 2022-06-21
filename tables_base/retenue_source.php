@@ -1,7 +1,7 @@
 <?php
 
-if(isset($_GET['IDB'])){
-    $id = $_GET['IDB'];
+if(isset($_GET['IDRET'])){
+    $id = $_GET['IDRET'];
 }else{
     $id = "0";
 }
@@ -10,7 +10,7 @@ if(isset($_POST['enregistrer_mail21'])){
 
 $codsoc	        	=	$_SESSION['delta_SOC'] ;
 $label	        	=	addslashes($_POST["label"]) ;
-$taux		=	addslashes($_POST["taux"]) ;
+$taux				=	addslashes($_POST["taux"]) ;
 
 if($id=="0")
     {
@@ -69,20 +69,18 @@ function SupprimerRetenue(id) {
 }
 </script>
 <form action="" method="POST">
-    <div class="form-group row">
-        <h3 class="col-lg-12 mt-5 mb-5" style="color: red  !important;">Retenue à la source (*)</h3>
+    <div class="form-group row" id="DivRET" <?php if(!isset($_GET['add17']) and !isset($_GET['IDRET']) ){?> style="display:none" <?php }?>>
 
-        <div class="col-sm-4">
-            <b>Label (*)</b>
-            <input class="form-control" type="text" placeholder="Label" value="<?php echo $label; ?>"
-                id="example-text-input" name="label" required>
+        <div class="col-sm-8">
+            <b>Libellé (*)</b>
+            <textarea class="form-control" type="text" placeholder="libellé" name="label"> <?php echo $label; ?></textarea>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-2">
             <b>Taux (*)</b>
             <input class="form-control" type="text" placeholder="Taux" value="<?php echo $taux; ?>"
                 id="example-text-input" name="taux" required>
         </div>
-        <div class="col-sm-3"><br>
+        <div class="col-sm-2"><br>
             <button type="submit" class="btn btn-primary waves-effect waves-light">
                 Enregistrer
             </button>
@@ -92,7 +90,16 @@ function SupprimerRetenue(id) {
 
 </form>
 <div class="col-xl-12">
-    <h3 class="col-lg-12 " style="color : red">Liste des Retenues à la source (*)</h3>
+   	<div class="col-xl-12 row">
+		<div class="col-xl-6">
+			 <b class="col-lg-12" style="color : red">Liste des retenus à la source</b>
+		</div>
+		<div class="col-xl-3"></div>
+		<div class="col-xl-3">
+			<button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutRET"  <?php if(isset($_GET['add17']) and (isset($_GET['IDRET'])) ){?> style="display:none" <?php }?>>+ Ajouter</button>
+			<button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerRET"  <?php if(!isset($_GET['add17']) and !isset($_GET['IDRET'])){?> style="display:none" <?php }?>>- Annuler</button>
+		</div>			
+	</div>
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
@@ -111,9 +118,9 @@ function SupprimerRetenue(id) {
             <tr>
                 <td><?php echo $enreg["label"] ?></td>
                 <td><?php echo $enreg["taux"]?></td>
-                <td><a type="button" href="tabs.php?IDB=<?php echo $enreg["id"] ?>&suc=17"
+                <td><a type="button" href="tabs.php?IDRET=<?php echo $enreg["id"] ?>&suc=17"
                         class="btn btn-warning waves-effect waves-light">Modifier</a>
-                    <a href="Javascript:SupprimerBanque('<?php echo $enreg["id"]; ?>')"
+                    <a href="Javascript:SupprimerRetenue('<?php echo $enreg["id"]; ?>')"
                         class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
                 </td>
             </tr>

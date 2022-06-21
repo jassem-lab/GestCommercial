@@ -21,6 +21,16 @@ $RIB		            =	addslashes($_POST["RIB"]) ;
 
 if($id=="0")
     {
+		
+		//Vérfication d'existance de code
+		$req="select * from delta_commerciaux where code='".$code."'";
+		$query=mysql_query($req);
+		if(mysql_num_rows($query)>0){
+			 echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=15&err=1" </SCRIPT>';
+			 exit;
+		}	
+				
+		
         $req="select max(id) as maxID from delta_commerciaux";
         $query=mysql_query($req);
         if(mysql_num_rows($query)>0){
@@ -91,10 +101,8 @@ function SupprimerCommerciaux(id) {
 }
 </script>
 <form action="" method="POST">
-    <div class="form-group row">
-        <h3 class="col-lg-12 mt-5 mb-5" style="color: blue  !important;">Commercial (*)</h3>
-
-        <div class="col-sm-3">
+    <div class="form-group row" id="DivC" <?php if(!isset($_GET['add15']) and !isset($_GET['IDCC']) ){?> style="display:none" <?php }?>>
+        <div class="col-sm-2">
             <b>Code (*)</b>
             <input class="form-control" type="text" placeholder="Code" value="<?php echo $code; ?>"
                 id="example-text-input" name="code" required>
@@ -149,7 +157,20 @@ function SupprimerCommerciaux(id) {
 
 </form>
 <div class="col-xl-12">
-    <h3 class="col-lg-12 " style="color : red">Liste des Commerciaux (*)</h3>
+    <div class="col-xl-12 row">
+		<div class="col-xl-6">
+			 <b class="col-lg-12" style="color : red">Liste des commerciaux</b>
+		</div>
+		<div class="col-xl-3"></div>
+		<div class="col-xl-3">
+			<button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutC"  <?php if(isset($_GET['add15']) and (isset($_GET['IDCC'])) ){?> style="display:none" <?php }?>>+ Ajouter</button>
+			<button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerC"  <?php if(!isset($_GET['add15']) and !isset($_GET['IDCC'])){?> style="display:none" <?php }?>>- Annuler</button>
+		</div>			
+	</div>
+	<?php if(isset($_GET['err'])){ ?>
+		<?php if($_GET['err']=='1'){ ?>
+		 <font color="red" style="background-color:#FFFFFF;"><center>Attention ! Ce Code est déjà existante</center></font><br /><br />
+	<?php } }?>
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>

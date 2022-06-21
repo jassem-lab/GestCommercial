@@ -50,18 +50,10 @@ if (isset($_POST['username'])) {
 			$_SESSION['delta_USER'] 	 = $enregTestExistEmail['nom'] . ' ' . $enregTestExistEmail['prenom'];
 			$_SESSION['delta_MAILUSER']  = $MAIL;
 			$_SESSION['delta_PROFIL'] 	 = $idprofil;
-           // $_SESSION['delta_SOC']       = $codsoc;
+            $_SESSION['delta_SOC']       = $codsoc;
 			
-			if (mysql_num_rows($queryTestExistEmail) >1) {
-				echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="dashbord_soc.php" </SCRIPT>';
-				exit;					
-			} else{
-				if($idprofil==1 or $idprofil==2){
-					echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="dashbord.php" </SCRIPT>';
-					exit;				
-				}				
-			}
-			
+			echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="dashbord.php" </SCRIPT>';
+			exit;
 			
 
 			if($enregTestExistEmail['archive']==1){
@@ -137,7 +129,7 @@ if (isset($_POST['username'])) {
             </div>
 
 				<div class="m-t-40 text-center">
-							<p class="text-muted"><b  style="color:white">  © 2022 Gestion commerciale <br> Application créée par  </b><a href="http://www.deltawebit.com/contact.php" target="_blank"><b  style="color:#e11919">Delta Web Information Technology</b></a></b></p>
+							<p class="text-muted"><b  style="color:white">Gestion Commerciale © 2022  <br> Application créée par  </b><a href="http://www.deltawebit.com/contact.php" target="_blank"><b  style="color:#e11919">Delta Web Information Technology</b></a></b></p>
 				</div>
 
         </div>

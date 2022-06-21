@@ -1,10 +1,8 @@
 <?php include('menu_footer/menu.php') ?>
 <style>
 .nav-link.active {
-    background: rgba(0, 0, 255, 0.6) !important;
-    color: white !important;
-    font-weight: 800;
-
+    color: #1b82ec !important;
+    font-weight: bold;
 }
 </style>
 <!-- page wrapper start -->
@@ -22,7 +20,7 @@
     </div>
     <!-- page-title-box -->
 
-    <div class="page-content-wrapper m-5">
+    <div class="page-content-wrapper">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
@@ -31,10 +29,16 @@
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==1){ ?> active show <?php } } ?>"
-                                        style="background: #ffc107  " data-toggle="tab" href="#famille"
+                                    <a class="nav-link <?php if((isset($_GET['suc']))){ if($_GET['suc']==1){ ?>
+									active show <?php } } ?> <?php if((!isset($_GET['suc']))){ ?> active show <?php }  ?>" 
+									style="background: #ffc107" data-toggle="tab" href="#famille"
                                         role="tab">Famille</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==18){ ?> active <?php } } ?>"
+                                        style="background: #ffc107  " data-toggle="tab" href="#nature" role="nature">Natures
+                                    </a>
+                                </li>								
                                 <li class="nav-item">
                                     <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==2){ ?> active <?php } } ?>"
                                         style="background: #ffc107  " data-toggle="tab" href="#unite" role="tab">Unité
@@ -84,15 +88,15 @@
                                         source</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==10){ ?> active <?php } } ?>"
-                                        style="background: #89c4a9 " data-toggle="tab" href="#gouvernorat"
-                                        role="tab">Gouvernorat</a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==11){ ?> active <?php } } ?>"
                                         style="background: #89c4a9 " data-toggle="tab" href="#region"
                                         role="tab">Région</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==10){ ?> active <?php } } ?>"
+                                        style="background: #89c4a9 " data-toggle="tab" href="#gouvernorat"
+                                        role="tab">Zone</a>
+                                </li>								
                                 <li class="nav-item">
                                     <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==12){ ?> active <?php } } ?>"
                                         style="background: #89c4a9 " data-toggle="tab" href="#pays" role="tab">Pays</a>
@@ -108,11 +112,6 @@
                                         role="tab">Commerciaux</a>
                                 </li>
 
-                                <li class="nav-item">
-                                    <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==13){ ?> active <?php } } ?>"
-                                        style="background: #eddff2 " data-toggle="tab" href="#parametres"
-                                        role="tab">Paramètres</a>
-                                </li>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
@@ -120,6 +119,10 @@
                                     id="famille" role="tabpanel">
                                     <?php include ("tables_base/famille_produit.php"); ?>
                                 </div>
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==18){ ?> active <?php } } ?>"
+                                    id="nature" role="tabpanel">
+                                    <?php include("tables_base/nature_produits.php"); ?>
+                                </div>								
                                 <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==2){ ?> active <?php } } ?>"
                                     id="unite" role="tabpanel">
                                     <?php include("tables_base/unite_produit.php"); ?>
@@ -180,10 +183,6 @@
                                     id="commerciaux" role="tabpanel">
                                     <?php include("tables_base/commerciaux.php"); ?>
                                 </div>
-                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==13){ ?> active <?php } } ?>"
-                                    id="parametres" role="tabpanel">
-                                    <?php include("tables_base/parametres.php"); ?>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -197,6 +196,190 @@
 <!-- end page content-->
 </div>
 <!-- page wrapper end -->
-
-
 <?php include("menu_footer/footer.php") ?>
+<script>
+	$("#btnAjoutRET").on("click", function(){
+		$("#DivRET").show();
+		$("#btnAjoutRET").hide();
+		$("#btnAnnulerRET").show();	
+		document.location.href="?suc=17&add17";
+	});
+	$("#btnAnnulerRET").on("click", function(){
+		$("#DivRET").hide();
+		$("#btnAjoutRET").show();
+		$("#btnAnnulerRET").hide();	
+	});
+	$("#btnAjoutCOL").on("click", function(){
+		$("#DivCOL").show();
+		$("#btnAjoutCOL").hide();
+		$("#btnAnnulerCOL").show();	
+		document.location.href="?suc=16&add16";
+	});
+	$("#btnAnnulerCOL").on("click", function(){
+		$("#DivCOL").hide();
+		$("#btnAjoutCOL").show();
+		$("#btnAnnulerCOL").hide();	
+	});
+
+	$("#btnAjoutC").on("click", function(){
+		$("#DivC").show();
+		$("#btnAjoutCOL").hide();
+		$("#btnAnnulerC").show();	
+		document.location.href="?suc=15&add15";
+	});
+	$("#btnAnnulerC").on("click", function(){
+		$("#DivC").hide();
+		$("#btnAjoutC").show();
+		$("#btnAnnulerC").hide();	
+	});	
+	
+	
+	
+	
+	$("#btnAjoutV").on("click", function(){
+		$("#DivV").show();
+		$("#btnAjoutV").hide();
+		$("#btnAnnulerV").show();	
+		document.location.href="?suc=14&add14";
+	});
+	$("#btnAnnulerV").on("click", function(){
+		$("#DivV").hide();
+		$("#btnAjoutV").show();
+		$("#btnAnnulerV").hide();	
+	});			
+	
+	
+	
+	$("#btnAjoutPAYS").on("click", function(){
+		$("#DivPAYS").show();
+		$("#btnAjoutPAYS").hide();
+		$("#btnAnnulerPAYS").show();	
+		document.location.href="?suc=12&add12";
+	});
+	$("#btnAnnulerPAYS").on("click", function(){
+		$("#DivPAYS").hide();
+		$("#btnAjoutPAYS").show();
+		$("#btnAnnulerPAYS").hide();	
+	});			
+	$("#btnAjoutREG").on("click", function(){
+		$("#DivREG").show();
+		$("#btnAjoutREG").hide();
+		$("#btnAnnulerREG").show();	
+		document.location.href="?suc=11&add11";
+	});
+	$("#btnAnnulerREG").on("click", function(){
+		$("#DivREG").hide();
+		$("#btnAjoutREG").show();
+		$("#btnAnnulerREG").hide();	
+	});		
+	$("#btnAjoutGV").on("click", function(){
+		$("#DivGV").show();
+		$("#btnAjoutBNK").hide();
+		$("#btnAnnulerGV").show();	
+		document.location.href="?suc=10&add10";
+	});
+	$("#btnAnnulerGV").on("click", function(){
+		$("#DivGV").hide();
+		$("#btnAjoutGV").show();
+		$("#btnAnnulerGV").hide();	
+	});	
+	$("#btnAjoutTVA").on("click", function(){
+		$("#DivTVA").show();
+		$("#btnAjoutBNK").hide();
+		$("#btnAnnulerTVA").show();	
+		document.location.href="?suc=9&add9";
+	});
+	$("#btnAnnulerTVA").on("click", function(){
+		$("#DivTVA").hide();
+		$("#btnAjoutTVA").show();
+		$("#btnAnnulerTVA").hide();	
+	});		
+	$("#btnAjoutBNK").on("click", function(){
+		$("#DivBNK").show();
+		$("#btnAjoutBNK").hide();
+		$("#btnAnnulerBNK").show();	
+		document.location.href="?suc=8&add8";
+	});
+	$("#btnAnnulerBNK").on("click", function(){
+		$("#DivBNK").hide();
+		$("#btnAjoutBNK").show();
+		$("#btnAnnulerBNK").hide();	
+	});		
+	$("#btnAjoutMOD").on("click", function(){
+		$("#DivMOD").show();
+		$("#btnAjoutCOL").hide();
+		$("#btnAnnulerMOD").show();	
+		document.location.href="?suc=7&add7";
+	});
+	$("#btnAnnulerMOD").on("click", function(){
+		$("#DivMOD").hide();
+		$("#btnAjoutMOD").show();
+		$("#btnAnnulerMOD").hide();	
+	});	
+	$("#btnAjoutMAG").on("click", function(){
+		$("#DivMAG").show();
+		$("#btnAjoutMAG").hide();
+		$("#btnAnnulerMAG").show();	
+		document.location.href="?suc=6&add6";
+	});
+	$("#btnAnnulerMAG").on("click", function(){
+		$("#DivMAG").hide();
+		$("#btnAjoutMAG").show();
+		$("#btnAnnulerMAG").hide();	
+	});
+	$("#btnAjoutDEV").on("click", function(){
+		$("#DivDEV").show();
+		$("#btnAjoutMAG").hide();
+		$("#btnAnnulerDEV").show();	
+		document.location.href="?suc=5&add5";
+	});
+	$("#btnAnnulerDEV").on("click", function(){
+		$("#DivDEV").hide();
+		$("#btnAjoutDEV").show();
+		$("#btnAnnulerDEV").hide();	
+	});	
+	$("#btnAjoutEMP").on("click", function(){
+		$("#DivEMP").show();
+		$("#btnAjoutEMP").hide();
+		$("#btnAnnulerEMP").show();	
+		document.location.href="?suc=4&add4";
+	});
+	$("#btnAnnulerEMP").on("click", function(){
+		$("#DivEMP").hide();
+		$("#btnAjoutEMP").show();
+		$("#btnAnnulerEMP").hide();	
+	});	
+	$("#btnAjoutMRQ").on("click", function(){
+		$("#DivMRQ").show();
+		$("#btnAjoutMRQ").hide();
+		$("#btnAnnulerMRQ").show();	
+		document.location.href="?suc=3&add3";
+	});
+	$("#btnAnnulerMRQ").on("click", function(){
+		$("#DivMRQ").hide();
+		$("#btnAjoutMRQ").show();
+		$("#btnAnnulerMRQ").hide();	
+	});
+	$("#btnAjoutUN").on("click", function(){
+		$("#DivUnite").show();
+		$("#btnAjoutUN").hide();
+		$("#btnAnnulerUN").show();	
+		document.location.href="?suc=2&add2";
+	});
+	$("#btnAnnulerUN").on("click", function(){
+		$("#DivUnite").hide();
+		$("#btnAjoutUN").show();
+		$("#btnAnnulerUN").hide();	
+	});
+	$("#btnAjoutFAM").on("click", function(){
+		$("#DivFamille").show();
+		$("#btnAjoutFAM").hide();
+		$("#btnAnnulerFAM").show();	
+		document.location.href="?add=1";
+	});
+	$("#btnAnnulerFAM").on("click", function(){
+		$("#DivFamille").hide();
+		$("#btnAjoutFAM").show();
+		$("#btnAnnulerFAM").hide();	
+	});
+</script>

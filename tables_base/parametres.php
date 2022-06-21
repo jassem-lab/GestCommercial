@@ -12,7 +12,7 @@ $codsoc	        	=	$_SESSION['delta_SOC'] ;
 $timbre	        	=	addslashes($_POST["timbre"]) ;
 $fodec      		=	addslashes($_POST["fodec"]) ;
 $exercice      		=	addslashes($_POST["exercice"]) ;
-$assujetti      		=	addslashes($_POST["assujetti"]) ;
+$assujetti      	=	addslashes($_POST["assujetti"]) ;
 
 
     
@@ -25,48 +25,42 @@ $assujetti      		=	addslashes($_POST["assujetti"]) ;
         $sql1="INSERT INTO `delta_log`(`dateheure`, `idutilisateur`, `document`, `action`, `iddocument`) VALUES ('".$dateheure."','".$iduser."','13','2','".$id."')";
         $req=mysql_query($sql1);				
    
-    $req=mysql_query($sql);
 
-    // echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=13" </SCRIPT>';
+     echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=13" </SCRIPT>';
  }
 
-$code		        =	"" ;
-$designation		=	"" ;
+$timbre	    =	"" ;
+$fodec	    =	"";
+$assujetti	=	"";
+$exercice	=	"" ;
 
 $req="select * from delta_parametres where id=1 ";
 $query=mysql_query($req);
 while($enreg=mysql_fetch_array($query))
 {
-
     $timbre	    =	$enreg["timbre"] ;
     $fodec	    =	$enreg["fodec"] ;
     $assujetti	=	$enreg["assujetti"] ;
     $exercice	=	$enreg["exercice"] ;
 }
 ?>
-<script>
-function SupprimerParametre(id) {
-    if (confirm('Confirmez-vous cette action?')) {
-        document.location.href = "page_js/supprimerParametre.php?ID=" + id;
-    }
-}
-</script>
+
 <form action="" method="POST">
     <div class="form-group row">
         <h3 class="col-lg-12 m-5">Paramètres (*)</h3>
 
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <b>Timbre (*)</b>
             <input class="form-control" type="text" placeholder="Timbre .. " value="<?php echo $timbre; ?>"
                 id="example-text-input" name="timbre" required>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <b>Taux Fodec (*)</b>
             <input class="form-control" type="text" placeholder="Taux Fodec" value="<?php echo $fodec; ?>"
                 id="example-text-input" name="fodec" required>
         </div>
         <div class="col-sm-3">
-            <b>Assujetti de la TVA (*)</b>
+            <b>Taux retenu client exonéré d'assujetti TVA(*)</b>
             <input class="form-control" type="text" value="<?php echo $assujetti; ?>" id="example-text-input"
                 name="assujetti" required>
         </div>

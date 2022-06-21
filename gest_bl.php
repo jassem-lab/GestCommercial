@@ -6,7 +6,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12">
-				<h4 class="page-title">Gestion des devis clients</h4>
+				<h4 class="page-title">Gestion des livraisons clients</h4>
 				<br> Utilisateur : <?php echo $_SESSION['delta_USER']; ?>
 			</div>
 		</div>
@@ -17,14 +17,14 @@
 	  {
 			if(confirm('Confirmez-vous cette action?'))
 			{
-				document.location.href="page_js/supprimerdevisclient.php?ID="+id ;
+				document.location.href="page_js/supprimerbl.php?ID="+id ;
 			}			    
 	  }	
 		function Imprimer(id)
 	  {
 			if(confirm('Confirmez-vous cette action?'))
 			{
-				var myMODELE_A4 = window.open("print/imprimer_devis.php?ID="+id, "_blank", "toolbar=no, scrollbars=yes, resizable=no, top=500, left=500, width=700, height=600");
+				var myMODELE_A4 = window.open("print/imprimer_bl.php?ID="+id, "_blank", "toolbar=no, scrollbars=yes, resizable=no, top=500, left=500, width=700, height=600");
 			}			    
 	  }	  	  
   </script>
@@ -53,8 +53,8 @@ if(isset($_POST['dat1'])){
 				<div class="col-lg-12">
 					<div class="card m-b-20">
 						<div class="card-body">
-						<a href="addedit_devis.php" class="btn btn-primary waves-effect waves-light">Ajouter un devis client</a> 
-							<h3>Liste des devis clients</h3>			
+						<a href="addedit_bl.php" class="btn btn-primary waves-effect waves-light">Ajouter un bon de livraison</a> 
+							<h3>Liste des livraisons clients</h3>			
 								<form name="SubmitContact" class="" method="post" action="" onSubmit="" style=''>
 									<div class="col-xl-12">
 										<div class="row">
@@ -81,7 +81,7 @@ if(isset($_POST['dat1'])){
                                         <tr>
                                             <th><b>Numéro</b></th>
 											<th><b>Client</b></th>
-											<th><b>Validitié de l'offre</b></th>
+											<th><b>Magasin</b></th>
                                             <th><b>Date</b></th>
 											<th><b style="color:red">Montant</b></th>
 											<th><b>Action</b></th>
@@ -93,9 +93,9 @@ if(isset($_POST['dat1'])){
 	$date				=	"";
 	$reference			=	"";
 	$id					=	0;
-	$validite			=	"0";
+	$montant			=	"0";
 	$total				=	"0";
-	$req="select * from delta_devisclient where 1=1 ".$reqDate.$reqDate1." order by date desc "; 
+	$req="select * from delta_bl where 1=1 ".$reqDate.$reqDate1." order by date desc "; 
 	$query=mysql_query($req);
 	while($enreg=mysql_fetch_array($query))
 	{
@@ -103,7 +103,6 @@ if(isset($_POST['dat1'])){
 		$reference			=	$enreg["numero"] ;
 		$montant			=	$enreg["montant"] ;
 		$date				=	date("d/m/Y", strtotime($enreg["date"]) );
-		$validite			=	date("d/m/Y", strtotime($enreg["validite"]) );
 		$total				=	$total+$montant;
 		
 		$client 			=	"";
@@ -113,18 +112,24 @@ if(isset($_POST['dat1'])){
 			$client 	=	$enregfrn['code'].' - '.$enregfrn['raison_social'];
 		}
 		
-
+		$magasin 		=	"";
+		$reqfrn="select * from delta_magasins where id=".$enreg['magasin'];
+		$queryfrn=mysql_query($reqfrn);
+		while($enregfrn=mysql_fetch_array($queryfrn)){
+			$magasin 	=	$enregfrn['code'].' - '.$enregfrn['designation'];
+		}		
+		
 		
 ?>
 										<tr>
 											 <td style="padding: 2px 2px;"><?php echo $reference; ?></td>
 											 <td style="padding: 2px 2px;"><?php echo $client; ?></td>
-											 <td style="padding: 2px 2px;"><?php echo $validite; ?></td>
+											 <td style="padding: 2px 2px;"><?php echo $magasin; ?></td>
 											 <td style="padding: 2px 2px;"><?php echo $date; ?></td>
 											 <td style="padding: 2px 2px;"><b style="color:red"><?php echo number_format($montant,'3','.',''); ?></b></td>
 											 <td style="padding: 2px 2px;">
 											 <?php if($enreg['etat']==0){?>
-												<a href="addedit_devis.php?ID=<?php echo $id; ?>" class="btn btn-warning waves-effect waves-light">
+												<a href="addedit_bl.php?ID=<?php echo $id; ?>" class="btn btn-warning waves-effect waves-light">
 													<i class="mdi mdi-tooltip-edit"></i>
 												</a>
 												<a href="javascript:Imprimer('<?php echo $id; ?>')" class="btn btn-warning waves-effect waves-light" style="background-color: blue;color: white;">

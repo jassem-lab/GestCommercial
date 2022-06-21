@@ -30,10 +30,34 @@ function Imprimer(id) {
 <?php
 $reqClient="";
 $Client="";
-if(isset($_POST['Client'])){
-	if(is_numeric($_POST['Client'])){
-		$Client		=	$_POST['Client'];
+if(isset($_POST['client'])){
+	if(is_numeric($_POST['client'])){
+		$Client		    =	$_POST['client'];
 		$reqClient		=	" and  id=".$Client;
+	}
+}
+$reqActivite="";
+$activite="";
+if(isset($_POST['activite'])){
+
+		$activite		=	$_POST['activite'];
+		$reqActivite		=	" and  activite like '%".$activite."%'";
+
+}
+$reqZone="";
+$zone="";
+if(isset($_POST['zone'])){
+	if(is_numeric($_POST['zone'])){
+		$zone		=	$_POST['zone'];
+		$reqZone		=	" and  zone=".$zone;
+	}
+}
+$reqRegion="";
+$region="";
+if(isset($_POST['region'])){
+	if(is_numeric($_POST['region'])){
+		$region		=	$_POST['region'];
+		$reqRegion		=	" and  region=".$region;
 	}
 }
 ?>
@@ -63,12 +87,12 @@ if(isset($_POST['Client'])){
                             <form name="SubmitContact" class="" method="post" action="" onSubmit="" style=''>
                                 <div class="col-xl-12">
                                     <div class="row">
-                                        <div class="col-sm-3">
-                                            <b>Client (*)</b>
-                                            <select class="form-control select2" name="client">
+                                        <div class="col-sm-2">
+                                            <b>Client</b>
+                                            <select class="form-control select2" name="client" id="client">
                                                 <option value=""> Sélectionner un client </option>
                                                 <?php
-												echo $reqc="select * from delta_clients";
+                                                $reqc="select * from delta_clients";
 												$queryc=mysql_query($reqc);
 												while($enregc=mysql_fetch_array($queryc)){
 												?>
@@ -78,18 +102,50 @@ if(isset($_POST['Client'])){
                                                 <?php } ?>
                                             </select>
                                         </div>
-                                        <div class="col-xl-3">
+                                        <div class="col-sm-2">
+                                            <b>Activité</b>
+                                            <input name="activite" id="activite" class="form-control" type="text"
+                                                placeholder="Activité">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <b>Region</b>
+                                            <select class="form-control select2" name="region" id="region">
+                                                <option value=""> Sélectionner une region </option>
+                                                <?php
+												 $reqc="select * from delta_regions";
+												$queryc=mysql_query($reqc);
+												while($enregc=mysql_fetch_array($queryc)){
+												?>
+                                                <option value="<?php echo $enregc['id']; ?>"
+                                                    <?php if($region==$enregc['id']) {?> selected <?php } ?>>
+                                                    <?php echo $enregc['designation']; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <b>Zone</b>
+                                            <select class="form-control select2" name="zone" id="zone">
+                                                <option value=""> Sélectionner une zone </option>
+                                                <?php
+												 $reqc="select * from delta_gouvernorats";
+												$queryc=mysql_query($reqc);
+												while($enregc=mysql_fetch_array($queryc)){
+												?>
+                                                <option value="<?php echo $enregc['id']; ?>"
+                                                    <?php if($zone==$enregc['id']) {?> selected <?php } ?>>
+                                                    <?php echo $enregc['designation']; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-xl-2">
                                             <b></b><br>
                                             <input name="SubmitContact" type="submit" id="submit"
                                                 class="btn btn-primary btn-sm " value="Filtrer">
-                                            <a href="print/imprimerClients.php" target="_blank"
-                                                class="btn btn-sm btn-info waves-effect waves-light"
-                                               >
-                                                <i class="ion-printer"></i>
+                                            <a id="btnImprimer" class="btn btn-sm btn-info waves-effect waves-light">
+                                                <span class="glyphicon glyphicon-print"></span>Imprimer
                                             </a>
-                                            <a href="export/export_clients.php" target="_blank"
-                                                class="btn btn-sm btn-success waves-effect waves-light"
-                                              >
+                                            </a>
+                                            <a id="btnExport" class="btn btn-sm btn-success waves-effect waves-light">
                                                 Exporter Excel
                                             </a>
                                         </div>
@@ -122,7 +178,7 @@ if(isset($_POST['Client'])){
                                         $famille			=	"";
                                         $unite			    =	"";
                                         $emplacement		=	"";
-                                        $req = "select * from delta_clients where 1=1 ".$reqClient ; 
+                                        $req = "select * from delta_clients where 1=1".$reqClient.$reqActivite.$reqRegion.$reqZone ; 
                                         $query =mysql_query($req); 
                                         while($enreg = mysql_fetch_array($query)){
                                             $id = $enreg["id"] ; 
@@ -339,8 +395,8 @@ if(isset($_POST['Client'])){
                                     </td>
                                     <td style="padding: 2px 2px;">
                                         <a href="javascript:Imprimer('<?php echo $id; ?>')"
-                                            class="btn btn-warning waves-effect waves-light"
-                                            style="background-color: blue;color: white;">
+                                            class="btn btn-info waves-effect waves-light"
+                                           >
                                             <i class="ion-printer"></i>
                                         </a>
                                         <a href="addedit_client.php?ID=<?php echo $id; ?>"
@@ -369,6 +425,36 @@ if(isset($_POST['Client'])){
 </div>
 <!-- end page content-->
 <?php include("menu_footer/footer.php") ?>
+
+
+
+<script>
+$("#btnImprimer").on("click", function() {
+    var client = $("#client").val();
+    var activite = $("#activite").val();
+    var region = $("#region").val();
+    var zone = $("#zone").val();
+    console.log(activite);
+
+    var myMODELE_A4 = window.open("print/liste_clients.php?client=" + client + "&activite=" + activite +
+        "&region=" +
+        region + "&zone=" + zone, "_blank",
+        "toolbar=no, scrollbars=yes, resizable=no, top=500, left=500, width=700, height=600");
+
+});
+$("#btnExport").on("click", function() {
+    var client = $("#client").val();
+    var activite = $("#activite").val();
+    var region = $("#region").val();
+    var zone = $("#zone").val();
+
+    var myMODELE_A4 = window.open("export/export_clients.php?client=" + client + "&activite=" + activite +
+        "&region=" +
+        region + "&zone=" + zone, "_blank",
+        "toolbar=no, scrollbars=yes, resizable=no, top=500, left=500, width=700, height=600");
+
+});
+</script>
 <script>
 $(".btnContact").on("click", function() {
     var id = $(this).attr('id');

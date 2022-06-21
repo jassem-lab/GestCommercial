@@ -20,8 +20,11 @@ $objPHPExcel->getActiveSheet()->SetCellValue('C4', ("Matricule Fiscale"));
 $objPHPExcel->getActiveSheet()->SetCellValue('D4', ("R. de commerce"));
 $objPHPExcel->getActiveSheet()->SetCellValue('E4', ("Email"));
 $objPHPExcel->getActiveSheet()->SetCellValue('F4', ("Téléphone"));
-$objPHPExcel->getActiveSheet()->SetCellValue('G4', ("region"));
-$objPHPExcel->getActiveSheet()->SetCellValue('H4', ("Activité"));
+$objPHPExcel->getActiveSheet()->SetCellValue('G4', ("Region"));
+$objPHPExcel->getActiveSheet()->SetCellValue('H4', ("Zone"));
+$objPHPExcel->getActiveSheet()->SetCellValue('I4', ("Activité"));
+$objPHPExcel->getActiveSheet()->SetCellValue('J4', ("Banque"));
+$objPHPExcel->getActiveSheet()->SetCellValue('K4', ("RIB"));
 
 
 
@@ -33,15 +36,51 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(20);
 $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(20);
 $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(20);
 $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(20);
+$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(20);
+$objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(20);
+$objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(20);
 
 
 $i = 5;
 
 	session_start();
 	include('../connexion/cn.php');
+	$reqClient="";
+	$client="";
+	if(isset($_GET['client'])){
+		if(is_numeric($_GET['client'])){
+			$client			    	=	$_GET['client'];
+			$reqClient				=	" and  id=".$client;
+		}
+	}
+	$reqActivite="";
+	$activite="";
+	if(isset($_GET['activite'])){
+		if($_GET['activite']){
+			$activite				=	$_GET['activite'];
+			$reqActivite		=	" and  activite like '%".$activite."%'";
+		}
+	}
 
+	$reqRegion="";
+	$region="";
+	if(isset($_GET['region'])){
+		if(is_numeric($_GET['region'])){
+			$region				=	$_GET['region'];
+			$reqRegion			=	" and  region=".$region;
+		}
+	}
+
+	$reqZone="";
+	$zone="";
+	if(isset($_GET['zone'])){
+		if(is_numeric($_GET['zone'])){
+			$zone				=	$_GET['zone'];
+			$reqZone			=	" and  zone=".$zone;
+		}
+	}
 	$article="";
-	$req="select * from delta_fournisseurs";
+	$req = "select * from delta_fournisseurs where 1=1 ".$reqClient.$reqActivite.$reqZone.$reqRegion; 
 	$query=mysql_query($req);
 	while($enreg=mysql_fetch_array($query))
 	{
@@ -53,18 +92,28 @@ $i = 5;
 		$mf			        	=	$enreg["matricule_fiscale"] ;
 		$rc				        =	$enreg["registre_commerce"] ;
 		$pays			    	=	$enreg["pays"] ;
-		$gouvenorat				=	$enreg["gouvernorat"] ;
+		$gouvenorat				=	$enreg["zone"] ;
         $region      		    =   $enreg["region"] ;
         $banque      		    =   $enreg["banque"] ;
         $activite      		    =   $enreg["activite"] ;
         $rib      		        =   $enreg["rib"] ;
         $dateheure              = date('d-m-y'); 
-			$reqR = "select * from delta_regions where id=".$region ; 
+			 $reqR = "select * from delta_regions where id=".$enreg["region"] ; 
             $queryR = mysql_query($reqR) ; 
             while($enregR = mysql_fetch_array($queryR)){
                 $region = $enregR["designation"] ; 
             }
-			
+			$reqZ = "select * from delta_gouvernorats where id=".$enreg["zone"] ; 
+            $queryZ = mysql_query($reqZ) ; 
+            while($enregZ = mysql_fetch_array($queryZ)){
+                $zone = $enregZ["designation"] ; 
+            }
+	
+			$reqB = "select * from delta_banques where id=".$banque ; 
+            $queryB = mysql_query($reqB) ; 
+            while($enregB = mysql_fetch_array($queryB)){
+                $banque = $enregB["designation"] ; 
+            }
 
 		
 			$objPHPExcel->getActiveSheet()->SetCellValue('B2', ($dateheure));
@@ -130,8 +179,29 @@ $i = 5;
 			->setFormatCode(
 				PHPExcel_Style_NumberFormat::FORMAT_TEXT
 			);
+			$objPHPExcel->getActiveSheet()->SetCellValue('H'.$i, ($zone));
+			$objPHPExcel->getActiveSheet()
+			->getStyle('F'.$i)
+			->getNumberFormat()
+			->setFormatCode(
+				PHPExcel_Style_NumberFormat::FORMAT_TEXT
+			);
 			
-			$objPHPExcel->getActiveSheet()->SetCellValue('H'.$i, ($activite));
+			$objPHPExcel->getActiveSheet()->SetCellValue('I'.$i, ($activite));
+			$objPHPExcel->getActiveSheet()
+			->getStyle('F'.$i)
+			->getNumberFormat()
+			->setFormatCode(
+				PHPExcel_Style_NumberFormat::FORMAT_TEXT
+			);
+			$objPHPExcel->getActiveSheet()->SetCellValue('J'.$i, ($banque));
+			$objPHPExcel->getActiveSheet()
+			->getStyle('F'.$i)
+			->getNumberFormat()
+			->setFormatCode(
+				PHPExcel_Style_NumberFormat::FORMAT_TEXT
+			);
+			$objPHPExcel->getActiveSheet()->SetCellValue('K'.$i, ($rib));
 			$objPHPExcel->getActiveSheet()
 			->getStyle('F'.$i)
 			->getNumberFormat()
@@ -152,6 +222,8 @@ $i = 5;
 	$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
 	$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
 	$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+	$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
+	$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->setTitle('Liste des Fournisseurs');
 
 

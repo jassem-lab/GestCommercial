@@ -270,6 +270,27 @@
 			$sql="UPDATE delta_autorisation_profils SET `gest_det_devis.php`=0 where idprofil=".$id." and codsoc=".$_SESSION['delta_SOC'];
 			$requete=mysql_query($sql);
 		}
+		if(isset($_POST["profils"])){
+			$sql="UPDATE delta_autorisation_profils SET `profils.php`=1 where idprofil=".$id." and codsoc=".$_SESSION['delta_SOC'];
+			$requete=mysql_query($sql);
+		} else{
+			$sql="UPDATE delta_autorisation_profils SET `profils.php`=0 where idprofil=".$id." and codsoc=".$_SESSION['delta_SOC'];
+			$requete=mysql_query($sql);
+		}	
+		if(isset($_POST["paremtrage"])){
+			$sql="UPDATE delta_autorisation_profils SET `paremtrage.php`=1 where idprofil=".$id." and codsoc=".$_SESSION['delta_SOC'];
+			$requete=mysql_query($sql);
+		} else{
+			$sql="UPDATE delta_autorisation_profils SET `paremtrage.php`=0 where idprofil=".$id." and codsoc=".$_SESSION['delta_SOC'];
+			$requete=mysql_query($sql);
+		}
+		if(isset($_POST["taxs"])){
+			$sql="UPDATE delta_autorisation_profils SET `taxs.php`=1 where idprofil=".$id." and codsoc=".$_SESSION['delta_SOC'];
+			$requete=mysql_query($sql);
+		} else{
+			$sql="UPDATE delta_autorisation_profils SET `taxs.php`=0 where idprofil=".$id." and codsoc=".$_SESSION['delta_SOC'];
+			$requete=mysql_query($sql);
+		}		
 	}
 ?>
 	
@@ -305,8 +326,10 @@
 	$autorisation_users					=		0;
 	$autorisation_addprofils			=		0;
 	$gest_det_devis						=		0;
+	$profils							=		0;
+	$paremtrage							=		0;
+	$taxs								=		0;
 	
-
 	$req="select * from delta_autorisation_profils where idprofil=".$id." and codsoc=".$_SESSION['delta_SOC'];
 	$query=mysql_query($req);
 	while($enreg=mysql_fetch_array($query)){
@@ -341,6 +364,7 @@
 		$autorisation_users					=		$enreg['autorisation_users.php'];
 		$autorisation_addprofils			=		$enreg['autorisation_addprofils.php'];
 		$gest_det_devis						=		$enreg['gest_det_devis.php'];
+		$profils							=		$enreg['profils.php'];
 	}
 ?>
     <!-- page-title-box -->
@@ -354,7 +378,14 @@
                             <form method="POST">
 
                                 <div class="form-group" style="margin-top:30px">
-									
+									 <div class="col-md-12 row">
+									  <input type="checkbox" id="profils" name="profils" value="1" <?php if($profils==1){ ?> checked <?php } ?>>
+									  <label for="profils" style="margin-left: 5px;"> Gestion des profils</label><br>									  
+									 </div>  
+									 <div class="col-md-12 row">
+									  <input type="checkbox" id="taxs" name="taxs" value="1" <?php if($taxs==1){ ?> checked <?php } ?>>
+									  <label for="taxs" style="margin-left: 5px;"> Paramétrage des taxs</label><br>									  
+									 </div>										 
 									<div class="col-md-12 row">
 									  <input type="checkbox" id="utilisateurs" name="utilisateurs" value="1" <?php if($utilisateurs==1){ ?> checked <?php } ?>>
 									  <label for="utilisateurs" style="margin-left: 5px;"> Gestion des utilisateurs</label><br>
@@ -508,7 +539,9 @@
 									 <div class="col-md-12 row">
 									  <input type="checkbox" id="gest_det_devis" name="gest_det_devis" value="1" <?php if($autorisation_users==1){ ?> checked <?php } ?>>
 									  <label for="gest_det_devis" style="margin-left: 5px;"> Ajout/Modification Devis</label><br>									  
-									 </div>  									 
+									 </div>  	
+
+									 
 								</div>
 
                                 <div class="form-group m-b-0">

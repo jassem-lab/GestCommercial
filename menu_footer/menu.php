@@ -17,31 +17,36 @@ if (!isset($_SESSION['delta_MAILUSER']))
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <title>DeltaCOM - Gestion commerciale</title>
+    <title>DeltaCOM - Gestion Commerciale</title>
     <meta content="Admin Dashboard" name="description" />
     <meta content="Themesbrand" name="author" />
     <link rel="shortcut icon" href="assets/images/1.png">
-    <link href="plugins/bootstrap-md-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
     <link rel="stylesheet" href="plugins/morris/morris.css">
 
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
     <link href="assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>		 -->
+
 
 </head>
 
 <body>
+<?php
+	$profil = "";
+	$req="select * from delta_profil where id=".$_SESSION['delta_PROFIL'];
+	$query=mysql_query($req);
+	while($enreg=mysql_fetch_array($query)){
+		$profil = $enreg['profil'];
+	}
+?>
     <!-- Navigation Bar-->
     <header id="topnav">
         <div class="topbar-main" style="background-color: #2054c966">
             <div class="container-fluid">
                 <div class="logo">
-                    <b style="text-align: center; color: #102677;font-family: Roboto, sans-serif;font-size: 16.5px;">Gestion
-                        commerciale</b>
+                    <b style="text-align: center; color: #102677;font-family:seriffont-size: 16.5px;">Gestion
+                       Commerciale</b>
                 </div>
 
                 <div class="menu-extras topbar-custom">
@@ -51,6 +56,11 @@ if (!isset($_SESSION['delta_MAILUSER']))
                         <?php
 							if (isset($_SESSION['delta_MAILUSER'])) {
 							?>
+						<li class="dropdown notification-list d-none d-sm-block" style="margin-top:16px">
+							<b style="text-align: center; color: #102677;font-family:seriffont-size: 12px;">
+							<?php echo $_SESSION['delta_USER']; ?> | <?php echo $profil; ?> 
+							</b>
+						</li>							
                         <li class="dropdown notification-list">
                             <div class="dropdown notification-list">
                                 <a class="dropdown-toggle nav-link arrow-none waves-effect nav-user waves-light"
@@ -85,9 +95,10 @@ if (!isset($_SESSION['delta_MAILUSER']))
                                     aria-expanded="false">
                                     <img src="assets/2.png" alt="user" class="rounded-circle">
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
-                                    <a class="dropdown-item text-danger" href="deconnexion.php"><i
-                                            class="mdi mdi-power text-danger"></i> Déconnexion</a>
+                                <div class="dropdown-menu dropdown-menu-right profile-dropdown">
+                                        <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5"></i> Compte</a>
+                                       
+                                        <a class="dropdown-item text-danger" href="deconnexion.php"><i class="mdi mdi-power text-danger"></i> Déconnexion</a>											
                                 </div>
                             </div>
                         </li>
@@ -121,27 +132,37 @@ if (!isset($_SESSION['delta_MAILUSER']))
 						?>
 
                     <?php if ($_SESSION['delta_PROFIL'] == 1) { ?>
+				
                     <ul class="navigation-menu">
+                        <li class="has-submenu">
+                            <a href="#" style="font-size: 14px;color: crimson;"><i class="mdi mdi-buffer"></i>Paramètrage</a>
+                            <ul class="submenu megamenu">
+                                <li>
+                                    <ul>
+										<li><a href="paremtrage.php"><b style="font-size:12px">Paramétrage</a></b></li>
+										<li><a href="taxs.php"><b style="font-size:12px">Tax</a></b></li>
+                                        <li><a href="socs.php"><b style="font-size:12px">Société</a></b></li>
+										<li><a href="profils.php"><b style="font-size:12px">Profils</a></b></li>
+										<li><a href="utilisateurs.php"><b style="font-size:12px">Utilisateurs</a></b></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </li>					
                         <li class="has-submenu">
                             <a href="dashbord.php" style="font-size: 12px;"><i class="mdi mdi-home"></i>Tableau de
                                 bord</a>
                         </li>
-
+	
                         <li class="has-submenu">
                             <a href="#" style="font-size: 12px;"><i class="mdi mdi-buffer"></i>Tables de base</a>
                             <ul class="submenu megamenu">
                                 <li>
                                     <ul>
-                                        <li><a href="utilisateurs.php"><b style="font-size:12px">Utilisateurs</a></b>
-                                        </li>
-                                        <li><a href="socs.php"><b style="font-size:12px">Société</a></b></li>
-										<li><a href="autorisation_profils.php"><b style="font-size:12px">Autorisations par profils</a></b></li>
-                                        <li><a href="tabs.php"><b style="font-size:12px">Autres table des base</a></b>
-                                        </li>
-                                        <li><a href="produits.php"><b style="font-size:12px">Produits </a></b></li>
                                         <li><a href="clients.php"><b style="font-size:12px">Clients </a></b></li>
-                                        <li><a href="fournisseurs.php"><b style="font-size:12px">Fournisseurs </a></b>
-                                        </li>
+										<li><a href="fournisseurs.php"><b style="font-size:12px">Fournisseurs </a></b><li>
+                                        <li><a href="produits.php"><b style="font-size:12px">Produits </a></b></li>
+                                        <li><a href="tabs.php"><b style="font-size:12px">Autres table des base</a></b></li>
                                     </ul>
                                 </li>
 

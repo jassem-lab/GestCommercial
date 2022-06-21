@@ -6,8 +6,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="state-information d-none d-sm-block"></div>
-                    <h4 class="page-title">Tableau de bord -  Utilisateur : <?php echo $_SESSION['delta_USER']; ?></h4>
-					 
+                    
                 </div>
             </div>
         </div>

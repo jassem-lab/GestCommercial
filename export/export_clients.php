@@ -36,13 +36,48 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(20);
 $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(20);
 
 
+
 $i = 5;
 
 	session_start();
 	include('../connexion/cn.php');
 
+	$reqClient="";
+	$client="";
+	if(isset($_GET['client'])){
+		if(is_numeric($_GET['client'])){
+			$client			    	=	$_GET['client'];
+			$reqClient				=	" and  id=".$client;
+		}
+	}
+	$reqActivite="";
+	$activite="";
+	if(isset($_GET['activite'])){
+		if($_GET['activite']){
+			$activite				=	$_GET['activite'];
+			$reqActivite		=	" and  activite like '%".$activite."%'";
+		}
+	}
+
+	$reqRegion="";
+	$region="";
+	if(isset($_GET['region'])){
+		if(is_numeric($_GET['region'])){
+			$region				=	$_GET['region'];
+			$reqRegion			=	" and  region=".$region;
+		}
+	}
+
+	$reqZone="";
+	$zone="";
+	if(isset($_GET['zone'])){
+		if(is_numeric($_GET['zone'])){
+			$zone				=	$_GET['zone'];
+			$reqZone			=	" and  zone=".$zone;
+		}
+	}
 	$article="";
-	$req="select * from delta_clients";
+	$req = "select * from delta_clients where 1=1 ".$reqClient.$reqActivite.$reqZone.$reqRegion; 
 	$query=mysql_query($req);
 	while($enreg=mysql_fetch_array($query))
 	{
@@ -54,8 +89,8 @@ $i = 5;
 		$mf			        	=	$enreg["matricule_fiscale"] ;
 		$rc				        =	$enreg["registre_commerce"] ;
 		$pays			    	=	$enreg["pays"] ;
-		$gouvenorat				=	$enreg["gouvernorat"] ;
-        $region      		    =   $enreg["region"] ;
+		$gouvenorat				=	$enreg["region"] ;
+        $region      		    =   $enreg["zone"] ;
         $banque      		    =   $enreg["banque"] ;
         $nature      		    =   $enreg["nature"] ;
         $activite      		    =   $enreg["activite"] ;
@@ -71,6 +106,7 @@ $i = 5;
             while($enregN = mysql_fetch_array($queryN)){
                 $nature = $enregN["nature"] ; 
             }
+			
 			
 
 		
@@ -153,8 +189,6 @@ $i = 5;
 			->setFormatCode(
 				PHPExcel_Style_NumberFormat::FORMAT_TEXT
 			);
-
-
 		$i ++;
 	}
 	

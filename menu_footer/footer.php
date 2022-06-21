@@ -3,7 +3,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-12">
-			<p class="text-muted"><b  style="color:#102677">  © 2022 Gestion commerciales - Application créée par </b>
+			<p class="text-muted"><b  style="color:#102677">Gestion Commerciale © 2022 - Application créée par </b>
 			<a href="http://www.deltawebit.com/contact.php" target="_blank"><b  style="color:red">Delta Web Information Technology</b></a>
 			</p>
 		  </div>
@@ -11,17 +11,6 @@
 	</div>
 </footer>
 <!-- End Footer -->
-        <!-- jQuery  -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/js/jquery.slimscroll.js"></script>
-        <script src="assets/js/waves.min.js"></script>
-
-        <script src="../plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
-
-        <!-- App js -->
-        <script src="assets/js/app.js"></script>
-
 <!-- jQuery  -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
@@ -29,6 +18,9 @@
 <script src="assets/js/waves.min.js"></script>
 
 <script src="plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
+
+<!-- App js -->
+<script src="assets/js/app.js"></script>
 
 <!-- Peity JS -->
 <script src="plugins/peity/jquery.peity.min.js"></script>
