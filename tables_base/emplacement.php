@@ -59,6 +59,15 @@ else{
 $code		        =	"" ;
 $designation		=	"" ;
 
+$reqEmplacement="";
+$emplacment="";
+if(isset($_POST['emplacment'])){
+	if(is_numeric($_POST['emplacment'])){
+		$emplacment		    =	$_POST['emplacment'];
+		$reqEmplacement		=	" and  id=".$emplacment;
+	}
+} 
+
 $req="select * from delta_emplacements where id=".$id;
 $query=mysql_query($req);
 while($enreg=mysql_fetch_array($query))
@@ -76,11 +85,12 @@ function SupprimerEmplacement(id) {
 }
 </script>
 <form action="" method="POST">
-    <div class="form-group row" id="DivEMP" <?php if(!isset($_GET['add4']) and !isset($_GET['IDE']) ){?> style="display:none" <?php }?>>
+    <div class="form-group row" id="DivEMP" <?php if(!isset($_GET['add4']) and !isset($_GET['IDE']) ){?>
+        style="display:none" <?php }?>>
         <div class="col-sm-4">
             <b>Code (*)</b>
-            <input class="form-control" type="text" placeholder="" value="<?php echo $code; ?>"
-                id="example-text-input" name="code" required>
+            <input class="form-control" type="text" placeholder="" value="<?php echo $code; ?>" id="example-text-input"
+                name="code" required>
         </div>
         <div class="col-sm-4">
             <b>Désignation (*)</b>
@@ -97,20 +107,44 @@ function SupprimerEmplacement(id) {
 
 </form>
 <div class="col-xl-12">
-   	<div class="col-xl-12 row">
-		<div class="col-xl-6">
-			 <b class="col-lg-12" style="color : red">Liste des emplacements</b>
-		</div>
-		<div class="col-xl-3"></div>
-		<div class="col-xl-3">
-			<button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutEMP"  <?php if(isset($_GET['add4']) and (isset($_GET['IDE'])) ){?> style="display:none" <?php }?>>+ Ajouter</button>
-			<button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerEMP"  <?php if(!isset($_GET['add4']) and !isset($_GET['IDE'])){?> style="display:none" <?php }?>>- Annuler</button>
-		</div>			
-	</div>
-	<?php if(isset($_GET['err'])){ ?>
-		<?php if($_GET['err']=='1'){ ?>
-		<font color="red" style="background-color:#FFFFFF;"><center>Attention ! Ce code est déjà existant</center></font><br /><br />
-	<?php } }?>	
+    <div class="col-xl-12 row">
+        <div class="col-xl-6">
+            <b class="col-lg-12" style="color : red">Liste des emplacements</b>
+        </div>
+        <div class="col-xl-3"></div>
+        <div class="col-xl-3">
+            <button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutEMP"
+                <?php if(isset($_GET['add4']) and (isset($_GET['IDE'])) ){?> style="display:none" <?php }?>>+
+                Ajouter</button>
+            <button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerEMP"
+                <?php if(!isset($_GET['add4']) and !isset($_GET['IDE'])){?> style="display:none" <?php }?>>-
+                Annuler</button>
+        </div>
+    </div>
+    <?php if(isset($_GET['err'])){ ?>
+    <?php if($_GET['err']=='1'){ ?>
+    <font color="red" style="background-color:#FFFFFF;">
+        <center>Attention ! Ce code est déjà existant</center>
+    </font><br /><br />
+    <?php } }?>
+    <form name="SubmitContact" class="row mb-3" method="post" action="" onSubmit="" style='margin-top : 50px ; '>
+        <div class="col-xl-3">
+            <b>Emplacement</b>
+            <select class="form-control select2" name="emplacement" id="emplacement">
+                <option value=""> Sélectionner un emplacement </option>
+                <?php
+                      echo  $reqc="select * from delta_emplacements" ;
+                        $queryc=mysql_query($reqc);
+                        while($enregc=mysql_fetch_array($queryc)){
+                        ?>
+                <option value="<?php echo $enregc['id']; ?>" <?php if($emplacement==$enregc['id']) {?> selected
+                    <?php } ?>>
+                    <?php echo $enregc['code']; ?></option>
+                <?php } ?>
+            </select>
+            <input name="SubmitContact" type="submit" id="submit" class="btn btn-primary btn-sm mt-2" value="Filtrer">
+        </div>
+    </form>
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
@@ -121,7 +155,7 @@ function SupprimerEmplacement(id) {
         </thead>
         <tbody>
             <?php 
-            $reqFP ="select * from delta_emplacements"; 
+            $reqFP ="select * from delta_emplacements where 1=1".$reqEmplacement; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 

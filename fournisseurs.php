@@ -151,7 +151,7 @@ if(isset($_POST['region'])){
                                             <input name="SubmitContact" type="submit" id="submit"
                                                 class="btn btn-primary btn-sm " value="Filtrer">
                                             <a id="btnImprimer" class="btn btn-sm btn-info waves-effect waves-light">
-                                                <span class="glyphicon glyphicon-print"></span>Imprimer
+                                                Imprimer
                                             </a>
                                             </a>
                                             <a id="btnExport" class="btn btn-sm btn-success waves-effect waves-light">

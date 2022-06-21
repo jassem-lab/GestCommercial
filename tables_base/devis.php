@@ -60,6 +60,15 @@ else{
     echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=5" </SCRIPT>';
 }
 
+$reqDevise="";
+$devise="";
+if(isset($_POST['devise'])){
+	if(is_numeric($_POST['devise'])){
+		$devise		    =	$_POST['devise'];
+		$reqDevise		=	" and  id=".$devise;
+	}
+}
+
 $code		        =	"" ;
 $designation		=	"" ;
 $nombre_chiffre		=	"" ;
@@ -85,7 +94,8 @@ function SupprimerDevis(id) {
 }
 </script>
 <form action="" method="POST">
-    <div class="form-group row" id="DivDEV" <?php if(!isset($_GET['add5']) and !isset($_GET['IDD']) ){?> style="display:none" <?php }?>>
+    <div class="form-group row" id="DivDEV" <?php if(!isset($_GET['add5']) and !isset($_GET['IDD']) ){?>
+        style="display:none" <?php }?>>
         <div class="col-sm-2">
             <b>Code (*)</b>
             <input class="form-control" type="text" placeholder="Famille de produit" value="<?php echo $code; ?>"
@@ -110,7 +120,7 @@ function SupprimerDevis(id) {
             <b>Taux de change (*)</b>
             <input class="form-control" type="text" placeholder="Taux" value="<?php echo $taux; ?>"
                 id="example-text-input" name="taux" required>
-        </div>		
+        </div>
         <div class="col-sm-3"><br>
             <button type="submit" class="btn btn-primary waves-effect waves-light">
                 Enregistrer
@@ -121,20 +131,43 @@ function SupprimerDevis(id) {
 
 </form>
 <div class="col-xl-12">
-   	<div class="col-xl-12 row">
-		<div class="col-xl-6">
-			 <b class="col-lg-12" style="color : red">Liste des devises</b>
-		</div>
-		<div class="col-xl-3"></div>
-		<div class="col-xl-3">
-			<button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutDEV"  <?php if(isset($_GET['add5']) and (isset($_GET['IDD'])) ){?> style="display:none" <?php }?>>+ Ajouter</button>
-			<button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerDEV"  <?php if(!isset($_GET['add5']) and !isset($_GET['IDD'])){?> style="display:none" <?php }?>>- Annuler</button>
-		</div>			
-	</div>
-	<?php if(isset($_GET['err'])){ ?>
-		<?php if($_GET['err']=='1'){ ?>
-		<font color="red" style="background-color:#FFFFFF;"><center>Attention ! Ce code est déjà existant</center></font><br /><br />
-	<?php } }?>	
+    <div class="col-xl-12 row">
+        <div class="col-xl-6">
+            <b class="col-lg-12" style="color : red">Liste des devises</b>
+        </div>
+        <div class="col-xl-3"></div>
+        <div class="col-xl-3">
+            <button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutDEV"
+                <?php if(isset($_GET['add5']) and (isset($_GET['IDD'])) ){?> style="display:none" <?php }?>>+
+                Ajouter</button>
+            <button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerDEV"
+                <?php if(!isset($_GET['add5']) and !isset($_GET['IDD'])){?> style="display:none" <?php }?>>-
+                Annuler</button>
+        </div>
+    </div>
+    <?php if(isset($_GET['err'])){ ?>
+    <?php if($_GET['err']=='1'){ ?>
+    <font color="red" style="background-color:#FFFFFF;">
+        <center>Attention ! Ce code est déjà existant</center>
+    </font><br /><br />
+    <?php } }?>
+    <form name="SubmitContact" class="row mb-3" method="post" action="" onSubmit="" style='margin-top : 50px ; '>
+        <div class="col-xl-3">
+            <b>Devise</b>
+            <select class="form-control select2" name="devise" id="devise">
+                <option value=""> Sélectionner un devise </option>
+                <?php
+                      echo  $reqc="select * from delta_devise" ;
+                        $queryc=mysql_query($reqc);
+                        while($enregc=mysql_fetch_array($queryc)){
+                        ?>
+                <option value="<?php echo $enregc['id']; ?>" <?php if($devise==$enregc['id']) {?> selected <?php } ?>>
+                    <?php echo $enregc['code']; ?></option>
+                <?php } ?>
+            </select>
+            <input name="SubmitContact" type="submit" id="submit" class="btn btn-primary btn-sm mt-2" value="Filtrer">
+        </div>
+    </form>
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
@@ -147,7 +180,7 @@ function SupprimerDevis(id) {
         </thead>
         <tbody>
             <?php 
-            $reqFP ="select * from delta_devise"; 
+            $reqFP ="select * from delta_devise where 1=1".$reqDevise ; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 

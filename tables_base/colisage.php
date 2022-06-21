@@ -14,6 +14,15 @@ $designation		=	addslashes($_POST["designation"]) ;
 $nbr_pieces		    =	addslashes($_POST["nbr_pieces"]) ;
 $poids_vide	    	=	addslashes($_POST["poids_vide"]) ;
 
+$reqColisage="";
+$colisage="";
+if(isset($_POST['colisage'])){
+	if(is_numeric($_POST['colisage'])){
+		$colisage		    =	$_POST['colisage'];
+		$reqColisage		=	" and  id=".$colisage;
+	}
+}
+
 if($id=="0")
     {
 		//Vérfication d'existance de code
@@ -81,7 +90,8 @@ function SupprimerColisage(id) {
 }
 </script>
 <form action="" method="POST">
-    <div class="form-group row" id="DivCOL" <?php if(!isset($_GET['add16']) and !isset($_GET['IDC']) ){?> style="display:none" <?php }?>>
+    <div class="form-group row" id="DivCOL" <?php if(!isset($_GET['add16']) and !isset($_GET['IDC']) ){?>
+        style="display:none" <?php }?>>
         <div class="col-sm-2">
             <b>Code (*)</b>
             <input class="form-control" type="text" placeholder="Code" value="<?php echo $code; ?>"
@@ -112,20 +122,43 @@ function SupprimerColisage(id) {
 
 </form>
 <div class="col-xl-12">
-   	<div class="col-xl-12 row">
-		<div class="col-xl-6">
-			 <b class="col-lg-12" style="color : red">Liste des colisages</b>
-		</div>
-		<div class="col-xl-3"></div>
-		<div class="col-xl-3">
-			<button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutCOL"  <?php if(isset($_GET['add16']) and (isset($_GET['IDC'])) ){?> style="display:none" <?php }?>>+ Ajouter</button>
-			<button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerCOL"  <?php if(!isset($_GET['add16']) and !isset($_GET['IDC'])){?> style="display:none" <?php }?>>- Annuler</button>
-		</div>			
-	</div>
-	<?php if(isset($_GET['err'])){ ?>
-		<?php if($_GET['err']=='1'){ ?>
-		<font color="red" style="background-color:#FFFFFF;"><center>Attention ! Ce code est déjà existant</center></font><br /><br />
-	<?php } }?>	
+    <div class="col-xl-12 row">
+        <div class="col-xl-6">
+            <b class="col-lg-12" style="color : red">Liste des colisages</b>
+        </div>
+        <div class="col-xl-3"></div>
+        <div class="col-xl-3">
+            <button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutCOL"
+                <?php if(isset($_GET['add16']) and (isset($_GET['IDC'])) ){?> style="display:none" <?php }?>>+
+                Ajouter</button>
+            <button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerCOL"
+                <?php if(!isset($_GET['add16']) and !isset($_GET['IDC'])){?> style="display:none" <?php }?>>-
+                Annuler</button>
+        </div>
+    </div>
+    <?php if(isset($_GET['err'])){ ?>
+    <?php if($_GET['err']=='1'){ ?>
+    <font color="red" style="background-color:#FFFFFF;">
+        <center>Attention ! Ce code est déjà existant</center>
+    </font><br /><br />
+    <?php } }?>
+    <form name="SubmitContact" class="row mb-3" method="post" action="" onSubmit="" style='margin-top : 50px ; '>
+        <div class="col-xl-3">
+            <b>colisage</b>
+            <select class="form-control select2" name="colisage" id="colisage">
+                <option value=""> Sélectionner un colisage </option>
+                <?php
+                      echo  $reqc="select * from delta_colisage" ;
+                        $queryc=mysql_query($reqc);
+                        while($enregc=mysql_fetch_array($queryc)){
+                        ?>
+                <option value="<?php echo $enregc['id']; ?>" <?php if($colisage==$enregc['id']) {?> selected <?php } ?>>
+                    <?php echo $enregc['code']; ?></option>
+                <?php } ?>
+            </select>
+            <input name="SubmitContact" type="submit" id="submit" class="btn btn-primary btn-sm mt-2" value="Filtrer">
+        </div>
+    </form>
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
@@ -138,7 +171,7 @@ function SupprimerColisage(id) {
         </thead>
         <tbody>
             <?php 
-            $reqFP ="select * from delta_colisage"; 
+            $reqFP ="select * from delta_colisage where 1=1".$reqColisage; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 

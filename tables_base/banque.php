@@ -59,6 +59,15 @@ else{
 $code		        =	"" ;
 $designation		=	"" ;
 
+$reqBanque="";
+$banque="";
+if(isset($_POST['banque'])){
+	if(is_numeric($_POST['banque'])){
+		$banque		    =	$_POST['banque'];
+		$reqBanque		=	" and  id=".$banque;
+	}
+}
+
 $req="select * from delta_banques where id=".$id;
 $query=mysql_query($req);
 while($enreg=mysql_fetch_array($query))
@@ -75,8 +84,11 @@ function SupprimerBanque(id) {
     }
 }
 </script>
+
 <form action="" method="POST">
-   <div class="form-group row" id="DivBNK" <?php if(!isset($_GET['add8']) and !isset($_GET['IDB']) ){?> style="display:none" <?php }?>>
+
+    <div class="form-group row" id="DivBNK" <?php if(!isset($_GET['add8']) and !isset($_GET['IDB']) ){?>
+        style="display:none" <?php }?>>
 
         <div class="col-sm-4">
             <b>Code (*)</b>
@@ -98,20 +110,44 @@ function SupprimerBanque(id) {
 
 </form>
 <div class="col-xl-12">
-   	<div class="col-xl-12 row">
-		<div class="col-xl-6">
-			 <b class="col-lg-12" style="color : red">Liste des banques</b>
-		</div>
-		<div class="col-xl-3"></div>
-		<div class="col-xl-3">
-			<button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutBNK"  <?php if(isset($_GET['add8']) and (isset($_GET['IDB'])) ){?> style="display:none" <?php }?>>+ Ajouter</button>
-			<button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerBNK"  <?php if(!isset($_GET['add8']) and !isset($_GET['IDB'])){?> style="display:none" <?php }?>>- Annuler</button>
-		</div>			
-	</div>
-	<?php if(isset($_GET['err'])){ ?>
-		<?php if($_GET['err']=='1'){ ?>
-		<font color="red" style="background-color:#FFFFFF;"><center>Attention ! Ce code est déjà existant</center></font><br /><br />
-	<?php } }?>	
+    <div class="col-xl-6 row">
+        <div class="col-xl-6">
+            <b class="col-lg-12" style="color : red">Liste des banques</b>
+        </div>
+        <div class="col-xl-3"></div>
+
+        <div class="col-xl-3">
+            <button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutBNK"
+                <?php if(isset($_GET['add8']) and (isset($_GET['IDB'])) ){?> style="display:none" <?php }?>>+
+                Ajouter</button>
+            <button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerBNK"
+                <?php if(!isset($_GET['add8']) and !isset($_GET['IDB'])){?> style="display:none" <?php }?>>-
+                Annuler</button>
+        </div>
+    </div>
+    <?php if(isset($_GET['err'])){ ?>
+    <?php if($_GET['err']=='1'){ ?>
+    <font color="red" style="background-color:#FFFFFF;">
+        <center>Attention ! Ce code est déjà existant</center>
+    </font><br /><br />
+    <?php } }?>
+    <form name="SubmitContact" class="row mb-3" method="post" action="" onSubmit="" style='margin-top : 50px ; '>
+        <div class="col-xl-3">
+            <b>Banque</b>
+            <select class="form-control select2" name="banque" id="banque">
+                <option value=""> Sélectionner un banque </option>
+                <?php
+                      echo  $reqc="select * from delta_banques" ;
+                        $queryc=mysql_query($reqc);
+                        while($enregc=mysql_fetch_array($queryc)){
+                        ?>
+                <option value="<?php echo $enregc['id']; ?>" <?php if($banque==$enregc['id']) {?> selected <?php } ?>>
+                    <?php echo $enregc['code']; ?></option>
+                <?php } ?>
+            </select>
+            <input name="SubmitContact" type="submit" id="submit" class="btn btn-primary btn-sm mt-2" value="Filtrer">
+        </div>
+    </form>
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
@@ -122,7 +158,7 @@ function SupprimerBanque(id) {
         </thead>
         <tbody>
             <?php 
-            $reqFP ="select * from delta_banques"; 
+            $reqFP ="select * from delta_banques where 1=1 ".$reqBanque;
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 

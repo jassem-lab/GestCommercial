@@ -60,6 +60,15 @@ else{
 $code		        =	"" ;
 $designation		=	"" ;
 
+$reqZone="";
+$zone="";
+
+if(isset($_POST['zone'])){
+	if(is_numeric($_POST['zone'])){
+		$zone		    =	$_POST['zone'];
+		$reqZone	    	=	" and  id=".$zone;
+	}
+} 
 $req="select * from delta_gouvernorats where id=".$id;
 $query=mysql_query($req);
 while($enreg=mysql_fetch_array($query))
@@ -77,7 +86,8 @@ function SupprimerGouvernorat(id) {
 }
 </script>
 <form action="" method="POST">
-    <div class="form-group row" id="DivGV" <?php if(!isset($_GET['add10']) and !isset($_GET['IDG']) ){?> style="display:none" <?php }?>>
+    <div class="form-group row" id="DivGV" <?php if(!isset($_GET['add10']) and !isset($_GET['IDG']) ){?>
+        style="display:none" <?php }?>>
         <div class="col-sm-4">
             <b>Zone (*)</b>
             <input class="form-control" type="text" placeholder="Zone" value="<?php echo $code; ?>"
@@ -93,20 +103,43 @@ function SupprimerGouvernorat(id) {
 
 </form>
 <div class="col-xl-12">
-   	<div class="col-xl-12 row">
-		<div class="col-xl-6">
-			 <b class="col-lg-12" style="color : red">Liste des zones</b>
-		</div>
-		<div class="col-xl-3"></div>
-		<div class="col-xl-3">
-			<button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutGV"  <?php if(isset($_GET['add10']) and (isset($_GET['IDG'])) ){?> style="display:none" <?php }?>>+ Ajouter</button>
-			<button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerGV"  <?php if(!isset($_GET['add10']) and !isset($_GET['IDG'])){?> style="display:none" <?php }?>>- Annuler</button>
-		</div>			
-	</div>
-	<?php if(isset($_GET['err'])){ ?>
-		<?php if($_GET['err']=='1'){ ?>
-		<font color="red" style="background-color:#FFFFFF;"><center>Attention ! Cette zone est déjà existante</center></font><br /><br />
-	<?php } }?>	
+    <div class="col-xl-12 row">
+        <div class="col-xl-6">
+            <b class="col-lg-12" style="color : red">Liste des zones</b>
+        </div>
+        <div class="col-xl-3"></div>
+        <div class="col-xl-3">
+            <button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutGV"
+                <?php if(isset($_GET['add10']) and (isset($_GET['IDG'])) ){?> style="display:none" <?php }?>>+
+                Ajouter</button>
+            <button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerGV"
+                <?php if(!isset($_GET['add10']) and !isset($_GET['IDG'])){?> style="display:none" <?php }?>>-
+                Annuler</button>
+        </div>
+    </div>
+    <?php if(isset($_GET['err'])){ ?>
+    <?php if($_GET['err']=='1'){ ?>
+    <font color="red" style="background-color:#FFFFFF;">
+        <center>Attention ! Cette zone est déjà existante</center>
+    </font><br /><br />
+    <?php } }?>
+    <form name="SubmitContact" class="row mb-3" method="post" action="" onSubmit="" style='margin-top : 50px ; '>
+        <div class="col-xl-3">
+            <b>Zone</b>
+            <select class="form-control select2" name="zone" id="zone">
+                <option value=""> Sélectionner une zone </option>
+                <?php
+                      echo  $reqc="select * from delta_gouvernorats" ;
+                        $queryc=mysql_query($reqc);
+                        while($enregc=mysql_fetch_array($queryc)){
+                        ?>
+                <option value="<?php echo $enregc['id']; ?>" <?php if($zone==$enregc['id']) {?> selected <?php } ?>>
+                    <?php echo $enregc['code']; ?></option>
+                <?php } ?>
+            </select>
+            <input name="SubmitContact" type="submit" id="submit" class="btn btn-primary btn-sm mt-2" value="Filtrer">
+        </div>
+    </form>
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
@@ -116,7 +149,7 @@ function SupprimerGouvernorat(id) {
         </thead>
         <tbody>
             <?php 
-            $reqFP ="select * from delta_gouvernorats"; 
+            $reqFP ="select * from delta_gouvernorats where 1=1".$reqZone; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 

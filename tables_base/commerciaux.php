@@ -76,6 +76,15 @@ $CIN	            	=	"" ;
 $permis	            	=	"" ;	            	
 $RIB	            	=	"" ;	            	
 
+$reqCommerciaux="";
+$commerciaux="";
+if(isset($_POST['commerciaux'])){
+	if(is_numeric($_POST['commerciaux'])){
+		$commerciaux		    =	$_POST['commerciaux'];
+		$reqCommerciaux		=	" and  id=".$commerciaux;
+	}
+}
+
 $req="select * from delta_commerciaux where id=".$id;
 $query=mysql_query($req);
 while($enreg=mysql_fetch_array($query))
@@ -101,7 +110,8 @@ function SupprimerCommerciaux(id) {
 }
 </script>
 <form action="" method="POST">
-    <div class="form-group row" id="DivC" <?php if(!isset($_GET['add15']) and !isset($_GET['IDCC']) ){?> style="display:none" <?php }?>>
+    <div class="form-group row" id="DivC" <?php if(!isset($_GET['add15']) and !isset($_GET['IDCC']) ){?>
+        style="display:none" <?php }?>>
         <div class="col-sm-2">
             <b>Code (*)</b>
             <input class="form-control" type="text" placeholder="Code" value="<?php echo $code; ?>"
@@ -158,19 +168,43 @@ function SupprimerCommerciaux(id) {
 </form>
 <div class="col-xl-12">
     <div class="col-xl-12 row">
-		<div class="col-xl-6">
-			 <b class="col-lg-12" style="color : red">Liste des commerciaux</b>
-		</div>
-		<div class="col-xl-3"></div>
-		<div class="col-xl-3">
-			<button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutC"  <?php if(isset($_GET['add15']) and (isset($_GET['IDCC'])) ){?> style="display:none" <?php }?>>+ Ajouter</button>
-			<button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerC"  <?php if(!isset($_GET['add15']) and !isset($_GET['IDCC'])){?> style="display:none" <?php }?>>- Annuler</button>
-		</div>			
-	</div>
-	<?php if(isset($_GET['err'])){ ?>
-		<?php if($_GET['err']=='1'){ ?>
-		 <font color="red" style="background-color:#FFFFFF;"><center>Attention ! Ce Code est déjà existante</center></font><br /><br />
-	<?php } }?>
+        <div class="col-xl-6">
+            <b class="col-lg-12" style="color : red">Liste des commerciaux</b>
+        </div>
+        <div class="col-xl-3"></div>
+        <div class="col-xl-3">
+            <button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutC"
+                <?php if(isset($_GET['add15']) and (isset($_GET['IDCC'])) ){?> style="display:none" <?php }?>>+
+                Ajouter</button>
+            <button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerC"
+                <?php if(!isset($_GET['add15']) and !isset($_GET['IDCC'])){?> style="display:none" <?php }?>>-
+                Annuler</button>
+        </div>
+    </div>
+    <?php if(isset($_GET['err'])){ ?>
+    <?php if($_GET['err']=='1'){ ?>
+    <font color="red" style="background-color:#FFFFFF;">
+        <center>Attention ! Ce Code est déjà existante</center>
+    </font><br /><br />
+    <?php } }?>
+    <form name="SubmitContact" class="row mb-3" method="post" action="" onSubmit="" style='margin-top : 50px ; '>
+        <div class="col-xl-3">
+            <b>Commercial</b>
+            <select class="form-control select2" name="commerciaux" id="commerciaux">
+                <option value=""> Sélectionner un commercial </option>
+                <?php
+                      echo  $reqc="select * from delta_commerciaux" ;
+                        $queryc=mysql_query($reqc);
+                        while($enregc=mysql_fetch_array($queryc)){
+                        ?>
+                <option value="<?php echo $enregc['id']; ?>" <?php if($commerciaux==$enregc['id']) {?> selected
+                    <?php } ?>>
+                    <?php echo $enregc['code']; ?></option>
+                <?php } ?>
+            </select>
+            <input name="SubmitContact" type="submit" id="submit" class="btn btn-primary btn-sm mt-2" value="Filtrer">
+        </div>
+    </form>
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
@@ -187,7 +221,7 @@ function SupprimerCommerciaux(id) {
         </thead>
         <tbody>
             <?php 
-            $reqFP ="select * from delta_commerciaux"; 
+            $reqFP ="select * from delta_commerciaux where 1=1".$reqCommerciaux ; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 

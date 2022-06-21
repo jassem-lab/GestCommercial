@@ -59,7 +59,14 @@ else{
     echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=1" </SCRIPT>';
 
 }
-
+$reqFamille="";
+$famille="";
+if(isset($_POST['famille'])){
+	if(is_numeric($_POST['famille'])){
+		$famille		    =	$_POST['famille'];
+		$reqFamille	    	=	" and  id=".$famille;
+	}
+} 
 $code		        =	"" ;
 $designation		=	"" ;
 
@@ -80,7 +87,8 @@ function SupprimerFP(id) {
 }
 </script>
 <form action="" method="POST">
-    <div class="form-group row" id="DivFamille" <?php if(!isset($_GET['add']) and !isset($_GET['ID']) ){?> style="display:none" <?php }?>  >
+    <div class="form-group row" id="DivFamille" <?php if(!isset($_GET['add']) and !isset($_GET['ID']) ){?>
+        style="display:none" <?php }?>>
         <div class="col-sm-3">
             <b>Code (*)</b>
             <input class="form-control" type="text" placeholder="Famille de produit" value="<?php echo $code; ?>"
@@ -101,20 +109,43 @@ function SupprimerFP(id) {
 
 </form>
 <div class="col-xl-12">
-	<div class="col-xl-12 row">
-		<div class="col-xl-6">
-			 <b class="col-lg-12" style="color : red">Liste des Familles de produit</b>
-		</div>
-		<div class="col-xl-3"></div>
-		<div class="col-xl-3">
-			<button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutFAM"  <?php if(isset($_GET['add']) and (isset($_GET['ID'])) ){?> style="display:none" <?php }?>>+ Ajouter</button>
-			<button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerFAM"  <?php if(!isset($_GET['add']) and !isset($_GET['ID'])){?> style="display:none" <?php }?>>- Annuler</button>
-		</div>			
-	</div>
-	<?php if(isset($_GET['err'])){ ?>
-		<?php if($_GET['err']=='1'){ ?>
-		<font color="red" style="background-color:#FFFFFF;"><center>Attention ! Ce code est déjà existant</center></font><br /><br />
-	<?php } }?>	  
+    <div class="col-xl-12 row">
+        <div class="col-xl-6">
+            <b class="col-lg-12" style="color : red">Liste des Familles de produit</b>
+        </div>
+        <div class="col-xl-3"></div>
+        <div class="col-xl-3">
+            <button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutFAM"
+                <?php if(isset($_GET['add']) and (isset($_GET['ID'])) ){?> style="display:none" <?php }?>>+
+                Ajouter</button>
+            <button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerFAM"
+                <?php if(!isset($_GET['add']) and !isset($_GET['ID'])){?> style="display:none" <?php }?>>-
+                Annuler</button>
+        </div>
+    </div>
+    <?php if(isset($_GET['err'])){ ?>
+    <?php if($_GET['err']=='1'){ ?>
+    <font color="red" style="background-color:#FFFFFF;">
+        <center>Attention ! Ce code est déjà existant</center>
+    </font><br /><br />
+    <?php } }?>
+    <form name="SubmitContact" class="row mb-3" method="post" action="" onSubmit="" style='margin-top : 50px ; '>
+        <div class="col-xl-3">
+            <b>Famille Produit</b>
+            <select class="form-control select2" name="famille" id="famille">
+                <option value=""> Sélectionner une famille </option>
+                <?php
+                      echo  $reqc="select * from delta_famille_produit" ;
+                        $queryc=mysql_query($reqc);
+                        while($enregc=mysql_fetch_array($queryc)){
+                        ?>
+                <option value="<?php echo $enregc['id']; ?>" <?php if($famille==$enregc['id']) {?> selected <?php } ?>>
+                    <?php echo $enregc['code']; ?></option>
+                <?php } ?>
+            </select>
+            <input name="SubmitContact" type="submit" id="submit" class="btn btn-primary btn-sm mt-2" value="Filtrer">
+        </div>
+    </form>
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
@@ -125,7 +156,7 @@ function SupprimerFP(id) {
         </thead>
         <tbody>
             <?php 
-            $reqFP ="select * from delta_famille_produit"; 
+            $reqFP ="select * from delta_famille_produit where 1=1".$famille; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 
