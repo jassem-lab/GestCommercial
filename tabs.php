@@ -1,4 +1,5 @@
 <?php include('menu_footer/menu.php') ?>
+
 <style>
 .nav-link.active {
     color: #1b82ec !important;
@@ -19,7 +20,19 @@
         <!-- end container-fluid -->
     </div>
     <!-- page-title-box -->
+    <?php
+// Required field names
+$required = array('banque', 'tva');
 
+// Loop over field names, make sure each one exists and is not empty
+$post = false;
+foreach($required as $field) {
+        if (isset($_POST[$field])) {
+        $post = true;
+    }
+}
+
+?>
     <div class="page-content-wrapper">
         <div class="container-fluid">
             <div class="row">
@@ -30,7 +43,7 @@
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link <?php if((isset($_GET['suc']))){ if($_GET['suc']==1){ ?>
-									active show <?php } } ?> <?php if((!isset($_GET['suc']))){ ?> active show <?php }  ?>" 
+									active show <?php } } ?> <?php if(($post == false)){ ?> active show <?php }  ?>" 
 									style="background: #ffc107" data-toggle="tab" href="#famille"
                                         role="tab">Famille</a>
                                 </li>
@@ -75,7 +88,8 @@
                                         paiement</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==8){ ?> active <?php } } ?>"
+                                    <a class="nav-link <?php if(isset($_GET['suc'])){ if($_GET['suc']==8){ ?> active <?php } } ?>
+                                    <?php if(isset($_POST['banque'])){ ?> active <?php } ?> "
                                         style="background: pink " data-toggle="tab" href="#banque" role="tab">Banque</a>
                                 </li>
                                 <li class="nav-item">
@@ -115,7 +129,8 @@
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
-                                <div class="tab-pane <?php if(isset($_GET['suc'])){ if($_GET['suc']==1){ ?> active <?php } } ?>  <?php if (!(isset($_GET['suc']))){  ?> active <?php } ?> p-3"
+                                <div class="tab-pane <?php if(isset($_GET['suc'])){ if($_GET['suc']==1){ ?> active <?php } } ?> 
+                                 <?php if ($post == false){  ?> active <?php } ?> p-3"
                                     id="famille" role="tabpanel">
                                     <?php include ("tables_base/famille_produit.php"); ?>
                                 </div>
@@ -147,7 +162,9 @@
                                     id="mode_paiement" role="tabpanel">
                                     <?php include("tables_base/mode_paiement.php"); ?>
                                 </div>
-                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==8){ ?> active <?php } } ?>"
+                                <div class="tab-pane p-3 <?php if(isset($_GET['suc'])){ if($_GET['suc']==8){ ?> active <?php } } ?>
+                                <?php if(isset($_POST['banque'])){ ?> active <?php } ?> "
+                               
                                     id="banque" role="tabpanel">
                                     <?php include("tables_base/banque.php"); ?>
                                 </div>

@@ -137,7 +137,7 @@ function SupprimerBanque(id) {
             <select class="form-control select2" name="banque" id="banque">
                 <option value=""> Sélectionner un banque </option>
                 <?php
-                      echo  $reqc="select * from delta_banques" ;
+                        $reqc="select * from delta_banques" ;
                         $queryc=mysql_query($reqc);
                         while($enregc=mysql_fetch_array($queryc)){
                         ?>
@@ -145,7 +145,7 @@ function SupprimerBanque(id) {
                     <?php echo $enregc['code']; ?></option>
                 <?php } ?>
             </select>
-            <input name="SubmitContact" type="submit" id="submit" class="btn btn-primary btn-sm mt-2" value="Filtrer">
+            <input name="SubmitContact"  type="submit" id="submit" class="btn btn-primary btn-sm mt-2" value="Filtrer">
         </div>
     </form>
     <table class="table mb-0">
