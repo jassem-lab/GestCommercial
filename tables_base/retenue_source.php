@@ -103,9 +103,9 @@ function SupprimerRetenue(id) {
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
-                <th>Label</th>
-                <th>Taux</th>
-                <th>Action</th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Label</th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Taux</th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Actions</th>
             </tr>
         </thead>
         <tbody>

@@ -9,12 +9,19 @@ while($enreg=mysql_fetch_array($query))
 }
 ?>
 
+
 <div class="col-xl-12">
-    <h3 class="col-lg-12 " style="color : red">Liste des natures produit</h3>
+    <div class="col-xl-12 row">
+        <div class="col-xl-6">
+            <b class="col-lg-12 m-3" style="color : red">Liste des Natures Produits</b>
+        </div>
+        <div class="col-xl-3"></div>
+
+    </div>
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
-                <th><b>Nature</b></th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Désignation</th>
             </tr>
         </thead>
         <tbody>

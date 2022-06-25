@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
-                    <h4 class="page-title">Gestion des entrées marchandises</h4>
+                    <h4 class="page-title">Gestion des Entrées Marchandises</h4>
                     <br> Utilisateur : <?php echo $_SESSION['delta_USER']; ?>
                 </div>
             </div>
@@ -76,7 +76,7 @@ if(isset($_POST['dat1'])){
                         <div class="card-body">
                             <a href="addedit_be.php" class="btn btn-primary waves-effect waves-light">Ajouter un bon
                                 d'entrée</a>
-                            <h3>Liste des entrées marchandises</h3>
+                            <h3>Liste des Entrées Marchandises</h3>
                             <form name="SubmitContact" class="" method="post" action="" onSubmit="" style=''>
                                 <div class="col-xl-12">
                                     <div class="row">

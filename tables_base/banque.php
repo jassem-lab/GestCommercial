@@ -131,49 +131,47 @@ function SupprimerBanque(id) {
         <center>Attention ! Ce code est déjà existant</center>
     </font><br /><br />
     <?php } }?>
-    <form name="SubmitContact" class="row mb-3" method="post" action="" onSubmit="" style='margin-top : 50px ; '>
-        <div class="col-xl-3">
-            <b>Banque</b>
-            <select class="form-control select2" name="banque" id="banque">
-                <option value=""> Sélectionner un banque </option>
-                <?php
-                        $reqc="select * from delta_banques" ;
-                        $queryc=mysql_query($reqc);
-                        while($enregc=mysql_fetch_array($queryc)){
-                        ?>
-                <option value="<?php echo $enregc['id']; ?>" <?php if($banque==$enregc['id']) {?> selected <?php } ?>>
-                    <?php echo $enregc['code']; ?></option>
-                <?php } ?>
-            </select>
-            <input name="SubmitContact"  type="submit" id="submit" class="btn btn-primary btn-sm mt-2" value="Filtrer">
+    
+    <div class="form-group row">
+        <div class="col-xl-2">
+            <b>Désignation</b>
+            <input name="code_banque" id="code_banque" class="form-control" type="text">
+            <p>( % : caractère générique ! )</p>
         </div>
-    </form>
-    <table class="table mb-0">
-        <thead class="thead-default">
-            <tr>
-                <th>Code</th>
-                <th>Designation</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-            $reqFP ="select * from delta_banques where 1=1 ".$reqBanque;
+        <div class="col-sm-3">
+            <input type="submit" id="submit_banque" class="btn btn-primary btn-sm mt-4" value="Filtrer">
+        </div>
+    </div>
+    <div class="col-xl-12" id="tabBanque">
+        <table class="table mb-0">
+            <thead class="thead-default">
+                <tr>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Code</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Désignation</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+            $reqFP ="select * from delta_banques where 1=1 order by designation ";
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 
             ?>
-            <tr>
-                <td><?php echo $enreg["code"] ?></td>
-                <td><?php echo $enreg["designation"]?></td>
-                <td><a type="button" href="tabs.php?IDB=<?php echo $enreg["id"] ?>&suc=8"
-                        class="btn btn-warning waves-effect waves-light">Modifier</a>
-                    <a href="Javascript:SupprimerBanque('<?php echo $enreg["id"]; ?>')"
-                        class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
-                </td>
-            </tr>
-            <?php } ?>
-        </tbody>
-    </table>
+                <tr>
+                    <td><?php echo $enreg["code"] ?></td>
+                    <td><?php echo $enreg["designation"]?></td>
+                    <td><a type="button" href="tabs.php?IDB=<?php echo $enreg["id"] ?>&suc=8"
+                            class="btn btn-warning waves-effect waves-light">Modifier</a>
+                        <a href="Javascript:SupprimerBanque('<?php echo $enreg["id"]; ?>')"
+                            class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
+                    </td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-xl-12" id="tabBanque1" style="display:none">
 
+    </div>
 </div>

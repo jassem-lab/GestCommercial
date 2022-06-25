@@ -77,11 +77,16 @@ function SupprimerMagasin(id) {
 }
 </script>
 <form action="" method="POST">
-    <div class="form-group row" id="DivMAG" <?php if(!isset($_GET['add6']) and !isset($_GET['IDMM']) ){?> style="display:none" <?php }?>>
+    <div class="form-group row" id="DivMAG" <?php if(!isset($_GET['add6']) and !isset($_GET['IDMM']) ){?>
+        style="display:none" <?php }?>>
         <div class="col-sm-4">
             <b>Code (*)</b>
+            <?php if($id==2){ ?>
             <input class="form-control" type="text" placeholder="Famille de produit" value="<?php echo $code; ?>"
-                id="example-text-input" name="code" required>
+                id="example-text-input" name="code" readonly>
+            <?php }else{ ?>
+            <input class="form-control" type="text" placeholder="Famille de produit" value="<?php echo $code; ?>"
+                id="example-text-input" name="code" required> <?php } ?>
         </div>
         <div class="col-sm-4">
             <b>Désignation (*)</b>
@@ -98,47 +103,56 @@ function SupprimerMagasin(id) {
 
 </form>
 <div class="col-xl-12">
-   	<div class="col-xl-12 row">
-		<div class="col-xl-6">
-			 <b class="col-lg-12" style="color : red">Liste des magasins</b>
-		</div>
-		<div class="col-xl-3"></div>
-		<div class="col-xl-3">
-			<button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutMAG"  <?php if(isset($_GET['add6']) and (isset($_GET['IDMM'])) ){?> style="display:none" <?php }?>>+ Ajouter</button>
-			<button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerMAG"  <?php if(!isset($_GET['add6']) and !isset($_GET['IDMM'])){?> style="display:none" <?php }?>>- Annuler</button>
-		</div>			
-	</div>
-	<?php if(isset($_GET['err'])){ ?>
-		<?php if($_GET['err']=='1'){ ?>
-		<font color="red" style="background-color:#FFFFFF;"><center>Attention ! Ce code est déjà existant</center></font><br /><br />
-	<?php } }?>	
+    <div class="col-xl-12 row">
+        <div class="col-xl-6">
+            <b class="col-lg-12" style="color : red">Liste des magasins</b>
+        </div>
+        <div class="col-xl-3"></div>
+        <div class="col-xl-3">
+            <button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutMAG"
+                <?php if(isset($_GET['add6']) and (isset($_GET['IDMM'])) ){?> style="display:none" <?php }?>>+
+                Ajouter</button>
+            <button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerMAG"
+                <?php if(!isset($_GET['add6']) and !isset($_GET['IDMM'])){?> style="display:none" <?php }?>>-
+                Annuler</button>
+        </div>
+    </div>
+    <?php if(isset($_GET['err'])){ ?>
+    <?php if($_GET['err']=='1'){ ?>
+    <font color="red" style="background-color:#FFFFFF;">
+        <center>Attention ! Ce code est déjà existant</center>
+    </font><br /><br />
+    <?php } }?>
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
-                <th>Code</th>
-                <th>Designation</th>
-                <th>Action</th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Code</th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Désignation</th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php 
-            $reqFP ="select * from delta_magasins"; 
+            $reqFP ="select * from delta_magasins order by designation"; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 
             ?>
             <tr>
                 <td><?php echo $enreg["code"] ?>
-				<?php if($enreg["defaut"]==1){ ?>
-					<br><b style="color:green">Magasin par défaut</b>
-				<?php } ?>				
-				</td>
+                </td>
                 <td><?php echo $enreg["designation"]?></td>
                 <td>
-				<?php if($enreg["defaut"]==0){ ?>
-				<a type="button" href="tabs.php?IDMM=<?php echo $enreg["id"] ?>&suc=6"class="btn btn-warning waves-effect waves-light">Modifier</a> 
-				<a href="Javascript:SupprimerMagasin('<?php echo $enreg["id"]; ?>')" class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
-				 <?php } ?>
+                    <a type="button" href="tabs.php?IDMM=<?php echo $enreg["id"] ?>&suc=6"
+                        class="btn btn-warning waves-effect waves-light">Modifier</a>
+                    <?php if($enreg["defaut"]==1){ ?>
+                    <b style="color:green ; margin-left : 10px ; ">Magasin par défaut</b>
+                    <?php } ?>
+                    <?php if($enreg["defaut"]==0){ ?>
+
+                    <a href="Javascript:SupprimerMagasin('<?php echo $enreg["id"]; ?>')"
+                        class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
+                    <?php } ?>
                 </td>
             </tr>
             <?php } ?>

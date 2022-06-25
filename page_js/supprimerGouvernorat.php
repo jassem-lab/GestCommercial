@@ -3,12 +3,12 @@ session_start();
 include('../connexion/cn.php');
 	
 	$id   = $_GET["ID"] ;
-    $req="select * from delta_gouvernorats  WHERE id=".$id;
+    $req="select * from delta_regions  WHERE id=".$id;
     $query=mysql_query($req);
     while($enreg=mysql_fetch_array($query)){
         $code = $enreg['code'];
     }
-	$sql = "delete from `delta_gouvernorats` WHERE id=".$id;
+	$sql = "delete from `delta_regions` WHERE id=".$id;
 	$requete = mysql_query($sql) ;
     $dateheure=date('Y-m-d H:i:s');
     $iduser=$_SESSION['delta_IDUSER'];

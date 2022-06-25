@@ -51,7 +51,6 @@ else{
         //Log
         $dateheure=date('Y-m-d H:i:s');
         $iduser=$_SESSION['delta_IDUSER'];
-        
         $sql1="INSERT INTO `delta_log`(`dateheure`, `idutilisateur`, `document`, `action`, `iddocument`) VALUES ('".$dateheure."','".$iduser."','8','2','".$id."')";
         $req=mysql_query($sql1);				
     }
@@ -128,7 +127,6 @@ function SupprimerDevis(id) {
             <input class="form-control" type="hidden" name="enregistrer_mail5">
         </div>
     </div>
-
 </form>
 <div class="col-xl-12">
     <div class="col-xl-12 row">
@@ -151,53 +149,49 @@ function SupprimerDevis(id) {
         <center>Attention ! Ce code est déjà existant</center>
     </font><br /><br />
     <?php } }?>
-    <form name="SubmitContact" class="row mb-3" method="post" action="" onSubmit="" style='margin-top : 50px ; '>
-        <div class="col-xl-3">
-            <b>Devise</b>
-            <select class="form-control select2" name="devise" id="devise">
-                <option value=""> Sélectionner un devise </option>
+
+
+    <div class="col-xl-12" id="tabDevise">
+        <table class="table mb-0">
+            <thead class="thead-default">
+                <tr>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Code</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Désignation</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Nombre de chiffres après la virgule
+                    </th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Symbole</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
                 <?php
-                      echo  $reqc="select * from delta_devise" ;
-                        $queryc=mysql_query($reqc);
-                        while($enregc=mysql_fetch_array($queryc)){
-                        ?>
-                <option value="<?php echo $enregc['id']; ?>" <?php if($devise==$enregc['id']) {?> selected <?php } ?>>
-                    <?php echo $enregc['code']; ?></option>
+        $reqFP ="select * from delta_devise where 1=1 order by designation"  ;
+        $queryFP = mysql_query($reqFP);
+        while($enreg=mysql_fetch_array($queryFP)){
+        ?>
+                <tr>
+                    <td><?php echo $enreg["code"] ?></td>
+                    <td><?php echo $enreg["designation"]?></td>
+                    <td><?php echo $enreg["nombre_chiffre"]?></td>
+                    <td><?php echo $enreg["symbole"]?></td>
+
+                    <td>
+                        <?php if($enreg["defaut"]==1){ ?>
+                        <b style="color:green ; margin-left : 10px ; ">Devise par défaut</b>
+                        <?php } ?>
+                        <?php if($enreg["defaut"]==0){ ?>
+                            <a type="button" href="tabs.php?IDD=<?php echo $enreg["id"] ?>&suc=5"
+                            class="btn btn-warning waves-effect waves-light">Modifier</a>
+                        <a href="Javascript:SupprimerDevis('<?php echo $enreg["id"]; ?>')"
+                            class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
+                        <?php } ?>
+                    </td>
+                </tr>
                 <?php } ?>
-            </select>
-            <input name="SubmitContact" type="submit" id="submit" class="btn btn-primary btn-sm mt-2" value="Filtrer">
-        </div>
-    </form>
-    <table class="table mb-0">
-        <thead class="thead-default">
-            <tr>
-                <th>Code</th>
-                <th>Designation</th>
-                <th>Nombre de chiffre après la virgule</th>
-                <th>Symbole</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-            $reqFP ="select * from delta_devise where 1=1".$reqDevise ; 
-            $queryFP = mysql_query($reqFP); 
-            while($enreg=mysql_fetch_array($queryFP)){
+            </tbody>
+        </table>
+    </div>
+    <div class="col-xl-12" id="tabDevise1" style="display:none">
 
-            ?>
-            <tr>
-                <td><?php echo $enreg["code"] ?></td>
-                <td><?php echo $enreg["designation"]?></td>
-                <td><?php echo $enreg["nombre_chiffre"]?></td>
-                <td><?php echo $enreg["symbole"]?></td>
-                <td><a type="button" href="tabs.php?IDD=<?php echo $enreg["id"] ?>&suc=5"
-                        class="btn btn-warning waves-effect waves-light">Modifier</a> <a
-                        href="Javascript:SupprimerDevis('<?php echo $enreg["id"]; ?>')"
-                        class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
-                </td>
-            </tr>
-            <?php } ?>
-        </tbody>
-    </table>
-
+    </div>
 </div>

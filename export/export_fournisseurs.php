@@ -92,8 +92,8 @@ $i = 5;
 		$mf			        	=	$enreg["matricule_fiscale"] ;
 		$rc				        =	$enreg["registre_commerce"] ;
 		$pays			    	=	$enreg["pays"] ;
-		$gouvenorat				=	$enreg["zone"] ;
-        $region      		    =   $enreg["region"] ;
+		$region				=	$enreg["region"] ;
+        $zone      		    =   $enreg["zone"] ;
         $banque      		    =   $enreg["banque"] ;
         $activite      		    =   $enreg["activite"] ;
         $rib      		        =   $enreg["rib"] ;
@@ -103,7 +103,7 @@ $i = 5;
             while($enregR = mysql_fetch_array($queryR)){
                 $region = $enregR["designation"] ; 
             }
-			$reqZ = "select * from delta_gouvernorats where id=".$enreg["zone"] ; 
+			$reqZ = "select * from delta_zones where id=".$enreg["zone"] ; 
             $queryZ = mysql_query($reqZ) ; 
             while($enregZ = mysql_fetch_array($queryZ)){
                 $zone = $enregZ["designation"] ; 

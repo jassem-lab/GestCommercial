@@ -6,7 +6,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12">
-				<h4 class="page-title">Gestion des société</h4>
+				<h4 class="page-title">Gestion de société</h4>
 				 <br> Utilisateur : <?php echo $_SESSION['delta_USER']; ?>
 			</div>
 		</div>
@@ -185,7 +185,7 @@ if(isset($_POST['enregistrer_mail'])){
 				<div class="col-lg-12">
 					<div class="card m-b-20">
 						<div class="card-body">
-							<h3>Liste des sociétés</h3>			
+							<h3>Les Informations de la société</h3>			
 								<br>
                                     <table class="table mb-0">
                                         <thead>

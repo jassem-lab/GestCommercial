@@ -187,62 +187,59 @@ function SupprimerCommerciaux(id) {
         <center>Attention ! Ce Code est déjà existante</center>
     </font><br /><br />
     <?php } }?>
-    <form name="SubmitContact" class="row mb-3" method="post" action="" onSubmit="" style='margin-top : 50px ; '>
-        <div class="col-xl-3">
-            <b>Commercial</b>
-            <select class="form-control select2" name="commerciaux" id="commerciaux">
-                <option value=""> Sélectionner un commercial </option>
-                <?php
-                      echo  $reqc="select * from delta_commerciaux" ;
-                        $queryc=mysql_query($reqc);
-                        while($enregc=mysql_fetch_array($queryc)){
-                        ?>
-                <option value="<?php echo $enregc['id']; ?>" <?php if($commerciaux==$enregc['id']) {?> selected
-                    <?php } ?>>
-                    <?php echo $enregc['code']; ?></option>
-                <?php } ?>
-            </select>
-            <input name="SubmitContact" type="submit" id="submit" class="btn btn-primary btn-sm mt-2" value="Filtrer">
+
+    <div class="form-group row">
+        <div class="col-xl-2">
+            <b>Désignation</b>
+            <input name="code_comm" id="code_comm" class="form-control" type="text">
+            <p>( % : caractère générique ! )</p>
         </div>
-    </form>
-    <table class="table mb-0">
-        <thead class="thead-default">
-            <tr>
-                <th>Code</th>
-                <th>Nom & Prénom</th>
-                <th>Téléphone</th>
-                <th>Email</th>
-                <th>Adresse</th>
-                <th>Permis</th>
-                <th>CIN</th>
-                <th>RIB</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-            $reqFP ="select * from delta_commerciaux where 1=1".$reqCommerciaux ; 
+        <div class="col-sm-3">
+            <input type="submit" id="submit_comm" class="btn btn-primary btn-sm mt-4" value="Filtrer">
+        </div>
+    </div>
+    <div class="col-xl-12" id="tabComm">
+        <table class="table mb-0">
+            <thead class="thead-default">
+                <tr>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Code</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Nom & Prénom</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Téléphone</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Email</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Adresse</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Permis</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">CIN</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">RIB</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+            $reqFP ="select * from delta_commerciaux order by nom, prenom" ; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 
             ?>
-            <tr>
-                <td><?php echo $enreg["code"] ?></td>
-                <td><?php echo $enreg["nom"]?> <?php echo $enreg["prenom"] ?></td>
-                <td><?php echo $enreg["tel"]?> </td>
-                <td><?php echo $enreg["email"]?> </td>
-                <td><?php echo $enreg["adresse"]?> </td>
-                <td><?php echo $enreg["permis"]?> </td>
-                <td><?php echo $enreg["CIN"]?> </td>
-                <td><?php echo $enreg["RIB"]?> </td>
-                <td><a type="button" href="tabs.php?IDCC=<?php echo $enreg["id"] ?>&suc=15"
-                        class="btn btn-warning waves-effect waves-light">Modifier</a> <a
-                        href="Javascript:SupprimerCommerciaux('<?php echo $enreg["id"]; ?>')"
-                        class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
-                </td>
-            </tr>
-            <?php } ?>
-        </tbody>
-    </table>
+                <tr>
+                    <td><?php echo $enreg["code"] ?></td>
+                    <td><?php echo $enreg["nom"]?> <?php echo $enreg["prenom"] ?></td>
+                    <td><?php echo $enreg["tel"]?> </td>
+                    <td><?php echo $enreg["email"]?> </td>
+                    <td><?php echo $enreg["adresse"]?> </td>
+                    <td><?php echo $enreg["permis"]?> </td>
+                    <td><?php echo $enreg["CIN"]?> </td>
+                    <td><?php echo $enreg["RIB"]?> </td>
+                    <td><a type="button" href="tabs.php?IDCC=<?php echo $enreg["id"] ?>&suc=15"
+                            class="btn btn-warning waves-effect waves-light">Modifier</a> <a
+                            href="Javascript:SupprimerCommerciaux('<?php echo $enreg["id"]; ?>')"
+                            class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
+                    </td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-xl-12" id="tabComm1" style="display:none">
 
+    </div>
 </div>

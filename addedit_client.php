@@ -58,11 +58,14 @@ $matricule_fiscale              = addslashes($_POST["matriculeFiscale"]) ;
 $registre_commerce              = addslashes($_POST["registre_commerce"]) ; 
 $RIB                            = addslashes($_POST["RIB"]) ; 
 $banque                         = addslashes($_POST["banque"]) ; 
-$gouvernorat					= addslashes($_POST["gouvernorat"]) ; 
+$zone							= addslashes($_POST["zone"]) ; 
 $nature                         = addslashes($_POST["nature"]) ; 
 $activite                       = addslashes($_POST["activite"]) ; 
 $SWIFT                          = addslashes($_POST["SWIFT"]) ; 
-$IBAN                           = addslashes($_POST["IBAN"]) ; 
+$IBAN                           = addslashes($_POST["IBAN"]) ;
+$num_exoneration                = addslashes($_POST["num_exoneration"]) ; 
+$date_debut                     = addslashes($_POST["date_debut"]) ; 
+$date_fin                       = addslashes($_POST["date_fin"]) ;  
 
     
 	if($id=="0")
@@ -85,9 +88,10 @@ $IBAN                           = addslashes($_POST["IBAN"]) ;
 		}
 		
 		
-	    $sql="INSERT INTO `delta_clients`(`id`,`code`,`raison_social`,`mail`,`tel`,`pays`,`adresse`,`region`,`gouvernorat`,`matricule_fiscale`,`registre_commerce`,`rib`,`banque`,`nature`,`activite`,`swift`,`iban`) VALUES
-		('".$id."','".$code."','".$raisonsocial."','".$mail."','".$tel."','".$pays."','".$adresse."','".$region."','".$gouvernorat."','".$matricule_fiscale."','".$registre_commerce."'
-		,'".$RIB."','".$banque."','".$nature."','".$activite."','".$SWIFT."','".$IBAN."')";
+	    $sql="INSERT INTO `delta_clients`(`id`,`code`,`raison_social`,`mail`,`tel`,`pays`,`adresse`,`region`,`zone`,`matricule_fiscale`,`registre_commerce`,`rib`,`banque`
+		,`nature`,`activite`,`swift`,`iban`,`num_exoneration`,`date_debut`,`date_fin`) VALUES
+		('".$id."','".$code."','".$raisonsocial."','".$mail."','".$tel."','".$pays."','".$adresse."','".$region."','".$zone."','".$matricule_fiscale."','".$registre_commerce."'
+		,'".$RIB."','".$banque."','".$nature."','".$activite."','".$SWIFT."','".$IBAN."','".$num_exoneration."','".$date_debut."','".$date_fin."')";
 			//Log
 		$req=mysql_query($sql);
 		
@@ -101,9 +105,10 @@ $IBAN                           = addslashes($_POST["IBAN"]) ;
 		
 	}
 	else{
-		$sql="UPDATE `delta_clients` SET `code`='".$code."' ,`raison_social`='".$raisonsocial."' , `mail`='".$mail."' , `tel`='".$tel."' , `gouvernorat`='".$gouvernorat."' , 
+		$sql="UPDATE `delta_clients` SET `code`='".$code."' ,`raison_social`='".$raisonsocial."' , `mail`='".$mail."' , `tel`='".$tel."' , `zone`='".$zone."' , 
 		`pays`='".$pays."' , `adresse`='".$adresse."' , `region`='".$region."' , `matricule_fiscale`='".$matricule_fiscale."' , `registre_commerce`='".$registre_commerce."'
-		, `rib`='".$rib."', `banque`='".$banque."', `nature`='".$nature."', `activite`='".$activite."', `swift`='".$SWIFT."', `iban`='".$IBAN."' WHERE id=".$id;
+		, `rib`='".$rib."', `banque`='".$banque."', `nature`='".$nature."', `activite`='".$activite."', `swift`='".$SWIFT."'
+		, `iban`='".$IBAN."', `num_exoneration`='".$num_exoneration."', `date_debut`='".$date_debut."', `date_fin`='".$date_fin."' WHERE id=".$id;
 		$req=mysql_query($sql);
 		  //Log
 
@@ -122,7 +127,7 @@ $matriculeFiscale        = "" ;
 $adresse                 = "" ; 
 $pays                    = "" ; 
 $region                  = "" ; 
-$gouvernorat             = "" ; 
+$zone   	             = "" ; 
 $registre_commerce       = "" ; 
 $mail2                   = "" ;
 $gsm2                    = "" ;
@@ -133,6 +138,9 @@ $activite                = "" ;
 $SWIFT                   = "" ; 
 $IBAN                    = "" ; 
 $code					 = "" ; 
+$num_exoneration		 = "" ; 
+$date_debut				 = "" ; 
+$date_fin				 = "" ; 
 
 $req = "select * from delta_clients where id=".$id ;
 $query = mysql_query($req) ; 
@@ -145,7 +153,7 @@ while($enreg = mysql_fetch_array($query)){
     $adresse                 = $enreg["adresse"] ; 
     $pays                    = $enreg["pays"] ; 
     $region                  = $enreg["region"] ; 
-    $gouvernorat             = $enreg["gouvernorat"] ; 
+    $zone                    = $enreg["zone"] ; 
     $registre_commerce       = $enreg["registre_commerce"] ; 
     $mail2                   = $enreg["mail2"] ;
     $gsm2                    = $enreg["gsm2"] ;
@@ -155,6 +163,9 @@ while($enreg = mysql_fetch_array($query)){
     $SWIFT                   = $enreg["swift"] ;
     $IBAN                    = $enreg["iban"] ;
 	$activite                = $enreg["activite"] ;
+	$num_exoneration         = $enreg["num_exoneration"] ;
+	$date_debut              = $enreg["date_debut"] ;
+	$date_fin                = $enreg["date_fin"] ;
 } 
 
 
@@ -228,18 +239,32 @@ while($enreg = mysql_fetch_array($query)){
 													<select class="form-control select2" name="nature" id="nature">
 														<option value=""> Sélectionner une Nature </option>
 														<?php
-																	$req="select * from delta_natures_client";
-																	$query=mysql_query($req);
-																	while($enreg=mysql_fetch_array($query)){
-																	?>
+														$req="select * from delta_natures_client";
+														$query=mysql_query($req);
+														while($enreg=mysql_fetch_array($query)){
+														?>
 														<option value="<?php echo $enreg['id']; ?>"
 															<?php if($nature==$enreg['id']) {?> selected <?php } ?>>
 															<?php echo $enreg['nature']; ?></option>
 														<?php } ?>
 													</select>													
+												</div>
+												
+												<div class="col-xl-12" style="margin-top:15px; display:none" id="DivExo1"> 
+													<b style="color:green">N° Exoneration (*)</b>
+													<input type="number" class="form-control" name="num_exoneration" value="<?php echo $num_exoneration; ?>" >
+												</div>
+												<div class="col-xl-6" style="margin-top:15px; display:none" id="DivExo2"> 
+													 <b style="color:green">Date début (*)</b>
+													 <input class="form-control" type="date"  value="<?php echo $date_debut; ?>" id="date_debut" name="date_debut">
+												</div>
+												<div class="col-xl-6" style="margin-top:15px; display:none" id="DivExo3">
+													<b style="color:green">Date fin (*)</b>
+													<input class="form-control"  type="date"  value="<?php echo $date_fin; ?>" id="date_fin" name="date_fin">
 												</div>	
+												
 												<div class="col-xl-6" style="margin-top:15px"> 
-													 <b>Email (*)</b>
+													 <bstyle="color:green">Email (*)</b>
 													 <input class="form-control" type="email" parsley-type="email" placeholder="Email de client" value="<?php echo $mail; ?>" id="mail" name="mail" required>
 												</div>
 												<div class="col-xl-6" style="margin-top:15px">
@@ -264,31 +289,31 @@ while($enreg = mysql_fetch_array($query)){
 													</select>												
 												</div>	
 												<div class="col-xl-4">
-													<b>Région </b>
-													<select class="form-control select2" name="region" id="region">
-														<option value="0">Région </option>
+													<b>Zone </b>
+													<select class="form-control select2" name="zone" id="region">
+														<option value="0">Zone </option>
 														<?php
-														$req="select * from delta_regions";
+														$req="select * from delta_zones";
 														$query=mysql_query($req);
 														while($enreg=mysql_fetch_array($query)){
 														?>
 														<option value="<?php echo $enreg['id']; ?>"
-															<?php if($region==$enreg['id']) {?> selected <?php } ?>>
+															<?php if($zone==$enreg['id']) {?> selected <?php } ?>>
 															<?php echo $enreg['designation']; ?></option>
 														<?php } ?>
 													</select>												
 												</div>	
 												<div class="col-xl-4">
-													<b>Gouvernorat</b>
-													<select class="form-control select2" name="gouvernorat" id="gouvernorat">
-														<option value="0">Gouvernorat </option>
+													<b>Région</b>
+													<select class="form-control select2" name="region" id="gouvernorat">
+														<option value="0">Région </option>
 														<?php
-																	$req="select * from delta_gouvernorats";
+																	$req="select * from delta_regions";
 																	$query=mysql_query($req);
 																	while($enreg=mysql_fetch_array($query)){
 																	?>
 														<option value="<?php echo $enreg['id']; ?>"
-															<?php if($gouvernorat==$enreg['id']) {?> selected <?php } ?>>
+															<?php if($region==$enreg['id']) {?> selected <?php } ?>>
 															<?php echo $enreg['designation']; ?></option>
 														<?php } ?>
 													</select>												
@@ -330,6 +355,7 @@ while($enreg = mysql_fetch_array($query)){
 											
 										</div>
 									</div>
+
                                 </div>
                                 <div class="form-group m-b-0">
                                     <div>
@@ -353,8 +379,32 @@ while($enreg = mysql_fetch_array($query)){
 </div>
 </div>
 <!-- page wrapper end -->
-
-
-
-
 <?php include("menu_footer/footer.php") ?>
+<script>
+	$(document).ready(function () {
+		var nature = $("#nature").val();
+		
+		if(nature>1){
+			$('#DivExo1').show();
+			$('#DivExo2').show();
+			$('#DivExo3').show();
+		} else{
+			$('#DivExo1').hide();
+			$('#DivExo2').hide();
+			$('#DivExo3').hide();
+		}		
+	});
+	
+	$("#nature").on("change", function(){
+		var nature = $(this).val();
+		if(nature>1){
+			$('#DivExo1').show();
+			$('#DivExo2').show();
+			$('#DivExo3').show();
+		} else{
+			$('#DivExo1').hide();
+			$('#DivExo2').hide();
+			$('#DivExo3').hide();
+		}
+	});
+</script>

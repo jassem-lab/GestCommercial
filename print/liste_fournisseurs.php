@@ -91,7 +91,7 @@
             <tbody>
 
                 <?php
-               echo $req = "select * from delta_fournisseurs where 1=1 ".$reqClient.$reqActivite.$reqZone.$reqRegion; 
+                $req = "select * from delta_fournisseurs where 1=1 ".$reqClient.$reqActivite.$reqZone.$reqRegion; 
 	$query=mysql_query($req);
 	while($enreg=mysql_fetch_array($query))
 	{
@@ -101,7 +101,7 @@
             while($enregP = mysql_fetch_array($queryP)){
                 $pays = $enregP["designation"] ; 
             }
-            $reqR = "select * from delta_gouvernorats where id=".$enreg["zone"] ; 
+            $reqR = "select * from delta_zones where id=".$enreg["zone"] ; 
             $queryR = mysql_query($reqR) ; 
             while($enregR = mysql_fetch_array($queryR)){
                 $zone = $enregR["designation"] ; 
@@ -111,11 +111,7 @@
             while($enregZ = mysql_fetch_array($queryZ)){
                 $region = $enregZ["designation"] ; 
             }
-            $reqB = "select * from delta_banques where id=".$enreg["banque"] ; 
-            $queryB = mysql_query($reqB) ; 
-            while($enregB = mysql_fetch_array($queryB)){
-                $banque = $enregB["designation"] ; 
-            }
+           
 
 ?>
 
@@ -128,9 +124,13 @@
                     <td scope="row" style=""><?php echo $enreg["mail"];?></td>
                     <td scope="row" style=""><?php echo $enreg["tel"];?></td>
                     <td scope="row" style=""><?php echo $pays;?></td>
-                    <td scope="row" style=""><?php echo $zone;?></td>
                     <td scope="row" style=""><?php echo $region;?></td>
-                    <td scope="row" style=" color:brown"><?php echo $banque;?></td>
+                    <td scope="row" style=""><?php echo $zone;?></td>
+                    <td scope="row" style=" color:brown"><?php  $reqB = "select * from delta_banques where id=".$enreg["banque"] ; 
+            $queryB = mysql_query($reqB) ; 
+            while($enregB = mysql_fetch_array($queryB)){
+                echo $enregB["designation"] ; 
+            } ;?></td>
                     <td scope="row" style=" color:blue"><?php echo $enreg["rib"];?></td>
                     <!-- <td scope="row" style="text-align:center; color:orange">
                         <?php if($enreg["fodec"]==1){ ?>

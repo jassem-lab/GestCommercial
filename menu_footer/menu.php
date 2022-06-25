@@ -140,7 +140,7 @@ if (!isset($_SESSION['delta_MAILUSER']))
                                 <li>
                                     <ul>
 										<li><a href="paremtrage.php"><b style="font-size:12px">Paramétrage</a></b></li>
-										<li><a href="taxs.php"><b style="font-size:12px">Tax</a></b></li>
+										<li><a href="taxs.php"><b style="font-size:12px">Taxe</a></b></li>
                                         <li><a href="socs.php"><b style="font-size:12px">Société</a></b></li>
 										<li><a href="profils.php"><b style="font-size:12px">Profils</a></b></li>
 										<li><a href="utilisateurs.php"><b style="font-size:12px">Utilisateurs</a></b></li>

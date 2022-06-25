@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
-                    <h4 class="page-title">Gestion des taxs</h4>
+                    <h4 class="page-title">Gestion des taxes</h4>
                     <br> Utilisateur : <?php echo $_SESSION['delta_USER']; ?>
                 </div>
             </div>

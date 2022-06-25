@@ -16,7 +16,7 @@
     </thead>
     <tbody>
         <?php
-	$reqnom="select * from delta_contacts_fournisseur where fournisseur=".$client;
+	 $reqnom="select * from delta_contacts_fournisseur where fournisseur=".$client;
 	$querynom=mysql_query($reqnom);
 	while($enregnom=mysql_fetch_array($querynom))
 	{

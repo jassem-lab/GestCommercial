@@ -59,14 +59,15 @@ else{
     echo '<SCRIPT LANGUAGE="JavaScript">document.location.href="?suc=1" </SCRIPT>';
 
 }
+
 $reqFamille="";
 $famille="";
 if(isset($_POST['famille'])){
-	if(is_numeric($_POST['famille'])){
-		$famille		    =	$_POST['famille'];
-		$reqFamille	    	=	" and  id=".$famille;
-	}
-} 
+		$famille		=	$_POST['famille'];
+		$reqFamille		=	" and  designation Zone '%".$famille."%'";
+	
+}
+$reqZone=
 $code		        =	"" ;
 $designation		=	"" ;
 
@@ -111,7 +112,7 @@ function SupprimerFP(id) {
 <div class="col-xl-12">
     <div class="col-xl-12 row">
         <div class="col-xl-6">
-            <b class="col-lg-12" style="color : red">Liste des Familles de produit</b>
+            <b class="col-lg-12" style="color : red">Liste des Familles Produits</b>
         </div>
         <div class="col-xl-3"></div>
         <div class="col-xl-3">
@@ -129,9 +130,9 @@ function SupprimerFP(id) {
         <center>Attention ! Ce code est déjà existant</center>
     </font><br /><br />
     <?php } }?>
-    <form name="SubmitContact" class="row mb-3" method="post" action="" onSubmit="" style='margin-top : 50px ; '>
-        <div class="col-xl-3">
-            <b>Famille Produit</b>
+
+    <div class="col-xl-3">
+        <!-- <b>Famille Produit</b>
             <select class="form-control select2" name="famille" id="famille">
                 <option value=""> Sélectionner une famille </option>
                 <?php
@@ -142,36 +143,48 @@ function SupprimerFP(id) {
                 <option value="<?php echo $enregc['id']; ?>" <?php if($famille==$enregc['id']) {?> selected <?php } ?>>
                     <?php echo $enregc['code']; ?></option>
                 <?php } ?>
-            </select>
-            <input name="SubmitContact" type="submit" id="submit" class="btn btn-primary btn-sm mt-2" value="Filtrer">
+            </select> -->
+        <div class="form-group row">
+            <div class="col-xl-8">
+                <b>Désignation</b>
+                <input name="famille" id="code_fam" class="form-control" type="text">
+                <p>( % : caractère générique ! )</p>
+            </div>
+            <div class="col-sm-3">
+                <input type="submit" id="submit_famille" class="btn btn-primary btn-sm mt-4" value="Filtrer">
+            </div>
         </div>
-    </form>
-    <table class="table mb-0">
-        <thead class="thead-default">
-            <tr>
-                <th>Code</th>
-                <th>Designation</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-            $reqFP ="select * from delta_famille_produit where 1=1".$famille; 
+    </div>
+    <div class="col-xl-12" id="tabFamille">
+        <table class="table mb-0">
+            <thead class="thead-default">
+                <tr>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Code</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Désignation</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+            $reqFP ="select * from delta_famille_produit order by designation"; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 
             ?>
-            <tr>
-                <td><?php echo $enreg["code"] ?></td>
-                <td><?php echo $enreg["designation"]?></td>
-                <td><a type="button" href="tabs.php?ID=<?php echo $enreg["id"] ?>"
-                        class="btn btn-warning waves-effect waves-light">Modifier</a> <a
-                        href="Javascript:SupprimerFP('<?php echo $enreg["id"]; ?>')"
-                        class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
-                </td>
-            </tr>
-            <?php } ?>
-        </tbody>
-    </table>
+                <tr>
+                    <td><?php echo $enreg["code"] ?></td>
+                    <td><?php echo $enreg["designation"]?></td>
+                    <td><a type="button" href="tabs.php?ID=<?php echo $enreg["id"] ?>"
+                            class="btn btn-warning waves-effect waves-light">Modifier</a> <a
+                            href="Javascript:SupprimerFP('<?php echo $enreg["id"]; ?>')"
+                            class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
+                    </td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-xl-12" id="tabFamille1" style="display:none">
 
+    </div>
 </div>

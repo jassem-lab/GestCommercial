@@ -84,8 +84,8 @@ $IBAN                           = addslashes($_POST["IBAN"]) ;
 			exit;
 		}		
 
-	    $sql="INSERT INTO `delta_fournisseurs`(`id`,`code`,`raison_social`,`mail`,`tel`,`pays`,`adresse`,`region`,`gouvernorat`,`matricule_fiscale`,`registre_commerce`,`rib`,`banque`,`activite`,`swift`,`iban`) VALUES
-		('".$id."','".$code."','".$raisonsocial."','".$mail."','".$tel."','".$pays."','".$adresse."','".$region."','".$gouvernorat."','".$matricule_fiscale."','".$registre_commerce."'
+	    $sql="INSERT INTO `delta_fournisseurs`(`id`,`code`,`raison_social`,`mail`,`tel`,`pays`,`adresse`,`region`,`zone`,`matricule_fiscale`,`registre_commerce`,`rib`,`banque`,`activite`,`swift`,`iban`) VALUES
+		('".$id."','".$code."','".$raisonsocial."','".$mail."','".$tel."','".$pays."','".$adresse."','".$region."','".$zone."','".$matricule_fiscale."','".$registre_commerce."'
 		,'".$RIB."','".$banque."','".$activite."','".$SWIFT."','".$IBAN."')";
 		$req=mysql_query($sql);
 		//Log
@@ -100,7 +100,7 @@ $IBAN                           = addslashes($_POST["IBAN"]) ;
 		
 	}
 	else{
-		$sql="UPDATE `delta_fournisseurs` SET `code`='".$code."' ,`raison_social`='".$raisonsocial."' , `mail`='".$mail."' , `tel`='".$tel."' , `gouvernorat`='".$gouvernorat."' , 
+		$sql="UPDATE `delta_fournisseurs` SET `code`='".$code."' ,`raison_social`='".$raisonsocial."' , `mail`='".$mail."' , `tel`='".$tel."' , `zone`='".$zone."' , 
 		`pays`='".$pays."' , `adresse`='".$adresse."' , `region`='".$region."' , `matricule_fiscale`='".$matricule_fiscale."' , `registre_commerce`='".$registre_commerce."'
 		, `rib`='".$rib."', `banque`='".$banque."', `activite`='".$activite."', `swift`='".$SWIFT."', `iban`='".$IBAN."' WHERE id=".$id;
 		$req=mysql_query($sql);
@@ -123,7 +123,7 @@ $matriculeFiscale        = "" ;
 $adresse                 = "" ; 
 $pays                    = "" ; 
 $region                  = "" ; 
-$gouvernorat             = "" ; 
+$zone		             = "" ; 
 $registre_commerce       = "" ; 
 $mail2                   = "" ;
 $gsm2                    = "" ;
@@ -144,8 +144,8 @@ while($enreg = mysql_fetch_array($query)){
     $matriculeFiscale        = $enreg["matricule_fiscale"] ;
     $adresse                 = $enreg["adresse"] ; 
     $pays                    = $enreg["pays"] ; 
+    $zone                    = $enreg["zone"] ; 
     $region                  = $enreg["region"] ; 
-    $gouvernorat             = $enreg["gouvernorat"] ; 
     $registre_commerce       = $enreg["registre_commerce"] ; 
     $mail2                   = $enreg["mail2"] ;
     $gsm2                    = $enreg["gsm2"] ;
@@ -247,31 +247,31 @@ while($enreg = mysql_fetch_array($query)){
 													</select>												
 												</div>	
 												<div class="col-xl-4">
-													<b>Région </b>
-													<select class="form-control select2" name="region" id="region">
-														<option value="0">Région </option>
+													<b>Zone </b>
+													<select class="form-control select2" name="zone" id="region">
+														<option value="0">Zone </option>
 														<?php
-														$req="select * from delta_regions";
+														$req="select * from delta_zones";
 														$query=mysql_query($req);
 														while($enreg=mysql_fetch_array($query)){
 														?>
 														<option value="<?php echo $enreg['id']; ?>"
-															<?php if($region==$enreg['id']) {?> selected <?php } ?>>
+															<?php if($zone==$enreg['id']) {?> selected <?php } ?>>
 															<?php echo $enreg['designation']; ?></option>
 														<?php } ?>
 													</select>												
 												</div>	
 												<div class="col-xl-4">
-													<b>Gouvernorat</b>
-													<select class="form-control select2" name="gouvernorat" id="gouvernorat">
-														<option value="0">Gouvernorat </option>
+													<b>Région</b>
+													<select class="form-control select2" name="region" id="gouvernorat">
+														<option value="0">Région </option>
 														<?php
-																	$req="select * from delta_gouvernorats";
+																	$req="select * from delta_regions";
 																	$query=mysql_query($req);
 																	while($enreg=mysql_fetch_array($query)){
 																	?>
 														<option value="<?php echo $enreg['id']; ?>"
-															<?php if($gouvernorat==$enreg['id']) {?> selected <?php } ?>>
+															<?php if($region==$enreg['id']) {?> selected <?php } ?>>
 															<?php echo $enreg['designation']; ?></option>
 														<?php } ?>
 													</select>												

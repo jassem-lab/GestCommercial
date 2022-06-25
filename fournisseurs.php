@@ -48,9 +48,10 @@ $reqActivite="";
 $activite="";
 if(isset($_POST['activite'])){
 		$activite		=	$_POST['activite'];
-		$reqActivite		=	" and  activite like '%".$activite."%'";
+		$reqActivite		=	" and  activite Zone '%".$activite."%'";
 	
 }
+$reqZone=
 $reqZone="";
 $zone="";
 if(isset($_POST['zone'])){
@@ -136,7 +137,7 @@ if(isset($_POST['region'])){
                                             <select class="form-control select2" name="zone" id="zone">
                                                 <option value=""> Sélectionner une zone </option>
                                                 <?php
-												 $reqc="select * from delta_gouvernorats";
+												 $reqc="select * from delta_zones";
 												$queryc=mysql_query($reqc);
 												while($enregc=mysql_fetch_array($queryc)){
 												?>
@@ -234,28 +235,28 @@ if(isset($_POST['region'])){
 																$pays = $enregp['code'];
 															}
 															$region = "";
-															$reqp="select * from delta_regions where id=".$enreg['region'];
+															$reqp="select * from delta_zones where id=".$enreg['zone'];
+															$queryp=mysql_query($reqp);
+															while($enregp=mysql_fetch_array($queryp)){
+																$zone = $enregp['code'];
+															}
+															$gouvernorat = "";
+                                                             $reqp="select * from delta_regions where id=".$enreg['region'];
 															$queryp=mysql_query($reqp);
 															while($enregp=mysql_fetch_array($queryp)){
 																$region = $enregp['code'];
-															}
-															$gouvernorat = "";
-															$reqp="select * from delta_gouvernorats where id=".$enreg['gouvernorat'];
-															$queryp=mysql_query($reqp);
-															while($enregp=mysql_fetch_array($queryp)){
-																$gouvernorat = $enregp['code'];
 															}															
 														?>
                                                             <div class="col-md-12">
                                                                 <b style="color: blue">Pays : </b> <?php echo $pays; ?>
                                                             </div>
                                                             <div class="col-md-12">
-                                                                <b style="color: blue">Région : </b>
-                                                                <?php echo $region; ?>
+                                                                <b style="color: blue">Zone : </b>
+                                                                <?php echo $zone; ?>
                                                             </div>
                                                             <div class="col-md-12">
-                                                                <b style="color: blue">Gouvernorat : </b>
-                                                                <?php echo $gouvernorat; ?>
+                                                                <b style="color: blue">Région : </b>
+                                                                <?php echo $region; ?>
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <b style="color: blue">Adresse : </b>
@@ -282,7 +283,7 @@ if(isset($_POST['region'])){
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title mt-0" id="myLargeModalLabel"
-                                                            style="color:blue">Autres contacts - Client :
+                                                            style="color:blue">Autres contacts - Fournisseur :
                                                             <?php echo $enreg["code"]; ?></h5>
                                                         <button
                                                             class="ml-5 btn btn-sm btn btn-outline-info btn-outline btnContact"
@@ -413,11 +414,11 @@ if(isset($_POST['region'])){
 
                                     </td>
                                     <td style="padding: 2px 2px;">
-                                        <a href="javascript:Imprimer('<?php echo $id; ?>')"
+                                        <!-- <a href="javascript:Imprimer('<?php echo $id; ?>')"
                                             class="btn btn-warning waves-effect waves-light"
                                             style="background-color: blue;color: white;">
                                             <i class="ion-printer"></i>
-                                        </a>
+                                        </a> -->
                                         <a href="addedit_fournisseur.php?ID=<?php echo $id; ?>"
                                             class="btn btn-warning waves-effect waves-light">
                                             <span class="far fa-edit"></span>

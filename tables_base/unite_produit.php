@@ -77,7 +77,8 @@ function Supprimer(id) {
 }
 </script>
 <form action="" method="POST">
-    <div class="form-group row" id="DivUnite" <?php if(!isset($_GET['add2']) and !isset($_GET['IDP']) ){?> style="display:none" <?php }?>  >
+    <div class="form-group row" id="DivUnite" <?php if(!isset($_GET['add2']) and !isset($_GET['IDP']) ){?>
+        style="display:none" <?php }?>>
         <div class="col-sm-4">
             <b>Code (*)</b>
             <input class="form-control" type="text" placeholder="Unite de produit" value="<?php echo $code; ?>"
@@ -98,47 +99,66 @@ function Supprimer(id) {
 
 </form>
 <div class="col-xl-12">
- 	<div class="col-xl-12 row">
-		<div class="col-xl-6">
-			 <b class="col-lg-12" style="color : red">Liste des unites de produit </b>
-		</div>
-		<div class="col-xl-3"></div>
-		<div class="col-xl-3">
-			<button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutUN"  <?php if(isset($_GET['add2']) and (isset($_GET['IDP'])) ){?> style="display:none" <?php }?>>+ Ajouter</button>
-			<button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerUN"  <?php if(!isset($_GET['add2']) and !isset($_GET['IDP'])){?> style="display:none" <?php }?>>- Annuler</button>
-		</div>			
-	</div>
-	<?php if(isset($_GET['err'])){ ?>
-		<?php if($_GET['err']=='1'){ ?>
-		<font color="red" style="background-color:#FFFFFF;"><center>Attention ! Ce code est déjà existant</center></font><br /><br />
-	<?php } }?>		
-    <table class="table mb-0">
-        <thead class="thead-default">
-            <tr>
-                <th>Code</th>
-                <th>Designation</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-            $reqFP ="select * from delta_unite_produit"; 
+    <div class="col-xl-12 row">
+        <div class="col-xl-6">
+            <b class="col-lg-12" style="color : red">Liste des Unités Produits</b>
+        </div>
+        <div class="col-xl-3"></div>
+        <div class="col-xl-3">
+            <button type="button" class="btn btn-primary waves-effect waves-light" id="btnAjoutUN"
+                <?php if(isset($_GET['add2']) and (isset($_GET['IDP'])) ){?> style="display:none" <?php }?>>+
+                Ajouter</button>
+            <button type="button" class="btn btn-danger waves-effect waves-light" id="btnAnnulerUN"
+                <?php if(!isset($_GET['add2']) and !isset($_GET['IDP'])){?> style="display:none" <?php }?>>-
+                Annuler</button>
+        </div>
+    </div>
+    <?php if(isset($_GET['err'])){ ?>
+    <?php if($_GET['err']=='1'){ ?>
+    <font color="red" style="background-color:#FFFFFF;">
+        <center>Attention ! Ce code est déjà existant</center>
+    </font><br /><br />
+    <?php } }?>
+    <div class="form-group row">
+        <div class="col-xl-2">
+            <b>Désignation</b>
+            <input name="unite" id="code_unite" class="form-control" type="text">
+            <p>( % : caractère générique ! )</p>
+        </div>
+        <div class="col-sm-3">
+            <input type="submit" id="submit_unite" class="btn btn-primary btn-sm mt-4" value="Filtrer">
+        </div>
+    </div>
+    <div class="col-xl-12" id="tabUnite">
+        <table class="table mb-0">
+            <thead class="thead-default">
+                <tr>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Code</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Désignation</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+            $reqFP ="select * from delta_unite_produit order by designation"; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
-
             ?>
-            <tr>
-                <td><?php echo $enreg["code"] ?></td>
-                <td><?php echo $enreg["designation"]?></td>
-                <td>
-                    <a type="button" href="tabs.php?IDP=<?php echo $enreg["id"] ?>&suc=2"
-                        class="btn btn-warning waves-effect waves-light">Modifier</a>
-                    <a href="Javascript:Supprimer('<?php echo $enreg["id"]; ?>')"
-                        class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
-                </td>
-            </tr>
-            <?php } ?>
-        </tbody>
-    </table>
+                <tr>
+                    <td><?php echo $enreg["code"] ?></td>
+                    <td><?php echo $enreg["designation"]?></td>
+                    <td>
+                        <a type="button" href="tabs.php?IDP=<?php echo $enreg["id"] ?>&suc=2"
+                            class="btn btn-warning waves-effect waves-light">Modifier</a>
+                        <a href="Javascript:Supprimer('<?php echo $enreg["id"]; ?>')"
+                            class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
+                    </td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-xl-12" id="tabUnite1" style="display:none">
 
+    </div>
 </div>

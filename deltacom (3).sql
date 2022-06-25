@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 19, 2022 at 09:43 PM
+-- Generation Time: Jun 23, 2022 at 03:55 PM
 -- Server version: 5.6.12-log
 -- PHP Version: 5.4.12
 
@@ -165,14 +165,54 @@ CREATE TABLE IF NOT EXISTS `delta_banques` (
   `designation` varchar(255) NOT NULL,
   `codsoc` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `delta_banques`
 --
 
 INSERT INTO `delta_banques` (`id`, `code`, `designation`, `codsoc`) VALUES
-(4, 'UIB', 'UIB', 1);
+(3, 'UIB', 'UIB', 1),
+(5, 'STB', 'STB', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `delta_banque_client`
+--
+
+CREATE TABLE IF NOT EXISTS `delta_banque_client` (
+  `id` int(11) NOT NULL,
+  `client` int(11) NOT NULL,
+  `banque` varchar(255) NOT NULL,
+  `rib` varchar(255) NOT NULL,
+  `iban` varchar(255) NOT NULL,
+  `swift` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `delta_banque_client`
+--
+
+INSERT INTO `delta_banque_client` (`id`, `client`, `banque`, `rib`, `iban`, `swift`) VALUES
+(0, 2, 'Attijari', '32131231251321', '32131231251321', '32131231251321'),
+(0, 7, 'Attijari', '32131231251321', '32131231251321', '32131231251321'),
+(0, 8, 'Attijari', '32131231251321', '32131231251321', '32131231251321');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `delta_banque_fournisseur`
+--
+
+CREATE TABLE IF NOT EXISTS `delta_banque_fournisseur` (
+  `id` int(11) NOT NULL,
+  `fournisseur` int(11) NOT NULL,
+  `rib` varchar(255) NOT NULL,
+  `banque` varchar(255) NOT NULL,
+  `swift` varchar(255) NOT NULL,
+  `iban` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -253,8 +293,8 @@ CREATE TABLE IF NOT EXISTS `delta_clients` (
   `matricule_fiscale` varchar(255) NOT NULL,
   `registre_commerce` varchar(255) NOT NULL,
   `pays` int(11) NOT NULL,
-  `gouvernorat` int(11) NOT NULL,
   `region` int(11) NOT NULL,
+  `zone` int(11) NOT NULL,
   `banque` varchar(255) NOT NULL,
   `rib` varchar(255) NOT NULL,
   `gsm2` varchar(255) NOT NULL,
@@ -275,10 +315,10 @@ CREATE TABLE IF NOT EXISTS `delta_clients` (
 -- Dumping data for table `delta_clients`
 --
 
-INSERT INTO `delta_clients` (`id`, `code`, `raison_social`, `mail`, `tel`, `adresse`, `matricule_fiscale`, `registre_commerce`, `pays`, `gouvernorat`, `region`, `banque`, `rib`, `gsm2`, `mail2`, `nature`, `activite`, `swift`, `iban`, `archive`, `codsoc`, `num_exoneration`, `date_debut`, `date_fin`) VALUES
-(2, 'C0001', 'Gaaloul Jassem', 'jassemgaaloul123@gmail.com', '21367778', 'msaken', '123123125', '4324324121', 1, 0, 4, '3', '', '11111', 'jassemgaaloul12345@gmail.com', 1, 'test', '', '', 0, 1, '2514142525', '2022-06-12', '2023-06-21'),
+INSERT INTO `delta_clients` (`id`, `code`, `raison_social`, `mail`, `tel`, `adresse`, `matricule_fiscale`, `registre_commerce`, `pays`, `region`, `zone`, `banque`, `rib`, `gsm2`, `mail2`, `nature`, `activite`, `swift`, `iban`, `archive`, `codsoc`, `num_exoneration`, `date_debut`, `date_fin`) VALUES
+(2, 'C0001', 'Gaaloul Jassem', 'jassemgaaloul123@gmail.com', '21367778', 'msaken', '123123125', '4324324121', 1, 0, 4, '3', '01234567890123456789', '11111', 'jassemgaaloul12345@gmail.com', 1, 'test', '', '251425214', 0, 1, '2514142525', '2022-06-12', '2023-06-21'),
 (7, 'C0002', 'Client ', 'client@client.com', '73000111', 'Rio de janeiro riadh sousse\r\nsousse', 'MF 000 123 AAA', '15241425', 1, 2, 2, '3', '01234567890123456789', '', '', 2, 'Activité', '251414', '251425214', 0, 0, '', '', ''),
-(8, 'C0003', 'SOCIETE ABC', 'trabelsi.majdi18@gmail.com', '21186227', 'Rio de janeiro riadh sousse\r\nsousse', 'TEST', 'TEST', 0, 0, 0, '0', '', '', '', 4, 'Informatique', '', '', 0, 0, '521441253652', '2022-06-17', '2023-06-17');
+(8, 'C0003', 'SOCIETE ABC', 'trabelsi.majdi18@gmail.com', '21186227', 'Rio de janeiro riadh sousse\r\nsousse', 'TEST', 'TEST', 0, 0, 0, '4', '', '', '', 4, 'Informatique', '', '251425214', 0, 0, '521441253652', '2022-06-17', '2023-06-17');
 
 -- --------------------------------------------------------
 
@@ -290,7 +330,7 @@ CREATE TABLE IF NOT EXISTS `delta_colisage` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(255) NOT NULL,
   `designation` varchar(255) NOT NULL,
-  `nbr_pieces` varchar(255) NOT NULL,
+  `nbr_pieces` int(255) NOT NULL,
   `poids_vide` varchar(255) NOT NULL,
   `codsoc` int(11) NOT NULL,
   PRIMARY KEY (`id`)
@@ -301,9 +341,9 @@ CREATE TABLE IF NOT EXISTS `delta_colisage` (
 --
 
 INSERT INTO `delta_colisage` (`id`, `code`, `designation`, `nbr_pieces`, `poids_vide`, `codsoc`) VALUES
-(1, 'COL1', 'Colisage 11', '20', '100', 1),
-(2, 'COL2', 'Colisage 12', '12', '50', 1),
-(3, 'COL3', 'Colisage 13', '6', '25', 1);
+(1, 'COL1', 'Colisage 11', 20, '100', 1),
+(2, 'COL2', 'Colisage 12', 12, '50', 1),
+(3, 'COL3', 'Colisage 13', 6, '25', 1);
 
 -- --------------------------------------------------------
 
@@ -345,6 +385,7 @@ CREATE TABLE IF NOT EXISTS `delta_contacts_client` (
   `client` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `telephone` varchar(255) NOT NULL,
+  `nomcontact` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=50 ;
 
@@ -352,21 +393,21 @@ CREATE TABLE IF NOT EXISTS `delta_contacts_client` (
 -- Dumping data for table `delta_contacts_client`
 --
 
-INSERT INTO `delta_contacts_client` (`id`, `client`, `email`, `telephone`) VALUES
-(1, 0, 'mail2@mail.com', '70111222'),
-(2, 0, '', ''),
-(3, 0, '', ''),
-(35, 2, 'trabelsi.majdi18@gmail.com', '21186227'),
-(36, 7, '', '90802011'),
-(37, 8, 'trabelsi.majdi@yahoo.fr', '21186227'),
-(41, 2, 'trabelsi@gmail.com', ''),
-(42, 7, 'trabelsi.m@gmail.com', '21186001'),
-(44, 7, 'trabelsi.majdi18@gmail.com', '21186227'),
-(45, 2, 'trabelsi.ma@gmail.com', '21186002'),
-(46, 8, 'majdi19@gmail.com', '21186880'),
-(47, 7, 'trabelsi.majdi20@gmail.com', '21186227'),
-(48, 8, 'trabelsi@gmail.com', ''),
-(49, 7, 'trabelsi.majdi18@gmail.com', '21186227');
+INSERT INTO `delta_contacts_client` (`id`, `client`, `email`, `telephone`, `nomcontact`) VALUES
+(1, 0, 'mail2@mail.com', '70111222', ''),
+(2, 0, '', '', ''),
+(3, 0, '', '', ''),
+(35, 2, 'trabelsi.majdi18@gmail.com', '21186227', ''),
+(36, 7, '', '90802011', ''),
+(37, 8, 'trabelsi.majdi@yahoo.fr', '21186227', ''),
+(41, 2, 'trabelsi@gmail.com', '', ''),
+(42, 7, 'trabelsi.m@gmail.com', '21186001', ''),
+(44, 7, 'trabelsi.majdi18@gmail.com', '21186227', ''),
+(45, 2, 'trabelsi.ma@gmail.com', '21186002', ''),
+(46, 8, 'majdi19@gmail.com', '21186880', ''),
+(47, 7, 'trabelsi.majdi20@gmail.com', '21186227', ''),
+(48, 8, 'trabelsi@gmail.com', '', ''),
+(49, 7, 'trabelsi.majdi18@gmail.com', '21186227', '');
 
 -- --------------------------------------------------------
 
@@ -379,6 +420,7 @@ CREATE TABLE IF NOT EXISTS `delta_contacts_fournisseur` (
   `fournisseur` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `telephone` varchar(255) NOT NULL,
+  `nomcontact` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
@@ -386,10 +428,10 @@ CREATE TABLE IF NOT EXISTS `delta_contacts_fournisseur` (
 -- Dumping data for table `delta_contacts_fournisseur`
 --
 
-INSERT INTO `delta_contacts_fournisseur` (`id`, `fournisseur`, `email`, `telephone`) VALUES
-(1, '1', 'jas.frn@gmail.com', '75221552'),
-(3, '2', '', '75110224'),
-(4, '2', 'trabelsi..m@majdi.com', '22277');
+INSERT INTO `delta_contacts_fournisseur` (`id`, `fournisseur`, `email`, `telephone`, `nomcontact`) VALUES
+(1, '1', 'jas.frn@gmail.com', '75221552', ''),
+(3, '2', '', '75110224', ''),
+(4, '2', 'trabelsi..m@majdi.com', '22277', '');
 
 -- --------------------------------------------------------
 
@@ -530,7 +572,7 @@ CREATE TABLE IF NOT EXISTS `delta_devisclient` (
   `date_fin` varchar(255) NOT NULL,
   `nature_client` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `delta_devisclient`
@@ -553,6 +595,7 @@ CREATE TABLE IF NOT EXISTS `delta_devise` (
   `nombre_chiffre` int(11) NOT NULL,
   `symbole` varchar(255) NOT NULL,
   `taux` varchar(255) NOT NULL,
+  `defaut` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
@@ -560,11 +603,11 @@ CREATE TABLE IF NOT EXISTS `delta_devise` (
 -- Dumping data for table `delta_devise`
 --
 
-INSERT INTO `delta_devise` (`id`, `code`, `designation`, `codsoc`, `nombre_chiffre`, `symbole`, `taux`) VALUES
-(1, 'USD', 'Dollar', 1, 2, '$', ''),
-(2, 'Euro', 'Euro', 1, 2, '€', ''),
-(3, 'TND', 'Dinar', 1, 3, 'TND', ''),
-(4, 'CAD', 'Dollar', 1, 2, '$', '');
+INSERT INTO `delta_devise` (`id`, `code`, `designation`, `codsoc`, `nombre_chiffre`, `symbole`, `taux`, `defaut`) VALUES
+(1, 'USD', 'Dollar', 1, 2, '$', '', 0),
+(2, 'Euro', 'Euro', 1, 2, '€', '', 0),
+(3, 'TND', 'Dinar', 1, 3, 'TND', '', 1),
+(4, 'CAD', 'Dollar', 1, 2, '$', '', 0);
 
 -- --------------------------------------------------------
 
@@ -644,7 +687,7 @@ CREATE TABLE IF NOT EXISTS `delta_famille_produit` (
   `designation` varchar(255) NOT NULL,
   `codsoc` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `delta_famille_produit`
@@ -652,8 +695,8 @@ CREATE TABLE IF NOT EXISTS `delta_famille_produit` (
 
 INSERT INTO `delta_famille_produit` (`id`, `code`, `designation`, `codsoc`) VALUES
 (1, 'FAM1', 'Famille 1', 1),
-(2, 'FAM2', 'Famille 2', 1),
-(3, 'FAM3', 'Famille 3', 1);
+(2, 'FAM2', 'Famille2', 1),
+(3, 'FAM3', 'Famille 3a', 1);
 
 -- --------------------------------------------------------
 
@@ -671,7 +714,7 @@ CREATE TABLE IF NOT EXISTS `delta_fournisseurs` (
   `matricule_fiscale` varchar(255) NOT NULL,
   `registre_commerce` varchar(255) NOT NULL,
   `pays` int(11) NOT NULL,
-  `gouvernorat` int(11) NOT NULL,
+  `zone` int(11) NOT NULL,
   `region` int(11) NOT NULL,
   `banque` int(11) NOT NULL,
   `rib` varchar(255) NOT NULL,
@@ -689,36 +732,9 @@ CREATE TABLE IF NOT EXISTS `delta_fournisseurs` (
 -- Dumping data for table `delta_fournisseurs`
 --
 
-INSERT INTO `delta_fournisseurs` (`id`, `code`, `raison_social`, `mail`, `adresse`, `tel`, `matricule_fiscale`, `registre_commerce`, `pays`, `gouvernorat`, `region`, `banque`, `rib`, `gsm2`, `mail2`, `activite`, `swift`, `iban`, `archive`, `codsoc`) VALUES
-(1, 'F001', 'Gaaloul Jassem', 'jassemgaaloul123@gmail.com', 'test', '312412512', '3123125', '123123123215', 1, 0, 4, 0, '', '', '', 'test', '', '', 0, 0),
-(2, 'F0002', 'Fournisseur 1', 'fournisseur@fournisseur.com', 'Rio de janeiro riadh sousse\r\nsousse', '73000111', 'MF 000 123 AAA', '15241425', 1, 2, 2, 4, '01234567890123456789', '', '', 'Informatique', '251414', '', 0, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `delta_gouvernorats`
---
-
-CREATE TABLE IF NOT EXISTS `delta_gouvernorats` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(255) NOT NULL,
-  `designation` varchar(255) NOT NULL,
-  `codsoc` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
-
---
--- Dumping data for table `delta_gouvernorats`
---
-
-INSERT INTO `delta_gouvernorats` (`id`, `code`, `designation`, `codsoc`) VALUES
-(2, 'Tunis', 'Tunis', 1),
-(3, 'Nabeul', 'Nabeul', 1),
-(4, 'Monastir', 'Monastir', 1),
-(5, 'Ariana', 'Ariana', 1),
-(6, 'Ben arous', 'Ben Arous', 1),
-(7, 'Mahdia', 'Mahdia', 1),
-(8, 'Sousse', 'Sousse', 1);
+INSERT INTO `delta_fournisseurs` (`id`, `code`, `raison_social`, `mail`, `adresse`, `tel`, `matricule_fiscale`, `registre_commerce`, `pays`, `zone`, `region`, `banque`, `rib`, `gsm2`, `mail2`, `activite`, `swift`, `iban`, `archive`, `codsoc`) VALUES
+(1, 'F001', 'Gaaloul Jassem', 'jassemgaaloul123@gmail.com', 'test', '312412512', '3123125', '123123123215', 1, 4, 4, 3, '01234567890123456789', '', '', 'test', '', '', 0, 0),
+(2, 'F0002', 'Fournisseur 1', 'fournisseur@fournisseur.com', 'Rio de janeiro riadh sousse\r\nsousse', '73000111', 'MF 000 123 AAA', '15241425', 1, 2, 2, 3, '01234567890123456789', '', '', 'Informatique', '251414', '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -735,7 +751,7 @@ CREATE TABLE IF NOT EXISTS `delta_log` (
   `iddocument` int(11) NOT NULL,
   `code` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=386 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=407 ;
 
 --
 -- Dumping data for table `delta_log`
@@ -1126,7 +1142,28 @@ INSERT INTO `delta_log` (`id`, `dateheure`, `idutilisateur`, `document`, `action
 (382, '2022-06-19 17:53:24', 1, 18, '1', 8, ''),
 (383, '2022-06-19 17:53:28', 1, 7, '3', 8, ''),
 (384, '2022-06-19 17:54:17', 1, 18, '3', 8, ' T'),
-(385, '2022-06-19 17:54:27', 1, 18, '3', 7, ' Montants égaux ou supérieurs à 1 000 DT payés au titre des acquisitions de marchandises, matériel, équipements et de services effectuées auprès des sociétés soumises à l’IS au taux de 15%.');
+(385, '2022-06-19 17:54:27', 1, 18, '3', 7, ' Montants égaux ou supérieurs à 1 000 DT payés au titre des acquisitions de marchandises, matériel, équipements et de services effectuées auprès des sociétés soumises à l’IS au taux de 15%.'),
+(386, '2022-06-22 09:27:38', 1, 7, '1', 5, ''),
+(387, '2022-06-22 09:57:25', 1, 3, '1', 4, ''),
+(388, '2022-06-22 09:57:46', 1, 3, '1', 5, ''),
+(389, '2022-06-22 09:58:58', 1, 3, '1', 6, ''),
+(390, '2022-06-22 10:07:45', 1, 3, '2', 2, ''),
+(391, '2022-06-22 10:09:29', 1, 3, '2', 5, ''),
+(392, '2022-06-22 10:13:24', 1, 3, '2', 3, ''),
+(393, '2022-06-22 10:35:27', 1, 13, '2', 1, ''),
+(394, '2022-06-22 12:33:46', 1, 9, '2', 2, ''),
+(395, '2022-06-22 12:34:05', 1, 9, '2', 3, ''),
+(396, '2022-06-22 12:34:55', 1, 9, '2', 4, ''),
+(397, '2022-06-22 12:35:02', 1, 9, '2', 1, ''),
+(398, '2022-06-22 14:48:01', 1, 5, '2', 1, ''),
+(399, '2022-06-22 14:48:06', 1, 5, '2', 2, ''),
+(400, '2022-06-22 14:48:24', 1, 5, '1', 4, ''),
+(401, '2022-06-22 14:52:25', 1, 14, '2', 2, ''),
+(402, '2022-06-22 14:52:38', 1, 14, '2', 2, ''),
+(403, '2022-06-22 14:52:46', 1, 14, '2', 2, ''),
+(404, '2022-06-22 15:14:50', 1, 14, '2', 2, ''),
+(405, '2022-06-22 15:53:19', 1, 17, '2', 2, ''),
+(406, '2022-06-22 15:53:44', 1, 17, '2', 3, '');
 
 -- --------------------------------------------------------
 
@@ -1163,14 +1200,14 @@ CREATE TABLE IF NOT EXISTS `delta_magasins` (
   `codsoc` int(11) NOT NULL,
   `defaut` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `delta_magasins`
 --
 
 INSERT INTO `delta_magasins` (`id`, `code`, `designation`, `codsoc`, `defaut`) VALUES
-(2, 'MAG1', 'Magasin 1', 1, 1),
+(2, 'MAG01', 'Magasin 1', 1, 1),
 (4, 'MAG2', 'Magasin 2', 1, 0);
 
 -- --------------------------------------------------------
@@ -1185,16 +1222,17 @@ CREATE TABLE IF NOT EXISTS `delta_marques` (
   `designation` varchar(255) NOT NULL,
   `codsoc` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `delta_marques`
 --
 
 INSERT INTO `delta_marques` (`id`, `code`, `designation`, `codsoc`) VALUES
-(1, 'MRQ2', 'Marque 2', 1),
-(2, 'MRQ1', 'Marque 1', 1),
-(3, 'MRQ3', 'Marque 3', 1);
+(1, 'MRQ2', 'Marque 1', 1),
+(2, 'MRQ1', 'Marque 2', 1),
+(3, 'MRQ3', 'Marque 3', 1),
+(4, 'MRQ4', 'Marque 4', 1);
 
 -- --------------------------------------------------------
 
@@ -1208,14 +1246,14 @@ CREATE TABLE IF NOT EXISTS `delta_mode_paiement` (
   `designation` varchar(255) NOT NULL,
   `codsoc` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `delta_mode_paiement`
 --
 
 INSERT INTO `delta_mode_paiement` (`id`, `code`, `designation`, `codsoc`) VALUES
-(1, 'Chèque', 'Chèque', 1),
+(1, 'CH', 'Chèque', 1),
 (2, 'Espèce', 'Espèce', 1),
 (3, 'Virement', 'Virement', 1);
 
@@ -1368,7 +1406,7 @@ CREATE TABLE IF NOT EXISTS `delta_produits` (
   `colisage` int(11) NOT NULL,
   `archive` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `delta_produits`
@@ -1415,16 +1453,20 @@ CREATE TABLE IF NOT EXISTS `delta_regions` (
   `designation` varchar(255) NOT NULL,
   `codsoc` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `delta_regions`
 --
 
 INSERT INTO `delta_regions` (`id`, `code`, `designation`, `codsoc`) VALUES
-(2, 'Grand Tunis', 'Grand Tunis', 1),
-(3, 'Cap Bon', 'Cap Bon', 1),
-(4, 'Sahel', 'Sahel', 1);
+(2, 'Tunis', 'Tunis', 1),
+(3, 'Nabeul', 'Nabeul', 1),
+(4, 'Monastir', 'Monastir', 1),
+(5, 'Ariana', 'Ariana', 1),
+(6, 'Ben arous', 'Ben Arous', 1),
+(7, 'Mahdia', 'Mahdia', 1),
+(8, 'Sousse', 'Sousse', 1);
 
 -- --------------------------------------------------------
 
@@ -1438,7 +1480,7 @@ CREATE TABLE IF NOT EXISTS `delta_retenues` (
   `label` varchar(255) NOT NULL,
   `taux` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `delta_retenues`
@@ -1512,7 +1554,7 @@ INSERT INTO `delta_stock_magasin` (`id`, `produit`, `magasin`, `stock`) VALUES
 CREATE TABLE IF NOT EXISTS `delta_tvas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(255) NOT NULL,
-  `designation` varchar(255) NOT NULL,
+  `taux` int(11) NOT NULL,
   `codsoc` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
@@ -1521,11 +1563,11 @@ CREATE TABLE IF NOT EXISTS `delta_tvas` (
 -- Dumping data for table `delta_tvas`
 --
 
-INSERT INTO `delta_tvas` (`id`, `code`, `designation`, `codsoc`) VALUES
-(1, '13', '0.13', 1),
-(2, '0', '0', 1),
-(3, '7', '0.07', 1),
-(4, '19', '0.19', 1);
+INSERT INTO `delta_tvas` (`id`, `code`, `taux`, `codsoc`) VALUES
+(1, 'T13', 13, 1),
+(2, 'T0', 0, 1),
+(3, 'T7', 7, 1),
+(4, 'T19', 19, 1);
 
 -- --------------------------------------------------------
 
@@ -1560,7 +1602,7 @@ CREATE TABLE IF NOT EXISTS `delta_unite_produit` (
   `designation` varchar(255) NOT NULL,
   `codsoc` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `delta_unite_produit`
@@ -1587,7 +1629,7 @@ CREATE TABLE IF NOT EXISTS `delta_utilisateurs` (
   `idprofil` int(11) NOT NULL,
   `archive` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `delta_utilisateurs`
@@ -1619,8 +1661,31 @@ CREATE TABLE IF NOT EXISTS `delta_vehicules` (
 --
 
 INSERT INTO `delta_vehicules` (`id`, `matricule`, `model`, `codsoc`, `marque`, `tare`, `charge`) VALUES
-(2, '123456 TUN 0251', 'Model', 1, '', '', ''),
-(3, '123456 TUN 251455', 'Model 2', 1, '', '', '');
+(2, '123456 TUN 0251', 'Model', 1, 'Renault', '', ''),
+(3, '123456 TUN 251455', 'Model 2', 1, 'GMC', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `delta_zones`
+--
+
+CREATE TABLE IF NOT EXISTS `delta_zones` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) NOT NULL,
+  `designation` varchar(255) NOT NULL,
+  `codsoc` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `delta_zones`
+--
+
+INSERT INTO `delta_zones` (`id`, `code`, `designation`, `codsoc`) VALUES
+(2, 'Grand Tunis', 'Grand Tunis', 1),
+(3, 'Cap Bon', 'Cap Bon', 1),
+(4, 'Sahel', 'Sahel', 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

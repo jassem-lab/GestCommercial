@@ -127,50 +127,47 @@ function SupprimerEmplacement(id) {
         <center>Attention ! Ce code est déjà existant</center>
     </font><br /><br />
     <?php } }?>
-    <form name="SubmitContact" class="row mb-3" method="post" action="" onSubmit="" style='margin-top : 50px ; '>
-        <div class="col-xl-3">
-            <b>Emplacement</b>
-            <select class="form-control select2" name="emplacement" id="emplacement">
-                <option value=""> Sélectionner un emplacement </option>
-                <?php
-                      echo  $reqc="select * from delta_emplacements" ;
-                        $queryc=mysql_query($reqc);
-                        while($enregc=mysql_fetch_array($queryc)){
-                        ?>
-                <option value="<?php echo $enregc['id']; ?>" <?php if($emplacement==$enregc['id']) {?> selected
-                    <?php } ?>>
-                    <?php echo $enregc['code']; ?></option>
-                <?php } ?>
-            </select>
-            <input name="SubmitContact" type="submit" id="submit" class="btn btn-primary btn-sm mt-2" value="Filtrer">
+
+    <div class="form-group row">
+        <div class="col-xl-2">
+            <b>Désignation</b>
+            <input name="emplacement" id="code_emplacement" class="form-control" type="text">
+            <p>( % : caractère générique ! )</p>
         </div>
-    </form>
-    <table class="table mb-0">
-        <thead class="thead-default">
-            <tr>
-                <th>Code</th>
-                <th>Designation</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
+        <div class="col-sm-3">
+            <input type="submit" id="submit_emplacement" class="btn btn-primary btn-sm mt-4" value="Filtrer">
+        </div>
+    </div>
+    <div class="col-xl-12" id="tabEmplacement">
+        <table class="table mb-0">
+            <thead class="thead-default">
+                <tr>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Code</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Désignation</th>
+                    <th style="  text-decoration: underline; font-size : 18px ; ">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
             $reqFP ="select * from delta_emplacements where 1=1".$reqEmplacement; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 
             ?>
-            <tr>
-                <td><?php echo $enreg["code"] ?></td>
-                <td><?php echo $enreg["designation"]?></td>
-                <td><a type="button" href="tabs.php?IDE=<?php echo $enreg["id"] ?>&suc=4"
-                        class="btn btn-warning waves-effect waves-light">Modifier</a> <a
-                        href="Javascript:SupprimerEmplacement('<?php echo $enreg["id"]; ?>')"
-                        class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
-                </td>
-            </tr>
-            <?php } ?>
-        </tbody>
-    </table>
+                <tr>
+                    <td><?php echo $enreg["code"] ?></td>
+                    <td><?php echo $enreg["designation"]?></td>
+                    <td><a type="button" href="tabs.php?IDE=<?php echo $enreg["id"] ?>&suc=4"
+                            class="btn btn-warning waves-effect waves-light">Modifier</a> <a
+                            href="Javascript:SupprimerEmplacement('<?php echo $enreg["id"]; ?>')"
+                            class="btn btn-danger waves-effect waves-light" style="background-color:brown">Supprimer</a>
+                    </td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-xl-12" id="tabEmplacement1" style="display:none">
 
+    </div>
 </div>

@@ -142,36 +142,20 @@ function SupprimerColisage(id) {
         <center>Attention ! Ce code est déjà existant</center>
     </font><br /><br />
     <?php } }?>
-    <form name="SubmitContact" class="row mb-3" method="post" action="" onSubmit="" style='margin-top : 50px ; '>
-        <div class="col-xl-3">
-            <b>colisage</b>
-            <select class="form-control select2" name="colisage" id="colisage">
-                <option value=""> Sélectionner un colisage </option>
-                <?php
-                      echo  $reqc="select * from delta_colisage" ;
-                        $queryc=mysql_query($reqc);
-                        while($enregc=mysql_fetch_array($queryc)){
-                        ?>
-                <option value="<?php echo $enregc['id']; ?>" <?php if($colisage==$enregc['id']) {?> selected <?php } ?>>
-                    <?php echo $enregc['code']; ?></option>
-                <?php } ?>
-            </select>
-            <input name="SubmitContact" type="submit" id="submit" class="btn btn-primary btn-sm mt-2" value="Filtrer">
-        </div>
-    </form>
+   
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
-                <th>Code</th>
-                <th>Designation</th>
-                <th>Nombre de piece</th>
-                <th>Poids Vide</th>
-                <th>Action</th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Code</th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Désignation</th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Nombre de pièces</th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Poids vide</th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php 
-            $reqFP ="select * from delta_colisage where 1=1".$reqColisage; 
+            $reqFP ="select * from delta_colisage order by nbr_pieces"; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 

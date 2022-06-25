@@ -113,13 +113,13 @@ function SupprimerPays(id) {
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
-                <th>Code</th>
-                <th>Action</th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Pays</th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php 
-            $reqFP ="select * from delta_pays"; 
+            $reqFP ="select * from delta_pays order by code"; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 

@@ -123,7 +123,7 @@ function SupprimerVehicule(id) {
 <div class="col-xl-12">
     <div class="col-xl-12 row">
 		<div class="col-xl-6">
-			 <b class="col-lg-12" style="color : red">Liste des pays</b>
+			 <b class="col-lg-12" style="color : red">Liste des Véhicules</b>
 		</div>
 		<div class="col-xl-3"></div>
 		<div class="col-xl-3">
@@ -138,17 +138,17 @@ function SupprimerVehicule(id) {
     <table class="table mb-0">
         <thead class="thead-default">
             <tr>
-                <th>Matricule</th>
-				<th>Marque</th>
-                <th>Model</th>
-				<th>Tare</th>
-				<th>Charge utile</th>
-                <th>Action</th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Matricule</th>
+				<th style="  text-decoration: underline; font-size : 18px ; ">Marque</th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Model</th>
+				<th style="  text-decoration: underline; font-size : 18px ; ">Tare</th>
+				<th style="  text-decoration: underline; font-size : 18px ; ">Charge utile</th>
+                <th style="  text-decoration: underline; font-size : 18px ; ">Action</th>
             </tr>
         </thead>
         <tbody>
             <?php 
-            $reqFP ="select * from delta_vehicules"; 
+            $reqFP ="select * from delta_vehicules order by marque"; 
             $queryFP = mysql_query($reqFP); 
             while($enreg=mysql_fetch_array($queryFP)){
 

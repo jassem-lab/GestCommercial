@@ -157,7 +157,7 @@ if(isset($_POST['nature'])){
                                             <select class="form-control select2" name="zone" id="zone">
                                                 <option value=""> Sélectionner une zone </option>
                                                 <?php
-												 $reqc="select * from delta_gouvernorats";
+												 $reqc="select * from delta_zones";
 												$queryc=mysql_query($reqc);
 												while($enregc=mysql_fetch_array($queryc)){
 												?>
@@ -228,7 +228,7 @@ if(isset($_POST['nature'])){
                                             <select class="form-control select2" name="zone" id="zone">
                                                 <option value=""> Sélectionner une zone </option>
                                                 <?php
-												 $reqc="select * from delta_gouvernorats";
+												 $reqc="select * from delta_zones";
 												$queryc=mysql_query($reqc);
 												while($enregc=mysql_fetch_array($queryc)){
 												?>
